@@ -1,0 +1,213 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Настройки-->
+        <scene sceneID="IpO-gh-WOy">
+            <objects>
+                <viewController title="Настройки" id="qYq-Oy-kBP" customClass="TestAPIViewController" customModule="Radio" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="gL0-xj-nMU">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="Xeo-XK-M2x">
+                                <rect key="frame" x="152" y="300" width="110" height="296"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="scV-Je-fZ2">
+                                        <rect key="frame" x="36" y="0.0" width="38" height="30"/>
+                                        <state key="normal" title="Login"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="4JK-81-MP3"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dTv-7Y-6OW">
+                                        <rect key="frame" x="16" y="38" width="78" height="30"/>
+                                        <state key="normal" title="Get County"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="O1y-Ps-lDP"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="oGc-Ew-muQ">
+                                        <rect key="frame" x="20" y="76" width="70" height="30"/>
+                                        <state key="normal" title="Get Genre"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="QNv-Fb-qbW"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gmF-Fg-xW3">
+                                        <rect key="frame" x="12.5" y="114" width="85" height="30"/>
+                                        <state key="normal" title="Get Stations"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="SxL-rz-3tq"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tjx-1S-N8Z">
+                                        <rect key="frame" x="0.0" y="152" width="110" height="30"/>
+                                        <state key="normal" title="Get My Stations"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="Lcg-7y-qe4"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TSC-dt-cUh">
+                                        <rect key="frame" x="40" y="190" width="30" height="30"/>
+                                        <state key="normal" title="Like"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="XQ8-Pd-6Gp"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dFH-IE-oph">
+                                        <rect key="frame" x="32.5" y="228" width="45" height="30"/>
+                                        <state key="normal" title="Dislike"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="1yD-af-C8A"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XJT-ot-3fI">
+                                        <rect key="frame" x="10.5" y="266" width="89" height="30"/>
+                                        <state key="normal" title="Create Radio"/>
+                                        <connections>
+                                            <action selector="touchButton:" destination="qYq-Oy-kBP" eventType="touchUpInside" id="W5c-Vc-EGa"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Xeo-XK-M2x" firstAttribute="centerY" secondItem="gL0-xj-nMU" secondAttribute="centerY" id="4si-qP-XqY"/>
+                            <constraint firstItem="Xeo-XK-M2x" firstAttribute="centerX" secondItem="gL0-xj-nMU" secondAttribute="centerX" id="rdf-PF-bDo"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="LpE-4w-V0I"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Настройки" id="Xmf-fz-FiU"/>
+                    <connections>
+                        <outletCollection property="cardButtons" destination="scV-Je-fZ2" collectionClass="NSMutableArray" id="LWZ-FK-U06"/>
+                        <outletCollection property="cardButtons" destination="dTv-7Y-6OW" collectionClass="NSMutableArray" id="bRA-fI-Tke"/>
+                        <outletCollection property="cardButtons" destination="oGc-Ew-muQ" collectionClass="NSMutableArray" id="YcR-5f-a6N"/>
+                        <outletCollection property="cardButtons" destination="gmF-Fg-xW3" collectionClass="NSMutableArray" id="mhw-Xa-blm"/>
+                        <outletCollection property="cardButtons" destination="tjx-1S-N8Z" collectionClass="NSMutableArray" id="DOJ-rj-ZFW"/>
+                        <outletCollection property="cardButtons" destination="TSC-dt-cUh" collectionClass="NSMutableArray" id="Uam-LI-Rk4"/>
+                        <outletCollection property="cardButtons" destination="dFH-IE-oph" collectionClass="NSMutableArray" id="2td-xv-RER"/>
+                        <outletCollection property="cardButtons" destination="XJT-ot-3fI" collectionClass="NSMutableArray" id="vhs-y8-zEZ"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zje-RD-0Qc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2058" y="962"/>
+        </scene>
+        <!--Станций-->
+        <scene sceneID="mNw-2U-rAS">
+            <objects>
+                <viewController storyboardIdentifier="RadioListVC" title="Станций" id="bsZ-GL-5mY" customClass="RadioListViewController" customModule="Radio" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="GzX-la-UOw">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="1" sectionFooterHeight="1" translatesAutoresizingMaskIntoConstraints="NO" id="ljW-fQ-7wu">
+                                <rect key="frame" x="0.0" y="44" width="414" height="818"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="blue" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DataCell" rowHeight="100" id="Ws8-hx-DAd" customClass="RadioListTableViewCell" customModule="Radio" customModuleProvider="target">
+                                        <rect key="frame" x="0.0" y="28" width="414" height="100"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ws8-hx-DAd" id="FCA-a7-kpC">
+                                            <rect key="frame" x="0.0" y="0.0" width="414" height="100"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="WPf-qC-Sqd">
+                                                    <rect key="frame" x="20" y="10" width="374" height="80"/>
+                                                    <subviews>
+                                                        <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="HJp-cn-I4E">
+                                                            <rect key="frame" x="0.0" y="15" width="50" height="50"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="50" id="A5Y-wQ-ncQ"/>
+                                                                <constraint firstAttribute="height" constant="50" id="nPr-cs-jqy"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lost-Heaven FM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WoL-Ne-8Fk">
+                                                            <rect key="frame" x="66" y="30" width="308" height="20.5"/>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                                            <nil key="textColor"/>
+                                                            <nil key="highlightedColor"/>
+                                                        </label>
+                                                        <imageView hidden="YES" clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="radiowaves.left" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="BwI-k8-sUt">
+                                                            <rect key="frame" x="374" y="23" width="35" height="34"/>
+                                                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="35" id="sHs-HM-bAL"/>
+                                                                <constraint firstAttribute="height" constant="35" id="sxI-Ul-UQ9"/>
+                                                            </constraints>
+                                                        </imageView>
+                                                    </subviews>
+                                                </stackView>
+                                            </subviews>
+                                            <constraints>
+                                                <constraint firstItem="WPf-qC-Sqd" firstAttribute="top" secondItem="FCA-a7-kpC" secondAttribute="top" constant="10" id="7bM-5H-uYx"/>
+                                                <constraint firstItem="WPf-qC-Sqd" firstAttribute="leading" secondItem="FCA-a7-kpC" secondAttribute="leading" constant="20" id="Odb-ry-EgI"/>
+                                                <constraint firstAttribute="trailing" secondItem="WPf-qC-Sqd" secondAttribute="trailing" constant="20" id="ubi-0p-55K"/>
+                                                <constraint firstAttribute="bottom" secondItem="WPf-qC-Sqd" secondAttribute="bottom" constant="10" id="w8i-BY-B4m"/>
+                                            </constraints>
+                                        </tableViewCellContentView>
+                                        <connections>
+                                            <outlet property="isPlayingImage" destination="BwI-k8-sUt" id="dW6-eV-rLX"/>
+                                            <outlet property="logoImage" destination="HJp-cn-I4E" id="ycc-fh-YbY"/>
+                                            <outlet property="radioTitleLabel" destination="WoL-Ne-8Fk" id="vlp-bH-8ir"/>
+                                        </connections>
+                                    </tableViewCell>
+                                </prototypes>
+                                <connections>
+                                    <outlet property="dataSource" destination="bsZ-GL-5mY" id="Bt1-QQ-e1w"/>
+                                    <outlet property="delegate" destination="bsZ-GL-5mY" id="vqV-SN-78m"/>
+                                </connections>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="ljW-fQ-7wu" firstAttribute="top" secondItem="arM-rs-AsN" secondAttribute="top" id="J07-96-PaT"/>
+                            <constraint firstItem="ljW-fQ-7wu" firstAttribute="leading" secondItem="arM-rs-AsN" secondAttribute="leading" id="Q2H-v6-r5J"/>
+                            <constraint firstItem="arM-rs-AsN" firstAttribute="trailing" secondItem="ljW-fQ-7wu" secondAttribute="trailing" id="rRz-OK-0iw"/>
+                            <constraint firstItem="ljW-fQ-7wu" firstAttribute="bottom" secondItem="arM-rs-AsN" secondAttribute="bottom" id="y5N-d5-PVS"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="arM-rs-AsN"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Мои станций" id="luE-xS-lhx">
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="FRq-rP-FoC">
+                            <color key="tintColor" cocoaTouchSystemColor="darkTextColor"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="tableView" destination="ljW-fQ-7wu" id="DW6-Pe-f0P"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="CYT-Rd-rIx" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2057.971014492754" y="-554.46428571428567"/>
+        </scene>
+        <!--Найти-->
+        <scene sceneID="IOo-y4-QB0">
+            <objects>
+                <viewController id="Msm-XL-MDj" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="EuD-kf-Cul">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="1be-4T-CkK"/>
+                    </view>
+                    <navigationItem key="navigationItem" title="Найти" id="MGL-AL-mbM"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DkM-tR-Dtu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2058" y="171"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="logo" width="1200" height="782"/>
+        <image name="radiowaves.left" catalog="system" width="90" height="128"/>
+    </resources>
+</document>

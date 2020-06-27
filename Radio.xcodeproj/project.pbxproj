@@ -1,0 +1,559 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 51;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		900B1B1D473F6EE098F21A04 /* Pods_Radio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD9AE632015996638F845F6 /* Pods_Radio.framework */; };
+		9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */; };
+		9A6B901024A4B1F2002FE34A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */; };
+		9A6B901224A4B1F2002FE34A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */; };
+		9A6B901724A4B1F2002FE34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901524A4B1F2002FE34A /* Main.storyboard */; };
+		9A6B901924A4B1F4002FE34A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901824A4B1F4002FE34A /* Assets.xcassets */; };
+		9A6B901C24A4B1F4002FE34A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */; };
+		9A6B902424A4DBD6002FE34A /* TestAPIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902324A4DBD6002FE34A /* TestAPIViewController.swift */; };
+		9A6B902924A6291A002FE34A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902824A6291A002FE34A /* BaseViewController.swift */; };
+		9A6B902B24A62B90002FE34A /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902A24A62B90002FE34A /* Country.swift */; };
+		9A6B902D24A62C19002FE34A /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902C24A62C19002FE34A /* Genre.swift */; };
+		9A6B902F24A62E50002FE34A /* Radio.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902E24A62E50002FE34A /* Radio.swift */; };
+		9A6B903424A64459002FE34A /* RadioAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B903324A64459002FE34A /* RadioAPI.swift */; };
+		9A6B903624A6446C002FE34A /* CountryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B903524A6446C002FE34A /* CountryAPI.swift */; };
+		9A6B903824A64478002FE34A /* Constant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B903724A64478002FE34A /* Constant.swift */; };
+		9A6B903A24A64EB9002FE34A /* GenreAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B903924A64EB9002FE34A /* GenreAPI.swift */; };
+		9A74E21C24A7E50A0059E48B /* RadioInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */; };
+		9A74E21E24A7E6800059E48B /* RadioInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74E21D24A7E6800059E48B /* RadioInfoView.swift */; };
+		9AAE469A24A754FD005879AB /* RadioListContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469524A754FD005879AB /* RadioListContract.swift */; };
+		9AAE469B24A754FD005879AB /* RadioListPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469624A754FD005879AB /* RadioListPresenter.swift */; };
+		9AAE469C24A754FD005879AB /* RadioListRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469724A754FD005879AB /* RadioListRouter.swift */; };
+		9AAE469D24A754FD005879AB /* RadioListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469824A754FD005879AB /* RadioListViewController.swift */; };
+		9AAE469E24A754FD005879AB /* RadioListInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469924A754FD005879AB /* RadioListInteractor.swift */; };
+		9AAE46A024A756D7005879AB /* RadioListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE469F24A756D7005879AB /* RadioListTableViewCell.swift */; };
+		9AAE46A324A75C08005879AB /* PresenterProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AAE46A224A75C08005879AB /* PresenterProtocol.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		2BD9AE632015996638F845F6 /* Pods_Radio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Radio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.debug.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.debug.xcconfig"; sourceTree = "<group>"; };
+		9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioTabBarViewController.swift; sourceTree = "<group>"; };
+		9A6B900C24A4B1F2002FE34A /* Radio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
+		9A6B901624A4B1F2002FE34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		9A6B901824A4B1F4002FE34A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		9A6B901B24A4B1F4002FE34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9A6B901D24A4B1F4002FE34A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		9A6B902324A4DBD6002FE34A /* TestAPIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TestAPIViewController.swift; sourceTree = "<group>"; };
+		9A6B902824A6291A002FE34A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = "Radio/Custom Views/BaseViewController.swift"; sourceTree = SOURCE_ROOT; };
+		9A6B902A24A62B90002FE34A /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
+		9A6B902C24A62C19002FE34A /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
+		9A6B902E24A62E50002FE34A /* Radio.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Radio.swift; sourceTree = "<group>"; };
+		9A6B903324A64459002FE34A /* RadioAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAPI.swift; sourceTree = "<group>"; };
+		9A6B903524A6446C002FE34A /* CountryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountryAPI.swift; sourceTree = "<group>"; };
+		9A6B903724A64478002FE34A /* Constant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Constant.swift; sourceTree = "<group>"; };
+		9A6B903924A64EB9002FE34A /* GenreAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenreAPI.swift; sourceTree = "<group>"; };
+		9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioInfoView.xib; sourceTree = "<group>"; };
+		9A74E21D24A7E6800059E48B /* RadioInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioInfoView.swift; sourceTree = "<group>"; };
+		9AAE469524A754FD005879AB /* RadioListContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListContract.swift; sourceTree = "<group>"; };
+		9AAE469624A754FD005879AB /* RadioListPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListPresenter.swift; sourceTree = "<group>"; };
+		9AAE469724A754FD005879AB /* RadioListRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListRouter.swift; sourceTree = "<group>"; };
+		9AAE469824A754FD005879AB /* RadioListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListViewController.swift; sourceTree = "<group>"; };
+		9AAE469924A754FD005879AB /* RadioListInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListInteractor.swift; sourceTree = "<group>"; };
+		9AAE469F24A756D7005879AB /* RadioListTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListTableViewCell.swift; sourceTree = "<group>"; };
+		9AAE46A224A75C08005879AB /* PresenterProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresenterProtocol.swift; sourceTree = "<group>"; };
+		BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.release.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		9A6B900924A4B1F2002FE34A /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				900B1B1D473F6EE098F21A04 /* Pods_Radio.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		0E454E5B66263F5584B2CBB4 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2BD9AE632015996638F845F6 /* Pods_Radio.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		9A3850CA24A7920000EB0958 /* API */ = {
+			isa = PBXGroup;
+			children = (
+				9A6B903324A64459002FE34A /* RadioAPI.swift */,
+				9A6B903524A6446C002FE34A /* CountryAPI.swift */,
+				9A6B903924A64EB9002FE34A /* GenreAPI.swift */,
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		9A674D8924A766C700C35732 /* Custom Views */ = {
+			isa = PBXGroup;
+			children = (
+				9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */,
+				9A6B902824A6291A002FE34A /* BaseViewController.swift */,
+				9A6B902324A4DBD6002FE34A /* TestAPIViewController.swift */,
+				9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */,
+				9A74E21D24A7E6800059E48B /* RadioInfoView.swift */,
+			);
+			path = "Custom Views";
+			sourceTree = "<group>";
+		};
+		9A6B900324A4B1F2002FE34A = {
+			isa = PBXGroup;
+			children = (
+				9A6B900E24A4B1F2002FE34A /* Radio */,
+				9A6B900D24A4B1F2002FE34A /* Products */,
+				A985C6923ED7EF194537607F /* Pods */,
+				0E454E5B66263F5584B2CBB4 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		9A6B900D24A4B1F2002FE34A /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				9A6B900C24A4B1F2002FE34A /* Radio.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		9A6B900E24A4B1F2002FE34A /* Radio */ = {
+			isa = PBXGroup;
+			children = (
+				9A674D8924A766C700C35732 /* Custom Views */,
+				9AAE46A124A75BFA005879AB /* Protocol */,
+				9A6B903224A64446002FE34A /* Data Source */,
+				9A6B902524A4E040002FE34A /* Entities */,
+				9A6B903024A6425D002FE34A /* Modules */,
+				9A6B903124A6426E002FE34A /* Supporting Files */,
+				9A6B901524A4B1F2002FE34A /* Main.storyboard */,
+				9A6B901824A4B1F4002FE34A /* Assets.xcassets */,
+				9A6B901D24A4B1F4002FE34A /* Info.plist */,
+				9A6B903724A64478002FE34A /* Constant.swift */,
+			);
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		9A6B902524A4E040002FE34A /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				9A6B902A24A62B90002FE34A /* Country.swift */,
+				9A6B902C24A62C19002FE34A /* Genre.swift */,
+				9A6B902E24A62E50002FE34A /* Radio.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
+		9A6B903024A6425D002FE34A /* Modules */ = {
+			isa = PBXGroup;
+			children = (
+				9AAE469424A754E8005879AB /* RadioList */,
+				9AAE46A424A75D53005879AB /* CustomView */,
+			);
+			path = Modules;
+			sourceTree = "<group>";
+		};
+		9A6B903124A6426E002FE34A /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */,
+				9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */,
+				9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */,
+			);
+			path = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		9A6B903224A64446002FE34A /* Data Source */ = {
+			isa = PBXGroup;
+			children = (
+				9A3850CA24A7920000EB0958 /* API */,
+			);
+			path = "Data Source";
+			sourceTree = "<group>";
+		};
+		9AAE469424A754E8005879AB /* RadioList */ = {
+			isa = PBXGroup;
+			children = (
+				9AAE469524A754FD005879AB /* RadioListContract.swift */,
+				9AAE469624A754FD005879AB /* RadioListPresenter.swift */,
+				9AAE469724A754FD005879AB /* RadioListRouter.swift */,
+				9AAE469824A754FD005879AB /* RadioListViewController.swift */,
+				9AAE469924A754FD005879AB /* RadioListInteractor.swift */,
+			);
+			path = RadioList;
+			sourceTree = "<group>";
+		};
+		9AAE46A124A75BFA005879AB /* Protocol */ = {
+			isa = PBXGroup;
+			children = (
+				9AAE46A224A75C08005879AB /* PresenterProtocol.swift */,
+			);
+			path = Protocol;
+			sourceTree = "<group>";
+		};
+		9AAE46A424A75D53005879AB /* CustomView */ = {
+			isa = PBXGroup;
+			children = (
+				9AAE469F24A756D7005879AB /* RadioListTableViewCell.swift */,
+			);
+			path = CustomView;
+			sourceTree = "<group>";
+		};
+		A985C6923ED7EF194537607F /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */,
+				BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */,
+			);
+			path = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		9A6B900B24A4B1F2002FE34A /* Radio */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 9A6B902024A4B1F4002FE34A /* Build configuration list for PBXNativeTarget "Radio" */;
+			buildPhases = (
+				13DFD225EFBFFAC0A7A92DFB /* [CP] Check Pods Manifest.lock */,
+				9A6B900824A4B1F2002FE34A /* Sources */,
+				9A6B900924A4B1F2002FE34A /* Frameworks */,
+				9A6B900A24A4B1F2002FE34A /* Resources */,
+				900058613B10C35E2D03A2EE /* [CP] Embed Pods Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Radio;
+			productName = Radio;
+			productReference = 9A6B900C24A4B1F2002FE34A /* Radio.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		9A6B900424A4B1F2002FE34A /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 1140;
+				LastUpgradeCheck = 1140;
+				ORGANIZATIONNAME = Alisher;
+				TargetAttributes = {
+					9A6B900B24A4B1F2002FE34A = {
+						CreatedOnToolsVersion = 11.4.1;
+					};
+				};
+			};
+			buildConfigurationList = 9A6B900724A4B1F2002FE34A /* Build configuration list for PBXProject "Radio" */;
+			compatibilityVersion = "Xcode 9.3";
+			developmentRegion = en;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 9A6B900324A4B1F2002FE34A;
+			productRefGroup = 9A6B900D24A4B1F2002FE34A /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				9A6B900B24A4B1F2002FE34A /* Radio */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		9A6B900A24A4B1F2002FE34A /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A74E21C24A7E50A0059E48B /* RadioInfoView.xib in Resources */,
+				9A6B901C24A4B1F4002FE34A /* LaunchScreen.storyboard in Resources */,
+				9A6B901924A4B1F4002FE34A /* Assets.xcassets in Resources */,
+				9A6B901724A4B1F2002FE34A /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		13DFD225EFBFFAC0A7A92DFB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Radio-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		900058613B10C35E2D03A2EE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Radio/Pods-Radio-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Radio/Pods-Radio-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Radio/Pods-Radio-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		9A6B900824A4B1F2002FE34A /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				9A6B901024A4B1F2002FE34A /* AppDelegate.swift in Sources */,
+				9A6B901224A4B1F2002FE34A /* SceneDelegate.swift in Sources */,
+				9AAE46A324A75C08005879AB /* PresenterProtocol.swift in Sources */,
+				9A6B903624A6446C002FE34A /* CountryAPI.swift in Sources */,
+				9A6B903424A64459002FE34A /* RadioAPI.swift in Sources */,
+				9A6B902424A4DBD6002FE34A /* TestAPIViewController.swift in Sources */,
+				9A6B902B24A62B90002FE34A /* Country.swift in Sources */,
+				9A6B902F24A62E50002FE34A /* Radio.swift in Sources */,
+				9AAE469A24A754FD005879AB /* RadioListContract.swift in Sources */,
+				9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */,
+				9AAE469C24A754FD005879AB /* RadioListRouter.swift in Sources */,
+				9AAE46A024A756D7005879AB /* RadioListTableViewCell.swift in Sources */,
+				9A74E21E24A7E6800059E48B /* RadioInfoView.swift in Sources */,
+				9A6B903A24A64EB9002FE34A /* GenreAPI.swift in Sources */,
+				9AAE469E24A754FD005879AB /* RadioListInteractor.swift in Sources */,
+				9AAE469B24A754FD005879AB /* RadioListPresenter.swift in Sources */,
+				9AAE469D24A754FD005879AB /* RadioListViewController.swift in Sources */,
+				9A6B903824A64478002FE34A /* Constant.swift in Sources */,
+				9A6B902924A6291A002FE34A /* BaseViewController.swift in Sources */,
+				9A6B902D24A62C19002FE34A /* Genre.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		9A6B901524A4B1F2002FE34A /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A6B901624A4B1F2002FE34A /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A6B901B24A4B1F4002FE34A /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		9A6B901E24A4B1F4002FE34A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
+				MTL_FAST_MATH = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		9A6B901F24A4B1F4002FE34A /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_ENABLE_OBJC_WEAK = YES;
+				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_COMMA = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DEPRECATED_OBJC_IMPLEMENTATIONS = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
+				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
+				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
+				CLANG_WARN_STRICT_PROTOTYPES = YES;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNGUARDED_AVAILABILITY = YES_AGGRESSIVE;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu11;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				MTL_FAST_MATH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OPTIMIZATION_LEVEL = "-O";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		9A6B902124A4B1F4002FE34A /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FNS9H7J227;
+				INFOPLIST_FILE = Radio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alture.Radio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Debug;
+		};
+		9A6B902224A4B1F4002FE34A /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_STYLE = Automatic;
+				DEVELOPMENT_TEAM = FNS9H7J227;
+				INFOPLIST_FILE = Radio/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+				);
+				PRODUCT_BUNDLE_IDENTIFIER = com.alture.Radio;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		9A6B900724A4B1F2002FE34A /* Build configuration list for PBXProject "Radio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A6B901E24A4B1F4002FE34A /* Debug */,
+				9A6B901F24A4B1F4002FE34A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		9A6B902024A4B1F4002FE34A /* Build configuration list for PBXNativeTarget "Radio" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				9A6B902124A4B1F4002FE34A /* Debug */,
+				9A6B902224A4B1F4002FE34A /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 9A6B900424A4B1F2002FE34A /* Project object */;
+}
