@@ -13,16 +13,48 @@ final class RadioListInteractor {
   weak var output: RadioListInteractorOutput?
 }
 
-extension RadioListInteractor: RadioListUseCase {  
-  func fetchData() {
-    RadioAPI.getRadios { (response, error) in
+extension RadioListInteractor: RadioListUseCase {
+  func fetchData(of type: RadioListType) {
+    switch type {
+    case .all:
+      RadioAPI.getRadios { (response, error) in
+        if let error = error {
+          self.output?.handleError(error)
+          return
+        }
+        
+        if let radios = Radio.getArray(from: response ?? []) {
+          self.output?.fetchedData(radios)
+        }
+      }
+    case .favorite:
+      RadioAPI.getFavoriteRadios { (response, error) in
+        if let error = error {
+          self.output?.handleError(error)
+          return
+        }
+        
+        if let radios = Radio.getArray(from: response ?? []) {
+          self.output?.fetchedData(radios)
+        }
+      }
+    }
+  }
+  
+  func addData(id: Int) {
+    RadioAPI.addToFavorite(id) { (error) in
       if let error = error {
         self.output?.handleError(error)
         return
       }
-      
-      if let radios = Radio.getArray(from: response ?? []) {
-        self.output?.fetchedData(radios)
+    }
+  }
+  
+  func removeData(id: Int) {
+    RadioAPI.removeFromFavorite(id) { (error) in
+      if let error = error {
+        self.output?.handleError(error)
+        return
       }
     }
   }

@@ -16,13 +16,33 @@ final class RadioListPresenter {
 }
 
 extension RadioListPresenter: RadioListPresentation {
+  func didTapShowFilterView() {
+    router?.showFilterView()
+  }
+  
   func getRadioList() {
-    interactor?.fetchData()
+    interactor?.fetchData(of: .all)
+  }
+  
+  func getFavoriteRadioList() {
+    interactor?.fetchData(of: .favorite)
+  }
+  
+  func addToFavorite(_ id: Int) {
+    interactor?.addData(id: id)
+  }
+  
+  func removeFromFavorite(_ id: Int) {
+    interactor?.removeData(id: id)
   }
 }
 
 extension RadioListPresenter: RadioListInteractorOutput {  
   func fetchedData(_ data: [Radio]) {
-    view?.updateViewFromModel(data)
+    let availableRadios = data.filter { (radio) -> Bool in
+      return radio.enabled ?? false
+    }
+    
+    view?.updateViewFromModel(availableRadios)
   }
 }

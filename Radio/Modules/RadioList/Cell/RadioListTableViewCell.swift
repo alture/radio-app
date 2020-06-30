@@ -18,14 +18,15 @@ final class RadioListTableViewCell: UITableViewCell {
   
   var isPlaying: Bool = false {
     didSet {
-      logoImage.isHidden = !isPlaying
+      isPlayingImage.isHidden = !isPlaying
     }
   }
   
   @IBOutlet weak var logoImage: UIImageView!
   @IBOutlet weak var radioTitleLabel: UILabel!
   @IBOutlet weak var isPlayingImage: UIImageView!
-    
+  @IBOutlet weak var isFavoriteImage: UIImageView!
+  
   private func setupView() {
     guard let radio = radio
     else {
@@ -34,13 +35,16 @@ final class RadioListTableViewCell: UITableViewCell {
     
     if
       let logoString = radio.logo,
-      let logoURL = URL(string: logoString),
-      let data = try? Data(contentsOf: logoURL) {
-      logoImage.image = UIImage(data: data)
+      let logoURL = URL(string: logoString) {
+      logoImage.load(url: logoURL)
     } else {
       // TODO: Default Logo
     }
     
     radioTitleLabel.text = radio.name ?? "Station"
+    if let radioRate = radio.rate {
+      print("Name: \(radio.name!) rate: \(radioRate)")
+      isFavoriteImage.isHidden = radioRate == 0
+    }
   }
 }

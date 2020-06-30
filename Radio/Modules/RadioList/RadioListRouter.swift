@@ -39,5 +39,8 @@ final class RadioListRouter {
 }
 
 extension RadioListRouter: RadioListWireframe {
-  // TODO: Implement wireframe methods
+  func showFilterView() {
+    let vc = RadioFilterRouter.setupModule()
+    view?.present(vc, animated: true, completion: nil)
+  }
 }

@@ -12,10 +12,16 @@ protocol RadioListView: class {
 
 protocol RadioListPresentation: class {
   func getRadioList()
+  func getFavoriteRadioList()
+  func addToFavorite(_ id: Int)
+  func removeFromFavorite(_ id: Int)
+  func didTapShowFilterView()
 }
 
 protocol RadioListUseCase: class {
-  func fetchData()
+  func fetchData(of type: RadioListType)
+  func addData(id: Int)
+  func removeData(id: Int)
 }
 
 protocol RadioListInteractorOutput: InteractorOutputProtocol {
@@ -23,5 +29,5 @@ protocol RadioListInteractorOutput: InteractorOutputProtocol {
 }
 
 protocol RadioListWireframe: class {
-  // TODO: Declare wireframe methods
+  func showFilterView()
 }

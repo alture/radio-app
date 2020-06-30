@@ -38,6 +38,8 @@ class RadioTabBarViewController: UITabBarController {
     setupView()
     configureNotificationCenter()
     setupMediaPlayer()
+    
+    tabBar.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
   }
   
   private func setupView() {
@@ -47,15 +49,26 @@ class RadioTabBarViewController: UITabBarController {
   
   private func configureViews() {
     let radioListVC = RadioListRouter.setupModule()
-    radioListVC.tabBarItem = UITabBarItem(title: "Мои станций",
-                                                image: UIImage(systemName: "dot.radiowaves.left.and.right"),
-                                                tag: 0)
+    radioListVC.type = .favorite
+    radioListVC.tabBarItem = UITabBarItem(title: "Избранное",
+                                          image: UIImage(systemName: "star.fill"),
+                                          tag: 0)
     
-    let searchVC = UIViewController()
-    searchVC.tabBarItem = UITabBarItem(tabBarSystemItem: .search, tag: 1)
+    let searchVC = RadioListRouter.setupModule()
+    searchVC.type = .all
+    searchVC.tabBarItem = UITabBarItem(title: "Станций",
+                                       image: UIImage(systemName: "dot.radiowaves.left.and.right"),
+                                       tag: 1)
+    
+    let settingVC = UIViewController()
+    settingVC.tabBarItem = UITabBarItem(title: "Настройки",
+                                        image: UIImage(systemName: "gear"),
+                                        tag: 2)
+
     viewControllers = [
       UINavigationController(rootViewController: radioListVC),
-      UINavigationController(rootViewController: searchVC)
+      UINavigationController(rootViewController: searchVC),
+      UINavigationController(rootViewController: settingVC)
     ]
     
     self.view.insertSubview(radioInfoView, aboveSubview: tabBar)
@@ -136,8 +149,11 @@ class RadioTabBarViewController: UITabBarController {
     player.pause()
   }
   
-  func prepareToPlay(with url: String) {
-    guard let audioFileURL = URL(string: url) else {
+  func prepareToPlay(with radio: Radio) {
+    guard
+      let url = radio.url,
+      let audioFileURL = URL(string: url)
+    else {
       if let parentVC = parent?.children[0] as? BaseViewController {
         parentVC.showErrorAlert(with: "Неверный поток")
       }
@@ -154,8 +170,13 @@ class RadioTabBarViewController: UITabBarController {
     
     playerItem = AVPlayerItem(asset: asset)
     playerItem.add(metadataOutput)
-    
     player.replaceCurrentItem(with: playerItem)
+    radioInfoView.titleLabel.text = radio.name
+    if
+      let radioLogoString = radio.logo,
+      let radioLogoURL = URL(string: radioLogoString) {
+      radioInfoView.logoImageView.load(url: radioLogoURL)
+    }
   }
 }
 

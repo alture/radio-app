@@ -20,37 +20,45 @@
             <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJd-No-rsO">
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="fde-Oh-HQy"/>
+                    </constraints>
+                </view>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOr-LP-GKZ">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                    <rect key="frame" x="0.0" y="1" width="414" height="58"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ftn-sc-mxP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="60"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="bBM-1n-fYR">
-                                <rect key="frame" x="20" y="0.0" width="374" height="60"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="58"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="okf-OD-xP5">
-                                        <rect key="frame" x="0.0" y="10" width="40" height="40"/>
+                                        <rect key="frame" x="0.0" y="9" width="40" height="40"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="1vi-f2-slg"/>
                                             <constraint firstAttribute="width" constant="40" id="M6F-w0-mys"/>
                                         </constraints>
                                     </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lost-Heaven FM" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxF-va-MaB">
-                                        <rect key="frame" x="66" y="20" width="247" height="20.5"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не воспроизводится" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxF-va-MaB">
+                                        <rect key="frame" x="66" y="19" width="247" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-ea-9Yn">
-                                        <rect key="frame" x="339" y="12.5" width="35" height="35"/>
+                                        <rect key="frame" x="339" y="11.5" width="35" height="35"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="35" id="LyS-50-q0t"/>
                                             <constraint firstAttribute="height" constant="35" id="P1Q-Se-U0e"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" type="system" pointSize="20"/>
-                                        <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <color key="tintColor" red="1" green="0.34509803919999998" blue="0.31372549020000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" image="play.fill" catalog="system">
+                                            <color key="titleColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                             <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="large"/>
                                         </state>
                                         <connections>
@@ -70,13 +78,26 @@
                     </view>
                     <blurEffect style="regular"/>
                 </visualEffectView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="x7h-EP-MPn">
+                    <rect key="frame" x="0.0" y="59" width="414" height="1"/>
+                    <color key="backgroundColor" red="0.66422420739999999" green="0.66424006219999998" blue="0.66423153879999997" alpha="0.29999999999999999" colorSpace="custom" customColorSpace="sRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="1" id="GiD-U1-Tux"/>
+                    </constraints>
+                </view>
             </subviews>
             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
             <constraints>
                 <constraint firstItem="qOr-LP-GKZ" firstAttribute="leading" secondItem="vUN-kp-3ea" secondAttribute="leading" id="2y9-lP-BT3"/>
-                <constraint firstItem="qOr-LP-GKZ" firstAttribute="bottom" secondItem="vUN-kp-3ea" secondAttribute="bottom" id="Iw7-Ux-sJ0"/>
-                <constraint firstItem="qOr-LP-GKZ" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="lIS-Zl-b5B"/>
+                <constraint firstItem="vUN-kp-3ea" firstAttribute="bottom" secondItem="x7h-EP-MPn" secondAttribute="bottom" id="47F-R4-woR"/>
+                <constraint firstItem="fJd-No-rsO" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="G2b-rt-L9O"/>
+                <constraint firstItem="qOr-LP-GKZ" firstAttribute="top" secondItem="fJd-No-rsO" secondAttribute="bottom" id="Jwr-cS-CcY"/>
+                <constraint firstAttribute="trailing" secondItem="fJd-No-rsO" secondAttribute="trailing" id="NZW-Zd-mP8"/>
+                <constraint firstItem="x7h-EP-MPn" firstAttribute="leading" secondItem="iN0-l3-epB" secondAttribute="leading" id="sgc-Tl-q3T"/>
+                <constraint firstAttribute="trailing" secondItem="x7h-EP-MPn" secondAttribute="trailing" id="uqw-cg-wBe"/>
                 <constraint firstItem="qOr-LP-GKZ" firstAttribute="trailing" secondItem="vUN-kp-3ea" secondAttribute="trailing" id="uvc-NS-X8s"/>
+                <constraint firstItem="x7h-EP-MPn" firstAttribute="top" secondItem="qOr-LP-GKZ" secondAttribute="bottom" id="zfE-qp-smt"/>
+                <constraint firstItem="fJd-No-rsO" firstAttribute="top" secondItem="iN0-l3-epB" secondAttribute="top" id="zfN-I5-8QU"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>
