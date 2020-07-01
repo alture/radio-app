@@ -25,10 +25,10 @@ class Radio: Mappable {
   
   func mapping(map: Map) {
     country <- map["country"]
-    countryID <- map["countryID"]
+    countryID <- map["country_id"]
     enabled <- map["enabled"]
     genre <- map["genre"]
-    genreID <- map["genreID"]
+    genreID <- map["genre_id"]
     id <- map["id"]
     logo <- map["logo"]
     name <- map["name"]

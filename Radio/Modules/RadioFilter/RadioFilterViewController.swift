@@ -8,12 +8,16 @@
 
 import UIKit
 
+protocol RadioFilterViewControllerDelegate {
+  func didTapShowWithFilter(filter values: FilteredValues)
+}
+
 final class RadioFilterViewController: BaseViewController {
   
   // MARK: Properties
   
-  var closure: ((_ selectedGenries: [String], _ selectedCountries: [String]) -> Void)?
   var selectedIndexes: (genre: [Int], country: [Int]) = ([0], [0])
+  var delegate: RadioFilterViewControllerDelegate?
   
   var presenter: RadioFilterPresentation?
   private var genries: [Genre] = []
@@ -36,6 +40,25 @@ final class RadioFilterViewController: BaseViewController {
     
     presenter?.viewDidLoad()
     setupView()
+  }
+  
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(true)
+    
+    var filteredValues: FilteredValues = ([], [])
+    tableView.indexPathsForSelectedRows?.forEach({ (indexPath) in
+      if indexPath.row == 0 {
+        return
+      }
+      
+      if indexPath.section == 0 {
+        filteredValues.genriesID.append(genries[indexPath.row].id ?? 0)
+      } else {
+        filteredValues.countriesID.append(countries[indexPath.row].id ?? 0)
+      }
+    })
+    
+    delegate?.didTapShowWithFilter(filter: filteredValues)
   }
   
   private func setupView() {
@@ -72,7 +95,7 @@ extension RadioFilterViewController: RadioFilterView {
                           animated: false,
                           scrollPosition: .none)
     }
-    
+
     selectedIndexes.country.forEach { (index) in
       tableView.selectRow(at: IndexPath(row: index, section: 1),
       animated: false,
@@ -115,9 +138,25 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row != 0 {
+    if indexPath.row == 0 {
+      tableView.deselectAll()
+    } else {
       tableView.deselectRow(at: IndexPath(row: 0, section: indexPath.section), animated: true)
     }
   }
   
+}
+
+extension UITableView {
+  func deselectAll() {
+    guard let indexPathsForSelectedRows = indexPathsForSelectedRows else {
+      return
+    }
+    
+    for indexPath in indexPathsForSelectedRows {
+      if indexPath.row != 0 {
+        deselectRow(at: indexPath, animated: false)
+      }
+    }
+  }
 }

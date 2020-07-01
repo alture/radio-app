@@ -41,6 +41,7 @@ final class RadioListRouter {
 extension RadioListRouter: RadioListWireframe {
   func showFilterView() {
     let vc = RadioFilterRouter.setupModule()
+    vc.delegate = view as? RadioFilterViewControllerDelegate
     view?.present(vc, animated: true, completion: nil)
   }
 }

@@ -22,10 +22,24 @@ final class RadioListTableViewCell: UITableViewCell {
     }
   }
   
+  var isFavorite: Bool = false {
+    didSet {
+      let imageName = isFavorite ? "star.fill" : "star"
+      isFavoriteImage.image = UIImage(systemName: imageName)
+    }
+  }
+  
+  var didTapFavoriteButton: (() -> Void)?
+  
   @IBOutlet weak var logoImage: UIImageView!
   @IBOutlet weak var radioTitleLabel: UILabel!
   @IBOutlet weak var isPlayingImage: UIImageView!
-  @IBOutlet weak var isFavoriteImage: UIImageView!
+  @IBOutlet weak var isFavoriteImage: UIImageView! {
+    didSet {
+      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapFavoriteImage(_:)))
+      isFavoriteImage.addGestureRecognizer(tap)
+    }
+  }
   
   private func setupView() {
     guard let radio = radio
@@ -43,8 +57,14 @@ final class RadioListTableViewCell: UITableViewCell {
     
     radioTitleLabel.text = radio.name ?? "Station"
     if let radioRate = radio.rate {
-      print("Name: \(radio.name!) rate: \(radioRate)")
-      isFavoriteImage.isHidden = radioRate == 0
+      isFavorite = radioRate > 0
+    }
+  }
+  
+  @objc private func didTapFavoriteImage(_ sender: UITapGestureRecognizer) {
+    if sender.state == .ended {
+      isFavorite = !isFavorite
+      didTapFavoriteButton?()
     }
   }
 }

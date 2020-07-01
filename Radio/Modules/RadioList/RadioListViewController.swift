@@ -13,22 +13,63 @@ enum RadioListType {
   case favorite
 }
 
+typealias FilteredValues = (genriesID: [Int], countriesID: [Int])
+
 final class RadioListViewController: BaseViewController {
   
   // MARK: Properties
   
   var presenter: RadioListPresentation?
-  var radioList: [Radio] = []
+  var radioList: [Radio] = [] 
   
   var selectedIndexPath: IndexPath?
   var type: RadioListType = .favorite
   
   // MARK: - Search & Filter Properties
-  var filteredRadioList: [Radio] = []
-  var filterValues: (genre: String?, country: String?) = (nil, nil)
+  var searchingRadioName: String?
+  var filteredRadioList: [Radio] {
+    return radioList.filter { (radio: Radio) -> Bool in
+      guard
+        let radioName = radio.name,
+        let searchText = self.searchingRadioName
+      else {
+        return false
+      }
+    
+      return radioName.lowercased().contains(searchText.lowercased())
+    }
+  }
+  
+  var filterValues: FilteredValues? {
+    didSet {
+      guard let filteredValues = filterValues else {
+        return
+      }
+      
+      radioList = radioList.filter({ (radio) -> Bool in
+        if let genreID = radio.genreID {
+          return filteredValues.genriesID.isEmpty
+            ? true
+            : filteredValues.genriesID.contains(genreID)
+        }
+        
+        if let countryID = radio.countryID {
+          return filteredValues.genriesID.isEmpty
+            ? true
+            : filteredValues.countriesID.contains(countryID)
+        }
+        
+        return true
+      })
+      
+      tableView.reloadData()
+    }
+  }
+  
   var isFiltering: Bool {
     return navigationItem.searchController?.isActive ?? false && !isSearchBarEmpty
   }
+  
   var isSearchBarEmpty: Bool {
     return navigationItem.searchController?.searchBar.text?.isEmpty ?? true
   }
@@ -92,18 +133,6 @@ final class RadioListViewController: BaseViewController {
     definesPresentationContext = true
   }
   
-  func filterContentForSearchText(_ searchText: String) {
-    filteredRadioList = radioList.filter { (radio: Radio) -> Bool in
-      guard let radioName = radio.name else {
-        return false
-      }
-      
-      return radioName.lowercased().contains(searchText.lowercased())
-    }
-    
-    tableView.reloadData()
-  }
-  
   @objc private func didTapAddButton() {
     
   }
@@ -145,6 +174,22 @@ extension RadioListViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     cell.isPlaying = selectedIndexPath == indexPath
+    cell.didTapFavoriteButton = {
+      let id = self.isFiltering
+        ? self.filteredRadioList[indexPath.row].id ?? 0
+        : self.radioList[indexPath.row].id ?? 0
+      if cell.isFavorite {
+        self.presenter?.addToFavorite(id)
+      } else {
+        self.presenter?.removeFromFavorite(id)
+        
+        if self.type == .favorite {
+          self.radioList.remove(at: indexPath.row)
+          tableView.deleteRows(at: [indexPath], with: .fade)
+        }
+      }
+    }
+    
     return cell
   }
   
@@ -215,7 +260,14 @@ extension RadioListViewController: UITableViewDataSource, UITableViewDelegate {
 extension RadioListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
     let searchBar = searchController.searchBar
-    filterContentForSearchText(searchBar.text ?? "")
+    searchingRadioName = searchBar.text
+    tableView.reloadData()
+  }
+}
+
+extension RadioListViewController: RadioFilterViewControllerDelegate {
+  func didTapShowWithFilter(filter values: FilteredValues) {
+    filterValues = values
   }
 }
 
