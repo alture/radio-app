@@ -151,6 +151,11 @@
                                                                 <constraint firstAttribute="height" constant="50" id="tgv-tG-kWn"/>
                                                                 <constraint firstAttribute="width" constant="50" id="xde-wP-aRV"/>
                                                             </constraints>
+                                                            <userDefinedRuntimeAttributes>
+                                                                <userDefinedRuntimeAttribute type="number" keyPath="layer.cornerRadius">
+                                                                    <integer key="value" value="5"/>
+                                                                </userDefinedRuntimeAttribute>
+                                                            </userDefinedRuntimeAttributes>
                                                         </view>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Lost-Heaven FM" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WoL-Ne-8Fk">
                                                             <rect key="frame" x="66" y="20" width="262" height="20.5"/>
@@ -158,8 +163,8 @@
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="BwI-k8-sUt" userLabel="isFavorite">
-                                                            <rect key="frame" x="344" y="15" width="30" height="30"/>
+                                                        <imageView clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="ellipsis" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="BwI-k8-sUt" userLabel="more">
+                                                            <rect key="frame" x="344" y="22" width="30" height="15.5"/>
                                                             <color key="tintColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" constant="30" id="sHs-HM-bAL"/>
@@ -177,9 +182,9 @@
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <outlet property="isFavoriteImage" destination="BwI-k8-sUt" id="Rbo-Mx-jbA"/>
                                             <outlet property="isPlayingImage" destination="zNk-ED-yPJ" id="hQQ-D4-Qlr"/>
                                             <outlet property="logoImage" destination="HJp-cn-I4E" id="ycc-fh-YbY"/>
+                                            <outlet property="moreButton" destination="BwI-k8-sUt" id="vjo-ab-7Ho"/>
                                             <outlet property="radioTitleLabel" destination="WoL-Ne-8Fk" id="vlp-bH-8ir"/>
                                         </connections>
                                     </tableViewCell>
@@ -233,8 +238,8 @@
         </scene>
     </scenes>
     <resources>
+        <image name="ellipsis" catalog="system" width="128" height="37"/>
         <image name="logo" width="1200" height="782"/>
         <image name="radiowaves.left" catalog="system" width="90" height="128"/>
-        <image name="star" catalog="system" width="128" height="116"/>
     </resources>
 </document>

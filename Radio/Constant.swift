@@ -11,7 +11,7 @@ import Alamofire
 
 let baseURL = "https://panel.radio.rvision.tv/api/v1"
 let headers: HTTPHeaders = [
-    "X-RADIO-CLIENT-ID": "adcb64ee-b6e5-11ea-b3de-0242ac130004",
+  "X-RADIO-CLIENT-ID": "adcb64ee-b6e5-11ea-b3de-0242ac130004-\(Locale.current)" ,
 ]
 
 typealias ResponseHandler = ([[String: Any]]?, Error?) -> Void

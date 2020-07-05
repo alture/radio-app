@@ -9,14 +9,18 @@
 import Foundation
 import ObjectMapper
 
-class Radio: Mappable {
+class Radio: Mappable, Equatable {
+  static func == (lhs: Radio, rhs: Radio) -> Bool {
+    return lhs.id == rhs.id
+  }
+  
   var country: String?
   var countryID: Int?
   var enabled: Bool?
   var genre: String?
   var genreID: Int?
   var id: Int?
-  var logo: String?
+  var logo: String?  
   var name: String?
   var rate: Int?
   var url: String?

@@ -17,6 +17,7 @@ final class RadioListPresenter {
 
 extension RadioListPresenter: RadioListPresentation {
   func didTapShowFilterView() {
+//    interactor?.fetchData(of: .all)
     router?.showFilterView()
   }
   

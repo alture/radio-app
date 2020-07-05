@@ -25,6 +25,8 @@ class RadioTabBarViewController: UITabBarController {
     }
   }
   
+  var currentRadio: Radio?
+  
   private lazy var radioInfoView: RadioInfoView = {
     let view = RadioInfoView()
     view.delegate = self
@@ -149,8 +151,9 @@ class RadioTabBarViewController: UITabBarController {
     player.pause()
   }
   
-  func prepareToPlay(with radio: Radio) {
+  func prepareToPlay() {
     guard
+      let radio = currentRadio,
       let url = radio.url,
       let audioFileURL = URL(string: url)
     else {

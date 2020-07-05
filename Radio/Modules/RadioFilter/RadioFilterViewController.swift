@@ -52,9 +52,9 @@ final class RadioFilterViewController: BaseViewController {
       }
       
       if indexPath.section == 0 {
-        filteredValues.genriesID.append(genries[indexPath.row].id ?? 0)
+        filteredValues.genriesID.append(genries[indexPath.row-1].id ?? 0)
       } else {
-        filteredValues.countriesID.append(countries[indexPath.row].id ?? 0)
+        filteredValues.countriesID.append(countries[indexPath.row-1].id ?? 0)
       }
     })
     

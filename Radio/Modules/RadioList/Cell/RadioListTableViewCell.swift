@@ -22,22 +22,19 @@ final class RadioListTableViewCell: UITableViewCell {
     }
   }
   
-  var isFavorite: Bool = false {
-    didSet {
-      let imageName = isFavorite ? "star.fill" : "star"
-      isFavoriteImage.image = UIImage(systemName: imageName)
-    }
-  }
-  
-  var didTapFavoriteButton: (() -> Void)?
+  var didTapMoreButton: ((_ radio: Radio) -> Void)?
   
   @IBOutlet weak var logoImage: UIImageView!
   @IBOutlet weak var radioTitleLabel: UILabel!
-  @IBOutlet weak var isPlayingImage: UIImageView!
-  @IBOutlet weak var isFavoriteImage: UIImageView! {
+  @IBOutlet weak var isPlayingImage: UIImageView! {
+    didSet {
+      isPlayingImage.layer.cornerRadius = 5.0
+    }
+  }
+  @IBOutlet weak var moreButton: UIImageView! {
     didSet {
       let tap = UITapGestureRecognizer(target: self, action: #selector(didTapFavoriteImage(_:)))
-      isFavoriteImage.addGestureRecognizer(tap)
+      moreButton.addGestureRecognizer(tap)
     }
   }
   
@@ -52,19 +49,19 @@ final class RadioListTableViewCell: UITableViewCell {
       let logoURL = URL(string: logoString) {
       logoImage.load(url: logoURL)
     } else {
-      // TODO: Default Logo
+      // TODO: Default App Image
     }
     
     radioTitleLabel.text = radio.name ?? "Station"
-    if let radioRate = radio.rate {
-      isFavorite = radioRate > 0
-    }
   }
   
   @objc private func didTapFavoriteImage(_ sender: UITapGestureRecognizer) {
     if sender.state == .ended {
-      isFavorite = !isFavorite
-      didTapFavoriteButton?()
+      guard let radio = radio else {
+        return
+      }
+      
+      didTapMoreButton?(radio)
     }
   }
 }

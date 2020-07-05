@@ -20,54 +20,19 @@ final class RadioListViewController: BaseViewController {
   // MARK: Properties
   
   var presenter: RadioListPresentation?
-  var radioList: [Radio] = [] 
-  
-  var selectedIndexPath: IndexPath?
+  var allRadioList: [Radio] = []
+  var radioList: [Radio] = []
   var type: RadioListType = .favorite
   
   // MARK: - Search & Filter Properties
-  var searchingRadioName: String?
-  var filteredRadioList: [Radio] {
-    return radioList.filter { (radio: Radio) -> Bool in
-      guard
-        let radioName = radio.name,
-        let searchText = self.searchingRadioName
-      else {
-        return false
-      }
-    
-      return radioName.lowercased().contains(searchText.lowercased())
-    }
-  }
-  
-  var filterValues: FilteredValues? {
-    didSet {
-      guard let filteredValues = filterValues else {
-        return
-      }
-      
-      radioList = radioList.filter({ (radio) -> Bool in
-        if let genreID = radio.genreID {
-          return filteredValues.genriesID.isEmpty
-            ? true
-            : filteredValues.genriesID.contains(genreID)
-        }
-        
-        if let countryID = radio.countryID {
-          return filteredValues.genriesID.isEmpty
-            ? true
-            : filteredValues.countriesID.contains(countryID)
-        }
-        
-        return true
-      })
-      
-      tableView.reloadData()
-    }
-  }
-  
+  var filteredRadioList: [Radio] = []
+  var filterValues: FilteredValues?
   var isFiltering: Bool {
-    return navigationItem.searchController?.isActive ?? false && !isSearchBarEmpty
+    guard let searchController = navigationItem.searchController else {
+      return false
+    }
+    
+    return searchController.isActive && !isSearchBarEmpty
   }
   
   var isSearchBarEmpty: Bool {
@@ -133,6 +98,39 @@ final class RadioListViewController: BaseViewController {
     definesPresentationContext = true
   }
   
+  private func filterContentForSearchText(_ searchText: String) {
+    filteredRadioList = radioList.filter { (radio: Radio) -> Bool in
+      guard let radioName = radio.name else {
+        return false
+      }
+    
+      return radioName.lowercased().contains(searchText.lowercased())
+    }
+    
+    tableView.reloadData()
+  }
+  
+  private func updateRadioListWithFilter(_ filterValues: FilteredValues) {
+    radioList = allRadioList.filter({ (radio) -> Bool in
+      if let genreID = radio.genreID {
+        print(filterValues.genriesID.isEmpty)
+        if !filterValues.genriesID.isEmpty && !filterValues.genriesID.contains(genreID) {
+          return false
+        }
+      }
+
+      if let countryID = radio.countryID {
+        if !filterValues.countriesID.isEmpty && !filterValues.countriesID.contains(countryID) {
+          return false
+        }
+      }
+
+      return true
+    })
+    
+    tableView.reloadData()
+  }
+  
   @objc private func didTapAddButton() {
     
   }
@@ -140,10 +138,49 @@ final class RadioListViewController: BaseViewController {
   @objc private func didTapFilterButton() {
     presenter?.didTapShowFilterView()
   }
+  
+  private func didTapMoreButton(_ radio: Radio) {
+    let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+    let addAction = UIAlertAction(title: "Добавить в избранное", style: .default) { (_) in
+      if let id = radio.id {
+        self.presenter?.addToFavorite(id)
+      }
+    }
+    
+    let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { (_) in
+      guard let id = radio.id else {
+        return
+      }
+      
+      self.presenter?.removeFromFavorite(id)
+      switch self.type {
+      case .all: break
+      case .favorite:
+        if let index = self.radioList.firstIndex(of: radio) {
+          let indexPath = IndexPath(row: index, section: 0)
+          self.radioList.remove(at: index)
+          self.tableView.deleteRows(at: [indexPath], with: .automatic)
+        }
+      }
+    }
+    
+    switch type {
+    case .all:
+      alertController.addAction(addAction)
+    case .favorite:
+      alertController.addAction(removeAction)
+    }
+    
+    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+    alertController.addAction(cancelAction)
+    present(alertController, animated: true)
+  }
+  
 }
 
 extension RadioListViewController: RadioListView {
   func updateViewFromModel(_ model: [Radio]) {
+    allRadioList = model
     radioList = model
     tableView.reloadData()
   }
@@ -158,116 +195,55 @@ extension RadioListViewController: UITableViewDataSource, UITableViewDelegate {
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    if isFiltering {
-      return filteredRadioList.count
-    } else {
-      return radioList.count
-    }
+    return isFiltering ? filteredRadioList.count : radioList.count
   }
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell") as! RadioListTableViewCell
-    if isFiltering {
-      cell.radio = filteredRadioList[indexPath.row]
-    } else {
-      cell.radio = radioList[indexPath.row]
-    }
-    
-    cell.isPlaying = selectedIndexPath == indexPath
-    cell.didTapFavoriteButton = {
-      let id = self.isFiltering
-        ? self.filteredRadioList[indexPath.row].id ?? 0
-        : self.radioList[indexPath.row].id ?? 0
-      if cell.isFavorite {
-        self.presenter?.addToFavorite(id)
-      } else {
-        self.presenter?.removeFromFavorite(id)
-        
-        if self.type == .favorite {
-          self.radioList.remove(at: indexPath.row)
-          tableView.deleteRows(at: [indexPath], with: .fade)
-        }
-      }
+    let currentRadioList = isFiltering ? filteredRadioList : radioList
+    let radio = currentRadioList[indexPath.row]
+    cell.radio = radio
+    cell.isPlaying = tabBar.currentRadio == radio
+    cell.didTapMoreButton = { radio in
+      self.didTapMoreButton(radio)
     }
     
     return cell
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if selectedIndexPath == indexPath && tabBar.isPlaying {
+    let currentRadioList = isFiltering ? filteredRadioList : radioList
+    let radio = currentRadioList[indexPath.row]
+    if tabBar.currentRadio == radio && tabBar.isPlaying {
       tabBar.pauseStream()
     } else {
-      tabBar.prepareToPlay(with: radioList[indexPath.row])
+      tabBar.currentRadio = radio
+      tabBar.prepareToPlay()
       tabBar.playStream()
     }
     
-    selectedIndexPath = indexPath
     tableView.reloadData()
-  }
-  
-  func tableView(_ tableView: UITableView,
-                 trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    guard type == .favorite else {
-      return nil
-    }
-    
-    let deleteAction = UIContextualAction(style: .destructive, title: "Удалить") { (action, sourceView, completionHandler) in
-      if let id = self.radioList[indexPath.row].id  {
-        self.presenter?.removeFromFavorite(id)
-        self.radioList.remove(at: indexPath.row)
-        self.tableView.deleteRows(at: [indexPath], with: .automatic)
-        completionHandler(true)
-      } else {
-        completionHandler(false)
-      }
-    }
-    
-    deleteAction.backgroundColor = UIColor(red: 231.0/255.0, green: 76.0/255.0, blue: 60.0/255.0, alpha: 1.0)
-    deleteAction.image = UIImage(systemName: "trash.fill")
-    
-    let swipeConfiguration = UISwipeActionsConfiguration(actions: [deleteAction])
-    return swipeConfiguration
-  }
-  
-  func tableView(_ tableView: UITableView,
-                 leadingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
-    guard type == .all else {
-      return nil
-    }
-    
-    let addAction = UIContextualAction(style: .normal, title: "Добавить") { (action, sourceView, completionHandler) in
-      if let id = self.radioList[indexPath.row].id  {
-        self.presenter?.addToFavorite(id)
-        let radioRate = self.radioList[indexPath.row].rate ?? 0
-        self.radioList[indexPath.row].rate = radioRate == 0 ? 1 : 0
-        self.tableView.reloadRows(at: [indexPath], with: .automatic)
-        completionHandler(true)
-      } else {
-        completionHandler(false)
-      }
-    }
-    
-    let checkInIcon = (self.radioList[indexPath.row].rate ?? 0) == 1 ? "arrow.uturn.left" : "checkmark"
-    addAction.backgroundColor = UIColor(red: 38.0/255.0, green: 162.0/255.0, blue: 78.0/255.0, alpha: 1.0)
-    addAction.image = UIImage(systemName: checkInIcon)
-    
-    let swipeConfiguration = UISwipeActionsConfiguration(actions: [addAction])
-    return swipeConfiguration
   }
 
 }
 
 extension RadioListViewController: UISearchResultsUpdating {
   func updateSearchResults(for searchController: UISearchController) {
-    let searchBar = searchController.searchBar
-    searchingRadioName = searchBar.text
-    tableView.reloadData()
+    let searchText = searchController.searchBar.text
+    filterContentForSearchText(searchText!)
   }
 }
 
 extension RadioListViewController: RadioFilterViewControllerDelegate {
   func didTapShowWithFilter(filter values: FilteredValues) {
     filterValues = values
+    var filterCount = 0
+    if !values.countriesID.isEmpty { filterCount += 1 }
+    if !values.genriesID.isEmpty { filterCount += 1 }
+    
+    let barButtonTitle = "Фильтр (\(filterCount))"
+    navigationItem.rightBarButtonItem?.title = filterCount > 0 ? barButtonTitle : "Фильтр"
+    updateRadioListWithFilter(values)
   }
 }
 

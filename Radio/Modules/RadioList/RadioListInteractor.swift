@@ -22,7 +22,6 @@ extension RadioListInteractor: RadioListUseCase {
           self.output?.handleError(error)
           return
         }
-        
         if let radios = Radio.getArray(from: response ?? []) {
           self.output?.fetchedData(radios)
         }
