@@ -26,9 +26,11 @@ final class RadioListTableViewCell: UITableViewCell {
   
   @IBOutlet weak var logoImage: UIImageView!
   @IBOutlet weak var radioTitleLabel: UILabel!
+  @IBOutlet weak var radioInfoLabel: UILabel!
   @IBOutlet weak var isPlayingImage: UIImageView! {
     didSet {
       isPlayingImage.layer.cornerRadius = 5.0
+      isPlayingImage.layer.masksToBounds = true
     }
   }
   @IBOutlet weak var moreButton: UIImageView! {
@@ -44,15 +46,23 @@ final class RadioListTableViewCell: UITableViewCell {
       return
     }
     
-    if
-      let logoString = radio.logo,
-      let logoURL = URL(string: logoString) {
-      logoImage.load(url: logoURL)
+    if let logoString = radio.logo{
+      logoImage.load(logoString)
     } else {
       // TODO: Default App Image
     }
     
-    radioTitleLabel.text = radio.name ?? "Station"
+    radioTitleLabel.text = radio.name ?? "Название"
+    if
+      let genres = radio.genres {
+      let genresNames = genres.map({ $0.name ?? "" })
+      radioInfoLabel.text = "\(radio.country?.name ?? "Страна") • \(genresNames.joined(separator: ", "))"
+    } else {
+      radioInfoLabel.text = "\(radio.country?.name ?? "Страна")"
+    }
+    
+
+
   }
   
   @objc private func didTapFavoriteImage(_ sender: UITapGestureRecognizer) {

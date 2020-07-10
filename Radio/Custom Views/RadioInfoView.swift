@@ -24,7 +24,6 @@ class RadioInfoView: UIView {
     delegate?.didTapPlayButton()
   }
   
-  
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()

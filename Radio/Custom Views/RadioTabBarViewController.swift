@@ -73,6 +73,7 @@ class RadioTabBarViewController: UITabBarController {
       UINavigationController(rootViewController: settingVC)
     ]
     
+//    self.view.addSubview(radioInfoView)
     self.view.insertSubview(radioInfoView, aboveSubview: tabBar)
   }
   
@@ -81,7 +82,7 @@ class RadioTabBarViewController: UITabBarController {
       radioInfoView.heightAnchor.constraint(equalToConstant: 60.0),
       radioInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       radioInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-      radioInfoView.bottomAnchor.constraint(equalTo: tabBar.topAnchor)
+      radioInfoView.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: 1)
     ])
   }
   
@@ -175,10 +176,8 @@ class RadioTabBarViewController: UITabBarController {
     playerItem.add(metadataOutput)
     player.replaceCurrentItem(with: playerItem)
     radioInfoView.titleLabel.text = radio.name
-    if
-      let radioLogoString = radio.logo,
-      let radioLogoURL = URL(string: radioLogoString) {
-      radioInfoView.logoImageView.load(url: radioLogoURL)
+    if let radioLogoString = radio.logo {
+      radioInfoView.logoImageView.load(radioLogoString)
     }
   }
 }

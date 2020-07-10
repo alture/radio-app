@@ -20,23 +20,19 @@ final class RadioListViewController: BaseViewController {
   // MARK: Properties
   
   var presenter: RadioListPresentation?
-  var allRadioList: [Radio] = []
-  var radioList: [Radio] = []
   var type: RadioListType = .favorite
+  private var allRadioList: [Radio] = []
+  private var radioList: [Radio] = []
   
   // MARK: - Search & Filter Properties
-  var filteredRadioList: [Radio] = []
-  var filterValues: FilteredValues?
-  var isFiltering: Bool {
-    guard let searchController = navigationItem.searchController else {
-      return false
-    }
-    
+  private var filteredRadioList: [Radio] = []
+  private var filterValues: FilteredValues?
+  private var isFiltering: Bool {
     return searchController.isActive && !isSearchBarEmpty
   }
   
-  var isSearchBarEmpty: Bool {
-    return navigationItem.searchController?.searchBar.text?.isEmpty ?? true
+  private var isSearchBarEmpty: Bool {
+    return searchController.searchBar.text?.isEmpty ?? true
   }
   
   @IBOutlet weak var tableView: UITableView! {
@@ -49,6 +45,7 @@ final class RadioListViewController: BaseViewController {
     return super.parent!.parent as! RadioTabBarViewController
   }
   
+  private lazy var searchController = UISearchController(searchResultsController: nil)
   // MARK: Lifecycle
   
   override func viewDidLoad() {
@@ -84,13 +81,13 @@ final class RadioListViewController: BaseViewController {
       setupSearchController()
     }
     
+    navigationController?.navigationBar.shadowImage = UIImage()
     navigationController?.navigationBar.prefersLargeTitles = true
     navigationItem.largeTitleDisplayMode = .always
     navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
   }
   
   private func setupSearchController() {
-    let searchController = UISearchController()
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
     searchController.searchBar.placeholder = "Поиск"
@@ -110,29 +107,30 @@ final class RadioListViewController: BaseViewController {
     tableView.reloadData()
   }
   
-  private func updateRadioListWithFilter(_ filterValues: FilteredValues) {
-    radioList = allRadioList.filter({ (radio) -> Bool in
-      if let genreID = radio.genreID {
-        print(filterValues.genriesID.isEmpty)
-        if !filterValues.genriesID.isEmpty && !filterValues.genriesID.contains(genreID) {
-          return false
-        }
-      }
-
-      if let countryID = radio.countryID {
-        if !filterValues.countriesID.isEmpty && !filterValues.countriesID.contains(countryID) {
-          return false
-        }
-      }
-
-      return true
-    })
-    
-    tableView.reloadData()
-  }
+//  private func updateRadioListWithFilter(_ filterValues: FilteredValues) {
+//    radioList = allRadioList.filter({ (radio) -> Bool in
+//      if let genres = radio.genres, !genres.isEmpty {
+//        let listSet = NSSet(array: genres)
+//        let findListSet = NSSet(array: )
+//
+//        let allElemtsEqual = findListSet.isSubsetOfSet(otherSet: listSet)
+//
+//      }
+//
+//      if let countryID = radio.countryID {
+//        if !filterValues.countriesID.isEmpty && !filterValues.countriesID.contains(countryID) {
+//          return false
+//        }
+//      }
+//
+//      return true
+//    })
+//
+//    tableView.reloadData()
+//  }
   
   @objc private func didTapAddButton() {
-    
+    presenter?.addNewRadio()
   }
   
   @objc private func didTapFilterButton() {
@@ -140,18 +138,17 @@ final class RadioListViewController: BaseViewController {
   }
   
   private func didTapMoreButton(_ radio: Radio) {
+    guard let id = radio.id else {
+      return
+    }
+    
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     let addAction = UIAlertAction(title: "Добавить в избранное", style: .default) { (_) in
-      if let id = radio.id {
-        self.presenter?.addToFavorite(id)
-      }
+      self.presenter?.addToFavorite(id)
+      self.showResultView(with: .sucess(text: "\(radio.name ?? "Cтанция") - теперь в избранном!"))
     }
     
     let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { (_) in
-      guard let id = radio.id else {
-        return
-      }
-      
       self.presenter?.removeFromFavorite(id)
       switch self.type {
       case .all: break
@@ -163,6 +160,12 @@ final class RadioListViewController: BaseViewController {
         }
       }
     }
+    
+    let shareAction = UIAlertAction(title: "Поделится", style: .default) { (_) in
+      // TODO: - Implement Share
+    }
+    
+    alertController.addAction(shareAction)
     
     switch type {
     case .all:
@@ -235,6 +238,27 @@ extension RadioListViewController: UISearchResultsUpdating {
 }
 
 extension RadioListViewController: RadioFilterViewControllerDelegate {
+  func didTapAppendFilters(_ genres: [Genre], _ countries: [Country]) {
+    tableView.beginUpdates()
+    radioList = allRadioList.filter({ (radio) -> Bool in
+      if let radioGenres = radio.genres, !genres.isEmpty {
+        for genre in radioGenres {
+          if !genres.contains(genre) {
+            return false
+          }
+        }
+      }
+
+      guard let country = radio.country else {
+        return true
+      }
+      
+      return countries.isEmpty ? true : countries.contains(country)
+    })
+    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    tableView.endUpdates()
+  }
+  
   func didTapShowWithFilter(filter values: FilteredValues) {
     filterValues = values
     var filterCount = 0
@@ -243,8 +267,11 @@ extension RadioListViewController: RadioFilterViewControllerDelegate {
     
     let barButtonTitle = "Фильтр (\(filterCount))"
     navigationItem.rightBarButtonItem?.title = filterCount > 0 ? barButtonTitle : "Фильтр"
-    updateRadioListWithFilter(values)
   }
 }
 
-
+extension RadioListViewController: RadioAddViewControllerDelegate {
+  func radioAdded() {
+    showResultView(with: .sucess(text: "Станция в эфире!"))
+  }
+}

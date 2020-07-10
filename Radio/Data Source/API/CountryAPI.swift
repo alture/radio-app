@@ -11,11 +11,11 @@ import Alamofire
 
 class CountryAPI {
   static func getCountries(completion: @escaping ResponseHandler) {
-    let fullURL = baseURL + "/country"
-    AF.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
+    let fullURL = baseAPI + "/country"
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[Country]>) in
       switch response.result {
       case .success(let value):
-        completion(value as? [[String : Any]], nil)
+        completion(value, nil)
       case .failure(let error):
         completion(nil, error)
       }

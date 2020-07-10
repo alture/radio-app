@@ -1,19 +1,19 @@
 //
-//  BaseViewController.swift
+//  BaseTableViewController.swift
 //  Radio
 //
-//  Created by Alisher on 6/26/20.
+//  Created by Alisher on 7/7/20.
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
 import UIKit
 
-protocol BaseViewControllerDelegate {
+protocol BaseTableViewControllerDelegate {
   func showErrorAlert(with message: String)
   func showResultView(with result: Result)
 }
 
-class BaseViewController: UIViewController, BaseViewControllerDelegate {
+class BaseTableViewController: UITableViewController, BaseTableViewControllerDelegate {
   private lazy var resultView: ResulView = {
     let view = ResulView()
     view.translatesAutoresizingMaskIntoConstraints = false
@@ -35,7 +35,17 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
     return topController
   }
   
-  private lazy var resultViewBottomConstraint = NSLayoutConstraint()
+  private var isKeyboardPresented = false
+  private var keyboardHeight: CGFloat = 0.0
+  private var resultViewBottomConstraint: CGFloat {
+    var constant: CGFloat = isKeyboardPresented ? keyboardHeight : 130
+    
+//    if !topViewController.definesPresentationContext {
+//      constant -= 60
+//    }
+    
+    return constant
+  }
     
   func showResultView(with result: Result) {
     resultView.result = result
@@ -80,12 +90,10 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
   }
   
   private func configureResultConstraints() {
-    resultViewBottomConstraint = resultView.bottomAnchor.constraint(
-      equalTo: topViewController.view.bottomAnchor,
-      constant: -130.0)
-    
     NSLayoutConstraint.activate([
-      resultViewBottomConstraint,
+      resultView.bottomAnchor.constraint(
+        equalTo: topViewController.view.safeAreaLayoutGuide.bottomAnchor,
+        constant: -resultViewBottomConstraint),
       resultView.leadingAnchor.constraint(equalTo: topViewController.view.leadingAnchor,
                                           constant: 16.0),
       resultView.trailingAnchor.constraint(equalTo: topViewController.view.trailingAnchor,
@@ -117,19 +125,20 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
   }
   
   @objc private func keyboardWillShow(_ notification: Notification) {
-    let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-    resultViewBottomConstraint.constant = -keyboardHeight
-    resultView.layoutIfNeeded()
+    isKeyboardPresented = true
+    keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+    view.layoutIfNeeded()
   }
 
   @objc private func keyboardWillHide(_ notification: Notification) {
-    resultViewBottomConstraint.constant = -130.0
-    resultView.layoutIfNeeded()
+    isKeyboardPresented = false
+    keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
+    view.layoutIfNeeded()
   }
     
 }
 
-extension BaseViewController: InteractorOutputProtocol {
+extension BaseTableViewController: InteractorOutputProtocol {
   func handleError(_ error: Error, _ result: Result?) {
     if let result = result {
       showResultView(with: result)

@@ -9,7 +9,11 @@
 import Foundation
 import ObjectMapper
 
-class Genre: Mappable {
+class Genre: Mappable, Equatable {
+  static func == (lhs: Genre, rhs: Genre) -> Bool {
+    return lhs.id == rhs.id && lhs.name == rhs.name
+  }
+  
   var id: Int?
   var name: String?
   
@@ -18,20 +22,5 @@ class Genre: Mappable {
   func mapping(map: Map) {
     id <- map["id"]
     name <- map["name"]
-  }
-  
-  static func getArray(from jsonArray: Any) -> [Genre]? {
-      guard let jsonArray = jsonArray as? Array<[String: Any]> else {
-        return nil
-      }
-    
-      var arr: [Genre] = []
-      for jsonObject in jsonArray {
-        if let item = Genre(JSON: jsonObject) {
-              arr.append(item)
-        }
-      }
-    
-      return arr
   }
 }

@@ -17,7 +17,6 @@ final class RadioListPresenter {
 
 extension RadioListPresenter: RadioListPresentation {
   func didTapShowFilterView() {
-//    interactor?.fetchData(of: .all)
     router?.showFilterView()
   }
   
@@ -36,9 +35,21 @@ extension RadioListPresenter: RadioListPresentation {
   func removeFromFavorite(_ id: Int) {
     interactor?.removeData(id: id)
   }
+  
+  func addNewRadio() {
+    router?.showNewRadioView()
+  }
 }
 
-extension RadioListPresenter: RadioListInteractorOutput {  
+extension RadioListPresenter: RadioListInteractorOutput {
+  func addedToFavorite() {
+    view?.showResultView(with: .sucess(text: "Добавлено в изрбанное"))
+  }
+  
+  func removedFromFavorite() {
+    
+  }
+  
   func fetchedData(_ data: [Radio]) {
     let availableRadios = data.filter { (radio) -> Bool in
       return radio.enabled ?? false

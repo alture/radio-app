@@ -23,7 +23,7 @@ extension RadioFilterInteractor: RadioFilterUseCase {
         return
       }
       
-      if let genries = Genre.getArray(from: response ?? []) {
+      if let genries = response as? [Genre] {
         genriesData = genries
       }
       
@@ -33,7 +33,7 @@ extension RadioFilterInteractor: RadioFilterUseCase {
           return
         }
         
-        if let country = Country.getArray(from: response ?? []) {
+        if let country = response as? [Country]  {
           countryData = country
         }
         

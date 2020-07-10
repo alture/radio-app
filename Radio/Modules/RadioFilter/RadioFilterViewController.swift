@@ -10,18 +10,22 @@ import UIKit
 
 protocol RadioFilterViewControllerDelegate {
   func didTapShowWithFilter(filter values: FilteredValues)
+  func didTapAppendFilters(_ genres: [Genre], _ countries: [Country])
 }
 
 final class RadioFilterViewController: BaseViewController {
   
   // MARK: Properties
   
-  var selectedIndexes: (genre: [Int], country: [Int]) = ([0], [0])
   var delegate: RadioFilterViewControllerDelegate?
+  var filterValues: FilteredValues?
   
   var presenter: RadioFilterPresentation?
   private var genries: [Genre] = []
   private var countries: [Country] = []
+  
+  private var selectedGenries: [Genre] = []
+  private var selectedCountries: [Country] = []
   private lazy var tableView: UITableView = {
     let tableView = UITableView(frame: .zero, style: .grouped)
     tableView.delegate = self
@@ -40,25 +44,15 @@ final class RadioFilterViewController: BaseViewController {
     
     presenter?.viewDidLoad()
     setupView()
+    setupNavigationBar()
   }
-  
-  override func viewWillDisappear(_ animated: Bool) {
-    super.viewWillDisappear(true)
-    
-    var filteredValues: FilteredValues = ([], [])
-    tableView.indexPathsForSelectedRows?.forEach({ (indexPath) in
-      if indexPath.row == 0 {
-        return
-      }
-      
-      if indexPath.section == 0 {
-        filteredValues.genriesID.append(genries[indexPath.row-1].id ?? 0)
-      } else {
-        filteredValues.countriesID.append(countries[indexPath.row-1].id ?? 0)
-      }
-    })
-    
-    delegate?.didTapShowWithFilter(filter: filteredValues)
+
+  private func setupNavigationBar() {
+    navigationItem.rightBarButtonItem = UIBarButtonItem(
+      title: "Done",
+      style: .done,
+      target: self,
+      action: #selector(didTapDoneButton))
   }
   
   private func setupView() {
@@ -82,25 +76,29 @@ final class RadioFilterViewController: BaseViewController {
       tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor)
     ])
   }
+  
+  @objc private func didTapDoneButton() {
+    dismiss(animated: true) {
+      self.delegate?.didTapAppendFilters(self.selectedGenries, self.selectedCountries)
+    }
+  }
 }
 
 extension RadioFilterViewController: RadioFilterView {
   func updateViewFromModel(_ genre: [Genre], _ country: [Country]) {
     genries = genre
     countries = country
-    tableView.reloadData()
-    
-    selectedIndexes.genre.forEach { (index) in
-      tableView.selectRow(at: IndexPath(row: index, section: 0),
-                          animated: false,
-                          scrollPosition: .none)
-    }
-
-    selectedIndexes.country.forEach { (index) in
-      tableView.selectRow(at: IndexPath(row: index, section: 1),
-      animated: false,
-      scrollPosition: .none)
-    }
+    tableView.beginUpdates()
+    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+    tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
+    tableView.endUpdates()
+    tableView.selectRow(at: IndexPath(row: 0, section: 0),
+                        animated: false,
+                        scrollPosition: .none)
+    tableView.selectRow(at: IndexPath(row: 0, section: 1),
+                        animated: false,
+                        scrollPosition: .none)
+    return
   }
 }
 
@@ -121,6 +119,7 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
     return (section == 0 ? genries.count : countries.count) + 1
   }
+
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as! RadioFilterCell
@@ -138,24 +137,58 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    if indexPath.row != 0 && selectedGenries.count > 5 || selectedCountries.count > 5 {
+      showResultView(with: .warning(text: "Возможно выбрать максимум 5!"))
+      tableView.deselectRow(at: indexPath, animated: false)
+      return
+    }
+    
+    
     if indexPath.row == 0 {
-      tableView.deselectAll()
+      tableView.deselectAll(except: indexPath.row, at: indexPath.section)
+
+      if indexPath.section == 0 {
+        selectedGenries = []
+      } else {
+        selectedCountries = []
+      }
     } else {
       tableView.deselectRow(at: IndexPath(row: 0, section: indexPath.section), animated: true)
+      if indexPath.section == 0 {
+        selectedGenries.append(genries[indexPath.row - 1])
+      } else {
+        selectedCountries.append(countries[indexPath.row - 1])
+      }
     }
   }
   
+  func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+    guard indexPath.row != 0 else {
+      tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
+      return
+    }
+      
+    if indexPath.section == 0 {
+      if let indexOfItem = selectedGenries.firstIndex(of: genries[indexPath.row - 1]) {
+        selectedGenries.remove(at: indexOfItem)
+      }
+    } else {
+      if let indexOfItem = selectedCountries.firstIndex(of: countries[indexPath.row - 1]) {
+        selectedCountries.remove(at: indexOfItem)
+      }
+    }
+  }
 }
 
 extension UITableView {
-  func deselectAll() {
+  func deselectAll(except index: Int, at section: Int) {
     guard let indexPathsForSelectedRows = indexPathsForSelectedRows else {
       return
     }
     
     for indexPath in indexPathsForSelectedRows {
-      if indexPath.row != 0 {
-        deselectRow(at: indexPath, animated: false)
+      if indexPath.row != index {
+        deselectRow(at: IndexPath(row: indexPath.row, section: section), animated: false)
       }
     }
   }

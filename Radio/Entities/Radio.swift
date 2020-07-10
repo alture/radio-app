@@ -9,16 +9,15 @@
 import Foundation
 import ObjectMapper
 
-class Radio: Mappable, Equatable {
+class Radio: Mappable, Equatable  {
   static func == (lhs: Radio, rhs: Radio) -> Bool {
     return lhs.id == rhs.id
   }
   
-  var country: String?
-  var countryID: Int?
+  var country: Country?
   var enabled: Bool?
   var genre: String?
-  var genreID: Int?
+  var genres: [Genre]?
   var id: Int?
   var logo: String?  
   var name: String?
@@ -29,29 +28,13 @@ class Radio: Mappable, Equatable {
   
   func mapping(map: Map) {
     country <- map["country"]
-    countryID <- map["country_id"]
     enabled <- map["enabled"]
     genre <- map["genre"]
-    genreID <- map["genre_id"]
+    genres <- map["genres"]
     id <- map["id"]
     logo <- map["logo"]
     name <- map["name"]
     rate <- map["rate"]
     url <- map["url"]
-  }
-  
-  static func getArray(from jsonArray: Any) -> [Radio]? {
-      guard let jsonArray = jsonArray as? Array<[String: Any]> else {
-        return nil
-      }
-    
-      var arr: [Radio] = []
-      for jsonObject in jsonArray {
-        if let item = Radio(JSON: jsonObject) {
-              arr.append(item)
-        }
-      }
-    
-      return arr
   }
 }

@@ -11,11 +11,11 @@ import Alamofire
 
 class GenreAPI {
   static func getGenries(completion: @escaping ResponseHandler) {
-    let fullURL = baseURL + "/genre"
-    let _ = AF.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
+    let fullURL = baseAPI + "/genre"
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[Genre]>) in
       switch response.result {
       case .success(let value):
-        completion(value as? [[String : Any]], nil)
+        completion(value, nil)
       case .failure(let error):
         completion(nil, error)
       }

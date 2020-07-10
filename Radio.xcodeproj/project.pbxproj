@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		900B1B1D473F6EE098F21A04 /* Pods_Radio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD9AE632015996638F845F6 /* Pods_Radio.framework */; };
+		9A0126C124B3E3670027A431 /* RoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0126C024B3E3670027A431 /* RoundedTextField.swift */; };
 		9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */; };
 		9A6B901024A4B1F2002FE34A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */; };
 		9A6B901224A4B1F2002FE34A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */; };
@@ -39,11 +40,20 @@
 		9AC193DB24AB87E000C03C31 /* RadioFilterViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193D624AB87E000C03C31 /* RadioFilterViewController.swift */; };
 		9AC193DC24AB87E000C03C31 /* RadioFilterInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193D724AB87E000C03C31 /* RadioFilterInteractor.swift */; };
 		9AC193E024AB9EAC00C03C31 /* RadioFilterCellTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193DF24AB9EAC00C03C31 /* RadioFilterCellTableViewCell.swift */; };
+		9AC193E624B3AFFA00C03C31 /* RadioAddContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193E124B3AFF900C03C31 /* RadioAddContract.swift */; };
+		9AC193E724B3AFFA00C03C31 /* RadioAddPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193E224B3AFF900C03C31 /* RadioAddPresenter.swift */; };
+		9AC193E824B3AFFA00C03C31 /* RadioAddRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193E324B3AFF900C03C31 /* RadioAddRouter.swift */; };
+		9AC193E924B3AFFA00C03C31 /* RadioAddViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193E424B3AFF900C03C31 /* RadioAddViewController.swift */; };
+		9AC193EA24B3AFFA00C03C31 /* RadioAddInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193E524B3AFF900C03C31 /* RadioAddInteractor.swift */; };
+		9AC193ED24B3B19E00C03C31 /* BaseTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC193EC24B3B19E00C03C31 /* BaseTableViewController.swift */; };
+		9AD7480E24B4AED300ACE8E5 /* ResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD7480D24B4AED300ACE8E5 /* ResultView.xib */; };
+		9AD7481024B4AFA500ACE8E5 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2BD9AE632015996638F845F6 /* Pods_Radio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Radio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.debug.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.debug.xcconfig"; sourceTree = "<group>"; };
+		9A0126C024B3E3670027A431 /* RoundedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
 		9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioTabBarViewController.swift; sourceTree = "<group>"; };
 		9A6B900C24A4B1F2002FE34A /* Radio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Radio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,6 +87,14 @@
 		9AC193D624AB87E000C03C31 /* RadioFilterViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioFilterViewController.swift; sourceTree = "<group>"; };
 		9AC193D724AB87E000C03C31 /* RadioFilterInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioFilterInteractor.swift; sourceTree = "<group>"; };
 		9AC193DF24AB9EAC00C03C31 /* RadioFilterCellTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioFilterCellTableViewCell.swift; sourceTree = "<group>"; };
+		9AC193E124B3AFF900C03C31 /* RadioAddContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAddContract.swift; sourceTree = "<group>"; };
+		9AC193E224B3AFF900C03C31 /* RadioAddPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAddPresenter.swift; sourceTree = "<group>"; };
+		9AC193E324B3AFF900C03C31 /* RadioAddRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAddRouter.swift; sourceTree = "<group>"; };
+		9AC193E424B3AFF900C03C31 /* RadioAddViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAddViewController.swift; sourceTree = "<group>"; };
+		9AC193E524B3AFF900C03C31 /* RadioAddInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioAddInteractor.swift; sourceTree = "<group>"; };
+		9AC193EC24B3B19E00C03C31 /* BaseTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseTableViewController.swift; sourceTree = "<group>"; };
+		9AD7480D24B4AED300ACE8E5 /* ResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultView.xib; sourceTree = "<group>"; };
+		9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
 		BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.release.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -116,8 +134,10 @@
 				9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */,
 				9A6B902824A6291A002FE34A /* BaseViewController.swift */,
 				9A6B902324A4DBD6002FE34A /* TestAPIViewController.swift */,
-				9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */,
 				9A74E21D24A7E6800059E48B /* RadioInfoView.swift */,
+				9AC193EC24B3B19E00C03C31 /* BaseTableViewController.swift */,
+				9A0126C024B3E3670027A431 /* RoundedTextField.swift */,
+				9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -143,6 +163,7 @@
 		9A6B900E24A4B1F2002FE34A /* Radio */ = {
 			isa = PBXGroup;
 			children = (
+				9AD7480C24B4AE9400ACE8E5 /* Templates */,
 				9A74E21F24A8093F0059E48B /* Extension */,
 				9A674D8924A766C700C35732 /* Custom Views */,
 				9AAE46A124A75BFA005879AB /* Protocol */,
@@ -173,6 +194,7 @@
 			children = (
 				9AAE469424A754E8005879AB /* RadioList */,
 				9AC193DD24AB87E500C03C31 /* RadioFilter */,
+				9AC193EB24B3B00200C03C31 /* RadioAdd */,
 			);
 			path = Modules;
 			sourceTree = "<group>";
@@ -245,12 +267,33 @@
 			path = Cell;
 			sourceTree = "<group>";
 		};
+		9AC193EB24B3B00200C03C31 /* RadioAdd */ = {
+			isa = PBXGroup;
+			children = (
+				9AC193E124B3AFF900C03C31 /* RadioAddContract.swift */,
+				9AC193E224B3AFF900C03C31 /* RadioAddPresenter.swift */,
+				9AC193E324B3AFF900C03C31 /* RadioAddRouter.swift */,
+				9AC193E424B3AFF900C03C31 /* RadioAddViewController.swift */,
+				9AC193E524B3AFF900C03C31 /* RadioAddInteractor.swift */,
+			);
+			path = RadioAdd;
+			sourceTree = "<group>";
+		};
 		9ACAFBB224AA18CB0072C1BF /* Cell */ = {
 			isa = PBXGroup;
 			children = (
 				9AAE469F24A756D7005879AB /* RadioListTableViewCell.swift */,
 			);
 			path = Cell;
+			sourceTree = "<group>";
+		};
+		9AD7480C24B4AE9400ACE8E5 /* Templates */ = {
+			isa = PBXGroup;
+			children = (
+				9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */,
+				9AD7480D24B4AED300ACE8E5 /* ResultView.xib */,
+			);
+			path = Templates;
 			sourceTree = "<group>";
 		};
 		A985C6923ED7EF194537607F /* Pods */ = {
@@ -273,7 +316,7 @@
 				9A6B900824A4B1F2002FE34A /* Sources */,
 				9A6B900924A4B1F2002FE34A /* Frameworks */,
 				9A6B900A24A4B1F2002FE34A /* Resources */,
-				900058613B10C35E2D03A2EE /* [CP] Embed Pods Frameworks */,
+				9CB68431D298F75B32F207CC /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -322,6 +365,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9AD7480E24B4AED300ACE8E5 /* ResultView.xib in Resources */,
 				9A74E21C24A7E50A0059E48B /* RadioInfoView.xib in Resources */,
 				9A6B901C24A4B1F4002FE34A /* LaunchScreen.storyboard in Resources */,
 				9A6B901924A4B1F4002FE34A /* Assets.xcassets in Resources */,
@@ -354,7 +398,7 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
-		900058613B10C35E2D03A2EE /* [CP] Embed Pods Frameworks */ = {
+		9CB68431D298F75B32F207CC /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -379,21 +423,29 @@
 			buildActionMask = 2147483647;
 			files = (
 				9A6B901024A4B1F2002FE34A /* AppDelegate.swift in Sources */,
+				9A0126C124B3E3670027A431 /* RoundedTextField.swift in Sources */,
 				9A6B901224A4B1F2002FE34A /* SceneDelegate.swift in Sources */,
 				9AAE46A324A75C08005879AB /* PresenterProtocol.swift in Sources */,
 				9A6B903624A6446C002FE34A /* CountryAPI.swift in Sources */,
 				9A6B903424A64459002FE34A /* RadioAPI.swift in Sources */,
 				9A6B902424A4DBD6002FE34A /* TestAPIViewController.swift in Sources */,
+				9AC193EA24B3AFFA00C03C31 /* RadioAddInteractor.swift in Sources */,
+				9AC193E924B3AFFA00C03C31 /* RadioAddViewController.swift in Sources */,
+				9AC193E724B3AFFA00C03C31 /* RadioAddPresenter.swift in Sources */,
+				9AC193ED24B3B19E00C03C31 /* BaseTableViewController.swift in Sources */,
 				9AC193DC24AB87E000C03C31 /* RadioFilterInteractor.swift in Sources */,
+				9AD7481024B4AFA500ACE8E5 /* ResultView.swift in Sources */,
 				9A6B902B24A62B90002FE34A /* Country.swift in Sources */,
 				9A6B902F24A62E50002FE34A /* Radio.swift in Sources */,
 				9AAE469A24A754FD005879AB /* RadioListContract.swift in Sources */,
 				9AC193D924AB87E000C03C31 /* RadioFilterPresenter.swift in Sources */,
+				9AC193E624B3AFFA00C03C31 /* RadioAddContract.swift in Sources */,
 				9AC193D824AB87E000C03C31 /* RadioFilterContract.swift in Sources */,
 				9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */,
 				9AAE469C24A754FD005879AB /* RadioListRouter.swift in Sources */,
 				9AAE46A024A756D7005879AB /* RadioListTableViewCell.swift in Sources */,
 				9A74E21E24A7E6800059E48B /* RadioInfoView.swift in Sources */,
+				9AC193E824B3AFFA00C03C31 /* RadioAddRouter.swift in Sources */,
 				9A74E22124A809590059E48B /* UIImageView+LoadImg.swift in Sources */,
 				9AC193DA24AB87E000C03C31 /* RadioFilterRouter.swift in Sources */,
 				9AC193DB24AB87E000C03C31 /* RadioFilterViewController.swift in Sources */,

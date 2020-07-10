@@ -8,7 +8,11 @@
 
 import Foundation
 import ObjectMapper
-class Country: Mappable {
+class Country: Mappable, Equatable {
+  static func == (lhs: Country, rhs: Country) -> Bool {
+    return lhs.id == rhs.id && lhs.name == rhs.name
+  }
+  
   var id: Int?
   var name: String?
   
@@ -17,20 +21,5 @@ class Country: Mappable {
   func mapping(map: Map) {
     id <- map["id"]
     name <- map["name"]
-  }
-  
-  static func getArray(from jsonArray: Any) -> [Country]? {
-      guard let jsonArray = jsonArray as? Array<[String: Any]> else {
-        return nil
-      }
-    
-      var arr: [Country] = []
-      for jsonObject in jsonArray {
-        if let item = Country(JSON: jsonObject) {
-              arr.append(item)
-        }
-      }
-    
-      return arr
   }
 }

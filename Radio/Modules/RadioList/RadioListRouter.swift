@@ -12,7 +12,7 @@ final class RadioListRouter {
   
   // MARK: Properties
   
-  weak var view: UIViewController?
+  weak var view: BaseViewController?
   
   // MARK: Static methods
   
@@ -41,7 +41,16 @@ final class RadioListRouter {
 extension RadioListRouter: RadioListWireframe {
   func showFilterView() {
     let vc = RadioFilterRouter.setupModule()
+    let navVC = UINavigationController(rootViewController: vc)
     vc.delegate = view as? RadioFilterViewControllerDelegate
-    view?.present(vc, animated: true, completion: nil)
+    view?.present(navVC, animated: true, completion: nil)
+  }
+  
+  func showNewRadioView() {
+    let vc = RadioAddRouter.setupModule()
+    vc.title = "Добавить станцию"
+    vc.delegate = view as? RadioAddViewControllerDelegate
+    let navVC = UINavigationController(rootViewController: vc)
+    view?.present(navVC, animated: true)
   }
 }
