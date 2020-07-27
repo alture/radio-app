@@ -24,13 +24,18 @@ final class RadioListTableViewCell: UITableViewCell {
   
   var didTapMoreButton: ((_ radio: Radio) -> Void)?
   
-  @IBOutlet weak var logoImage: UIImageView!
+  @IBOutlet weak var logoImage: UIImageView! {
+    didSet {
+      isPlayingImage.layer.cornerRadius = 5.0
+      isPlayingImage.clipsToBounds = true
+    }
+  }
   @IBOutlet weak var radioTitleLabel: UILabel!
   @IBOutlet weak var radioInfoLabel: UILabel!
   @IBOutlet weak var isPlayingImage: UIImageView! {
     didSet {
       isPlayingImage.layer.cornerRadius = 5.0
-      isPlayingImage.layer.masksToBounds = true
+      isPlayingImage.clipsToBounds = true
     }
   }
   @IBOutlet weak var moreButton: UIImageView! {
@@ -49,7 +54,7 @@ final class RadioListTableViewCell: UITableViewCell {
     if let logoString = radio.logo{
       logoImage.load(logoString)
     } else {
-      // TODO: Default App Image
+      logoImage.image = UIImage(named: "logo")
     }
     
     radioTitleLabel.text = radio.name ?? "Название"

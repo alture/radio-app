@@ -9,7 +9,6 @@
 import UIKit
 
 protocol RadioFilterViewControllerDelegate {
-  func didTapShowWithFilter(filter values: FilteredValues)
   func didTapAppendFilters(_ genres: [Genre], _ countries: [Country])
 }
 
@@ -18,7 +17,6 @@ final class RadioFilterViewController: BaseViewController {
   // MARK: Properties
   
   var delegate: RadioFilterViewControllerDelegate?
-  var filterValues: FilteredValues?
   
   var presenter: RadioFilterPresentation?
   private var genries: [Genre] = []
@@ -48,11 +46,13 @@ final class RadioFilterViewController: BaseViewController {
   }
 
   private func setupNavigationBar() {
-    navigationItem.rightBarButtonItem = UIBarButtonItem(
-      title: "Done",
+    let barButtonItem = UIBarButtonItem(
+      title: "Готово",
       style: .done,
       target: self,
       action: #selector(didTapDoneButton))
+    barButtonItem.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    navigationItem.rightBarButtonItem = barButtonItem
   }
   
   private func setupView() {
@@ -124,6 +124,7 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as! RadioFilterCell
     cell.selectionStyle = .none
+    cell.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
     if indexPath.row == 0 {
       cell.textLabel?.text = indexPath.section == 0
         ? "Все жанры"
@@ -137,8 +138,8 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   }
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row != 0 && selectedGenries.count > 5 || selectedCountries.count > 5 {
-      showResultView(with: .warning(text: "Возможно выбрать максимум 5!"))
+    if indexPath.row != 0 && (selectedGenries.count > 5 || selectedCountries.count > 5) {
+      prepareResultView(with: .warning(text: "Возможно выбрать максимум 5!"))
       tableView.deselectRow(at: indexPath, animated: false)
       return
     }

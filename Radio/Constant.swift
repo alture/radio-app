@@ -12,7 +12,8 @@ import Alamofire
 
 let baseAPI = "https://panel.radio.rvision.tv/api/v1"
 let headers: HTTPHeaders = [
-  "X-RADIO-CLIENT-ID": "adcb64ee-b6e5-11ea-b3de-0242ac130004-\(Locale.current)" ,
+  "X-RADIO-CLIENT-ID": "\(UIDevice.current.identifierForVendor?.uuidString ?? "")-\(Locale.current)",
+  "Content-Type":"application/json",
 ]
 
 typealias ResponseHandler = ([Any]?, Error?) -> Void

@@ -11,6 +11,7 @@ import Alamofire
 import AlamofireObjectMapper
 
 class RadioAPI {
+  
   static func getRadios(completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/radio"
     
@@ -26,17 +27,30 @@ class RadioAPI {
     
   }
   
-  static func createRadio(with name: String, url: String, logoURL: String, completion: @escaping (Error?) -> Void) {
+  static func createRadio(with name: String, url: String, image: UIImage?, completion: @escaping (Error?) -> Void) {
     let fullURL = baseAPI + "/radio"
     let parameters = [
       "name": name,
-      "url": url,
-      "logo": url
+      "url": url
     ]
     
-    Alamofire.request(fullURL, method: .post, parameters: parameters, encoding: URLEncoding.default, headers: headers).responseJSON { (response) in
-      switch response.result {
-      case .success:
+    Alamofire.upload(multipartFormData: { (formData) in
+      for (key, value) in parameters {
+        formData.append("\(value)".data(using: String.Encoding.utf8)!, withName: key)
+      }
+
+      if let data = image?.jpegData(compressionQuality: 0.7) {
+        formData.append(data,
+                        withName: "logo",
+                        fileName: "logo.png",
+                        mimeType: "image/png")
+      }
+    }, usingThreshold: UInt64.init(),
+       to: fullURL,
+       method: .post,
+      headers: headers) { (result) in
+      switch result {
+      case .success(_, _, _):
         completion(nil)
       case .failure(let error):
         completion(error)
@@ -46,7 +60,7 @@ class RadioAPI {
   
   static func getFavoriteRadios(completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/radio/my"
-    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray(keyPath: "Result") { (response: DataResponse<[Radio]>) in
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[Radio]>) in
       switch response.result {
       case .success(let value):
         completion(value, nil)
@@ -60,10 +74,10 @@ class RadioAPI {
     let fullURL = baseAPI + "/radio/\(id)/like"
     Alamofire.request(fullURL, method: .post, encoding: URLEncoding.default , headers: headers).responseData { (response) in
       switch response.result {
-      case .success:
+      case .success(let result):
+        print(result)
         completion(nil)
       case .failure(let error):
-        print(error)
         completion(error)
       }
     }

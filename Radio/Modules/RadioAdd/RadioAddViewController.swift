@@ -22,23 +22,29 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
     didSet {
       nameRadioTextField.tag = 1
       nameRadioTextField.delegate = self
-//      nameRadioTextField.becomeFirstResponder()
+      nameRadioTextField.addTarget(self,
+                                   action: #selector(textFieldDidChange),
+                                   for: .editingChanged)
     }
   }
   
   @IBOutlet weak var nameUrlTextField: RoundedTextField! {
     didSet {
-      nameRadioTextField.tag = 2
-      nameRadioTextField.delegate = self
+      nameUrlTextField.tag = 2
+      nameUrlTextField.delegate = self
+      nameUrlTextField.addTarget(self,
+                                 action: #selector(textFieldDidChange),
+                                 for: .editingChanged)
     }
   }
   @IBOutlet weak var imageView: UIImageView!
+  private var uploadImage: UIImage?
   
   // MARK: Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
-//    tableView.separatorStyle = .none
+    tableView.separatorStyle = .none
     setupNavigationBar()
   }
   
@@ -48,6 +54,7 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
     navigationController?.navigationBar.prefersLargeTitles = false
     navigationItem.largeTitleDisplayMode = .never
     navigationItem.rightBarButtonItem?.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    navigationItem.rightBarButtonItem?.isEnabled = false
   }
   
   @objc private func didTapAddButton() {
@@ -57,11 +64,24 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
       name != "",
       url != ""
     else {
-      showResultView(with: .warning(text: "Заполните все поля"))
       return
     }
     
-    presenter?.didTapAddRadioButton(with: imageView.image, name, url)
+    presenter?.didTapAddRadioButton(with: uploadImage, name, url)
+  }
+  
+  @objc private func textFieldDidChange() {
+    guard
+      let name = nameRadioTextField.text,
+      let url = nameUrlTextField.text,
+      name != "",
+      url != ""
+    else {
+      navigationItem.rightBarButtonItem?.isEnabled = false
+      return
+    }
+    
+    navigationItem.rightBarButtonItem?.isEnabled = true
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
@@ -124,6 +144,7 @@ extension RadioAddViewController: UITextFieldDelegate {
 extension RadioAddViewController: UIImagePickerControllerDelegate {
   func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
     if let selectedImage = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
+      uploadImage = selectedImage
       imageView.image = selectedImage
       imageView.contentMode = .scaleAspectFill
       imageView.clipsToBounds = true

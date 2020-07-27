@@ -10,6 +10,7 @@ import UIKit
 
 protocol RadioInfoViewDelegate {
   func didTapPlayButton()
+  func showPlayer()
 }
 
 class RadioInfoView: UIView {
@@ -17,7 +18,13 @@ class RadioInfoView: UIView {
   var delegate: RadioInfoViewDelegate?
   
   @IBOutlet var contentView: UIView!
-  @IBOutlet weak var logoImageView: UIImageView!
+  @IBOutlet weak var logoImageView: UIImageView! {
+    didSet {
+      logoImageView.layer.cornerRadius = 5.0
+      logoImageView.layer.masksToBounds = true
+      logoImageView.backgroundColor = .white
+    }
+  }
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var playButton: UIButton!
   @IBAction func didTapPlayButton(_ sender: UIButton) {
@@ -27,6 +34,9 @@ class RadioInfoView: UIView {
   override init(frame: CGRect) {
     super.init(frame: frame)
     setupView()
+    let tap = UITapGestureRecognizer(target: self, action: #selector(didTapSelf))
+    isUserInteractionEnabled = true
+    addGestureRecognizer(tap)
   }
   
   required init?(coder aDecored: NSCoder) {
@@ -40,6 +50,10 @@ class RadioInfoView: UIView {
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
     
+  }
+  
+  @objc private func didTapSelf() {
+    delegate?.showPlayer()
   }
   
 }

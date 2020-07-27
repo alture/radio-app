@@ -43,7 +43,7 @@ extension RadioListPresenter: RadioListPresentation {
 
 extension RadioListPresenter: RadioListInteractorOutput {
   func addedToFavorite() {
-    view?.showResultView(with: .sucess(text: "Добавлено в изрбанное"))
+    view?.prepareResultView(with: .sucess(text: "Добавлено в изрбанное"))
   }
   
   func removedFromFavorite() {
