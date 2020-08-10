@@ -177,13 +177,15 @@ class RadioListTableViewController: BaseTableViewController {
     present(alertController, animated: true)
   }
   
-  private func loadFilter(_ genres: [Genre], _ countries: [Country]) {
+  private func loadFilter(_ genres: [Genre], _ countries: [Country], animated: Bool) {
     var filterCount = 0
     
     if !genres.isEmpty { filterCount += 1 }
     if !countries.isEmpty { filterCount += 1 }
     updateFilterLabel(filterCount: filterCount)
-    tableView.beginUpdates()
+    if animated {
+      tableView.beginUpdates()
+    }
     radioList = allRadioList.filter({ (radio) -> Bool in
       if let radioGenres = radio.genres, !genres.isEmpty {
         for genre in radioGenres {
@@ -199,8 +201,10 @@ class RadioListTableViewController: BaseTableViewController {
       
       return countries.isEmpty ? true : countries.contains(country)
     })
-    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-    tableView.endUpdates()
+    if animated {
+      tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
+      tableView.endUpdates()
+    }
     
   }
   
@@ -216,7 +220,7 @@ extension RadioListTableViewController: RadioListView {
     allRadioList = model
     radioList = model
     refreshControl?.endRefreshing()
-    loadFilter(selectedGenres, selectedCountries)
+    loadFilter(selectedGenres, selectedCountries, animated: false)
     tableView.reloadData()
   }
 }
@@ -273,7 +277,7 @@ extension RadioListTableViewController: RadioFilterViewControllerDelegate {
   func didTapAppendFilters(_ genres: [Genre], _ countries: [Country]) {
     selectedGenres = genres
     selectedCountries = countries
-    loadFilter(genres, countries)
+    loadFilter(genres, countries, animated: true)
   }
 }
 

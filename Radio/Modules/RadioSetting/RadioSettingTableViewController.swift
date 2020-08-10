@@ -48,6 +48,25 @@ final class RadioSettingTableViewController: BaseTableViewController {
     3:60.0
   ]
   private var bufferSizes = ["АВТО", "5 секунд", "10 секунд", "60 секунд"]
+  
+  private lazy var alertController: UIAlertController = {
+    let vc = UIViewController()
+    vc.preferredContentSize = CGSize(width: 250, height: 150)
+    vc.view.addSubview(pickerView)
+    
+    let alertController = UIAlertController(title: "Выбора размера буффера",
+                                            message: nil,
+                                            preferredStyle: .alert)
+    alertController.setValue(vc, forKey: "contentViewController")
+    alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
+    alertController.addAction(UIAlertAction(title: "Готово", style: .default, handler: { (_) in
+      self.defaults.set(self.bufferSize[self.selectedBufferSizeIndex], forKey: "BufferSize")
+      self.defaults.set(self.selectedBufferSizeIndex, forKey: "BufferSizeIndex")
+    }))
+    
+    return alertController
+  }()
+  
   private lazy var bottomView: UIView = {
     let view = UIView(frame: .zero)
     return view
@@ -126,17 +145,6 @@ final class RadioSettingTableViewController: BaseTableViewController {
   }
   
   private func showBufferOption() {
-    let vc = UIViewController()
-    vc.preferredContentSize = CGSize(width: 250, height: 150)
-    vc.view.addSubview(pickerView)
-        
-    let alertController = UIAlertController(title: "Выбора размера буффера", message: nil, preferredStyle: .alert)
-    alertController.setValue(vc, forKey: "contentViewController")
-    alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-    alertController.addAction(UIAlertAction(title: "Готово", style: .default, handler: { (_) in
-      self.defaults.set(self.bufferSize[self.selectedBufferSizeIndex], forKey: "BufferSize")
-      self.defaults.set(self.selectedBufferSizeIndex, forKey: "BufferSizeIndex")
-    }))
     present(alertController, animated: true, completion: nil)
   }
   

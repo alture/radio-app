@@ -37,6 +37,12 @@ final class RadioPlayerViewController: BaseViewController {
   private var bufferSizes = ["АВТО", "5 секунд", "10 секунд", "60 секунд"]
   private var bufferSize: Double = 0
   
+  private lazy var volumeView: MPVolumeView = {
+    let volumeView = MPVolumeView(frame: CGRect(x: -200, y: -200, width: 0.0, height: 0.0))
+    hiddenSystemVolumeSlider = volumeView.subviews.first(where: { $0 is UISlider }) as! UISlider
+    return volumeView
+  }()
+  
   private lazy var pickerView: UIPickerView = {
     let view = UIPickerView(frame: CGRect(x: 0, y: 0, width: 250, height: 150))
     view.delegate = self
@@ -81,6 +87,11 @@ final class RadioPlayerViewController: BaseViewController {
   
   // MARK: Lifecycle
   
+  override func viewDidLoad() {
+    super.viewDidLoad()
+    view.addSubview(volumeView)
+  }
+  
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
     
@@ -89,10 +100,6 @@ final class RadioPlayerViewController: BaseViewController {
     let audioSession = AVAudioSession.sharedInstance()
     audioSession.addObserver(self, forKeyPath: "outputVolume", options: NSKeyValueObservingOptions.new, context: nil)
     volumeSlider.value = audioSession.outputVolume
-    
-    let volumeView = MPVolumeView(frame: CGRect(x: -200, y: -200, width: 0.0, height: 0.0))
-    view.addSubview(volumeView)
-    hiddenSystemVolumeSlider = volumeView.subviews.first(where: { $0 is UISlider }) as! UISlider
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -100,7 +107,6 @@ final class RadioPlayerViewController: BaseViewController {
     
     let audioSession = AVAudioSession.sharedInstance()
     audioSession.removeObserver(self, forKeyPath: "outputVolume")
-    hiddenSystemVolumeSlider.removeFromSuperview()
   }
   
   override func viewDidLayoutSubviews() {
