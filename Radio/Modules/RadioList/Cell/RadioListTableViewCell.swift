@@ -26,8 +26,8 @@ final class RadioListTableViewCell: UITableViewCell {
   
   @IBOutlet weak var logoImage: UIImageView! {
     didSet {
-      isPlayingImage.layer.cornerRadius = 5.0
-      isPlayingImage.clipsToBounds = true
+      logoImage.layer.cornerRadius = 5.0
+      logoImage.clipsToBounds = true
     }
   }
   @IBOutlet weak var radioTitleLabel: UILabel!
@@ -44,17 +44,28 @@ final class RadioListTableViewCell: UITableViewCell {
       moreButton.addGestureRecognizer(tap)
     }
   }
+  @IBOutlet weak var containerView: UIView! {
+    didSet {
+      containerView.clipsToBounds = false
+      containerView.layer.shadowColor = UIColor.black.cgColor
+      containerView.layer.shadowOpacity = 0.1
+      containerView.layer.shadowOffset = CGSize.zero
+      containerView.layer.shadowRadius = 5.0
+      containerView.layer.cornerRadius = 5.0
+      containerView.layer.shadowPath = UIBezierPath(roundedRect: containerView.bounds,
+                                                    cornerRadius: 5.0).cgPath
+    }
+  }
   
   private func setupView() {
-    guard let radio = radio
-    else {
+    guard let radio = radio else {
       return
     }
     
     if let logoString = radio.logo{
       logoImage.load(logoString)
     } else {
-      logoImage.image = UIImage(named: "logo")
+      logoImage.image = UIImage(named: "default-2")
     }
     
     radioTitleLabel.text = radio.name ?? "Название"

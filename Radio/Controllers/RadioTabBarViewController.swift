@@ -9,26 +9,20 @@
 import UIKit
 import AVFoundation
 import MediaPlayer
-import Network
-import StoreKit
 
 class RadioTabBarViewController: UITabBarController {
   
   private var player = AVPlayer()
   private var playerItem: AVPlayerItem!
   private var metadataOutput: AVPlayerItemMetadataOutput!
-  
-  private var monitor = NWPathMonitor()
-  private var queue = DispatchQueue(label: "Monitor")
-  
   private var playerInfo: PlayerInfo? {
     didSet {
       guard let playerInfo = playerInfo else {
         return
       }
       
+      radioPlayerVC.playerInfo = playerInfo
       if radioPlayerVC.isViewLoaded {
-        radioPlayerVC.playerInfo = playerInfo
         radioPlayerVC.configure()
       }
     }
@@ -37,6 +31,7 @@ class RadioTabBarViewController: UITabBarController {
   var radioPlayerVC = RadioPlayerRouter.setupModule()
   var isPlaying: Bool = false {
     didSet {
+      playerInfo?.isPlaying = isPlaying
       if isPlaying {
         radioInfoView.playButton.setImage(UIImage(systemName: "stop.fill"), for: .normal)
       } else {
@@ -45,7 +40,31 @@ class RadioTabBarViewController: UITabBarController {
     }
   }
   
-  var currentRadio: Radio?
+  var currentRadio: Radio? {
+    didSet {
+      guard let radio = currentRadio else {
+        return
+      }
+      
+      playerInfo = PlayerInfo(title: radio.name ?? "Загружается",
+                              author: "-",
+                              image: radio.logo,
+                              isPlaying: isPlaying)
+      
+      radioInfoView.titleLabel.text = radio.name
+      if let radioLogoString = radio.logo {
+        radioInfoView.logoImageView.load(radioLogoString)
+      } else {
+        radioInfoView.logoImageView.image = UIImage(named: "default-2")
+      }
+      
+      let mpic = MPNowPlayingInfoCenter.default()
+      mpic.nowPlayingInfo = [
+          MPMediaItemPropertyArtist: "",
+          MPMediaItemPropertyTitle: radio.name ?? "Radio",
+      ]
+    }
+  }
   
   private lazy var radioInfoView: RadioInfoView = {
     let view = RadioInfoView()
@@ -61,19 +80,7 @@ class RadioTabBarViewController: UITabBarController {
     configureNotificationCenter()
     setupMediaPlayer()
     
-    tabBar.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
-    setupMonitor()
-  }
-  
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    
+    tabBar.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
   }
   
   private func setupView() {
@@ -94,7 +101,8 @@ class RadioTabBarViewController: UITabBarController {
                                        image: UIImage(systemName: "dot.radiowaves.left.and.right"),
                                        tag: 1)
     
-    let settingVC = UIViewController()
+    let settingVC = RadioSettingRouter.setupModule()
+    settingVC.title = "Настройки"
     settingVC.tabBarItem = UITabBarItem(title: "Настройки",
                                         image: UIImage(systemName: "gear"),
                                         tag: 2)
@@ -105,7 +113,7 @@ class RadioTabBarViewController: UITabBarController {
       UINavigationController(rootViewController: settingVC)
     ]
     
-    self.view.insertSubview(radioInfoView, aboveSubview: tabBar)
+    view.insertSubview(radioInfoView, aboveSubview: tabBar)
   }
   
   private func configureConstraints() {
@@ -153,30 +161,19 @@ class RadioTabBarViewController: UITabBarController {
                                            queue: nil) { (_) in
                                             print("PlaybackIsStalled")
                                             self.pauseStream()
-                                            self.isPlaying = false
-                                            
-                  
     }
     
     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
                                            object: nil,
                                            queue: nil) { (_) in
                                             print("AVPlayerItemDidPlayToEndTime")
-                                            
-                  
     }
     
     NotificationCenter.default.addObserver(forName: .AVPlayerItemFailedToPlayToEndTime,
                                            object: nil,
                                            queue: nil) { (_) in
                                             print("AVPlayerItemFailedToPlayToEndTime")
-                                            
-                  
     }
-  }
-  
-  private func setupMonitor() {
-    monitor.start(queue: queue)
   }
   
   @objc func doPlayPause(_ event:MPRemoteCommandEvent)
@@ -209,13 +206,11 @@ class RadioTabBarViewController: UITabBarController {
     }
     
     isPlaying = true
-    playerInfo?.isPlaying = isPlaying
     player.play()
   }
   
   func pauseStream() {
     isPlaying = false
-    playerInfo?.isPlaying = isPlaying
     player.pause()
   }
   
@@ -238,20 +233,11 @@ class RadioTabBarViewController: UITabBarController {
     metadataOutput.setDelegate(self, queue: DispatchQueue.main)
     
     playerItem = AVPlayerItem(asset: asset)
+    playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
+    player.automaticallyWaitsToMinimizeStalling = true
     playerItem.add(metadataOutput)
     
     player.replaceCurrentItem(with: playerItem)
-    radioInfoView.titleLabel.text = radio.name
-    if let radioLogoString = radio.logo {
-      radioInfoView.logoImageView.load(radioLogoString)
-    } else {
-      radioInfoView.logoImageView.image = UIImage(named: "logo")
-    }
-    
-    playerInfo = PlayerInfo(title: currentRadio?.name ?? "Загружается",
-                            author: "",
-                            image: radioInfoView.logoImageView.image,
-                            isPlaying: isPlaying)
   }
 }
 
@@ -262,16 +248,14 @@ extension RadioTabBarViewController: AVPlayerItemMetadataOutputPushDelegate {
     let item = groups.first?.items.first
     if let items = item?.value(forKey: "value") as? String {
       let parts = items.components(separatedBy: " - ")
-
-      radioInfoView.titleLabel.text = parts.last
       
       let artistName = parts.first ?? ""
       let titleName = parts.last ?? currentRadio?.name ?? "Загружается"
       
-      playerInfo = PlayerInfo(title: artistName,
-                              author: titleName,
-                              image: radioInfoView.logoImageView.image,
-                              isPlaying: isPlaying)
+      radioInfoView.titleLabel.text = titleName
+      
+      playerInfo?.author = artistName
+      playerInfo?.title = titleName
       
       let mpic = MPNowPlayingInfoCenter.default()
       mpic.nowPlayingInfo = [
@@ -285,7 +269,6 @@ extension RadioTabBarViewController: AVPlayerItemMetadataOutputPushDelegate {
 extension RadioTabBarViewController: RadioInfoViewDelegate {
   func showPlayer() {
     radioPlayerVC.playerInfo = playerInfo
-    radioPlayerVC.player = player
     present(radioPlayerVC, animated: true)
   }
   
@@ -298,7 +281,7 @@ extension RadioTabBarViewController: RadioInfoViewDelegate {
   }
 }
 
-extension RadioTabBarViewController: RadioPlayerViewControllerDelegate {
+extension RadioTabBarViewController: RadioPlayerViewControllerDelegate {  
   func didTapPlayStopButton() {
     if isPlaying {
       pauseStream()

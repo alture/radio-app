@@ -6,7 +6,9 @@
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
-protocol RadioListView: BaseViewController {
+import UIKit
+
+protocol RadioListView: BaseTableViewController {
   func updateViewFromModel(_ model: [Radio]) 
 }
 
@@ -15,7 +17,7 @@ protocol RadioListPresentation: class {
   func getFavoriteRadioList()
   func addToFavorite(_ id: Int)
   func removeFromFavorite(_ id: Int)
-  func didTapShowFilterView()
+  func didTapShowFilterView(with genres: [Genre], _ countries: [Country])
   func addNewRadio()
 }
 
@@ -26,12 +28,12 @@ protocol RadioListUseCase: class {
 }
 
 protocol RadioListInteractorOutput: InteractorOutputProtocol {
-  func fetchedData(_ data: [Radio])
+  func fetchedData(_ data: [Radio], _ type: RadioListType)
   func addedToFavorite()
   func removedFromFavorite()
 }
 
 protocol RadioListWireframe: class {
-  func showFilterView()
+  func showFilterView(with genres: [Genre], _ countries: [Country])
   func showNewRadioView()
 }

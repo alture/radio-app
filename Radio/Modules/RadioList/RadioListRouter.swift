@@ -12,14 +12,14 @@ final class RadioListRouter {
   
   // MARK: Properties
   
-  weak var view: BaseViewController?
+  weak var view: BaseTableViewController?
   
   // MARK: Static methods
   
-  static func setupModule() -> RadioListViewController {
+  static func setupModule() -> RadioListTableViewController {
     let viewController = UIStoryboard(name: "Main",
                                       bundle: nil)
-      .instantiateViewController(identifier: "RadioListVC") as! RadioListViewController
+      .instantiateViewController(identifier: "RadioListTVC") as! RadioListTableViewController
     let presenter = RadioListPresenter()
     let router = RadioListRouter()
     let interactor = RadioListInteractor()
@@ -39,10 +39,12 @@ final class RadioListRouter {
 }
 
 extension RadioListRouter: RadioListWireframe {
-  func showFilterView() {
+  func showFilterView(with genres: [Genre], _ countries: [Country]) {
     let vc = RadioFilterRouter.setupModule()
     let navVC = UINavigationController(rootViewController: vc)
     vc.delegate = view as? RadioFilterViewControllerDelegate
+//    vc.selectedGenries = genres
+//    vc.selectedCountries = countries
     view?.present(navVC, animated: true, completion: nil)
   }
   

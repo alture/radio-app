@@ -8,20 +8,29 @@
 
 import Foundation
 import ObjectMapper
+import RealmSwift
 
-class Radio: Mappable, Equatable  {
+final class Radio: Mappable, Codable, Equatable {
   static func == (lhs: Radio, rhs: Radio) -> Bool {
     return lhs.id == rhs.id
   }
   
+//  override static func ignoredProperties() -> [String] {
+//      return ["id"]
+//  }
+  
+//  override func isEqual(_ object: Any?) -> Bool {
+//    return id == (object as? Radio)?.id
+//  }
+  
   var country: Country?
-  var enabled: Bool?
+  var enabled: Bool = false
   var genre: String?
   var genres: [Genre]?
-  var id: Int?
-  var logo: String?  
+  var id: Int = 0
+  var logo: String?
   var name: String?
-  var rate: Int?
+  var rate: Int = 0
   var url: String?
   
   required init?(map: Map) {}

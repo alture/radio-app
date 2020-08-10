@@ -107,6 +107,8 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
   }
   
   private func configureResultView() {
+    tableView.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: 60, right: 0)
+    tableView.refreshControl?.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     topViewController.view.addSubview(resultView)
   }
   
@@ -162,7 +164,7 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
 }
 
 extension BaseTableViewController: InteractorOutputProtocol {
-  func handleError(_ error: Error, _ result: Result?) {
+  private func handleError(_ error: Error, _ result: Result?) {
     if let result = result {
       prepareResultView(with: result)
     } else {

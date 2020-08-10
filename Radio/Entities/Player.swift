@@ -11,6 +11,6 @@ import UIKit
 struct PlayerInfo {
   var title: String
   var author: String
-  var image: UIImage?
+  var image: String?
   var isPlaying: Bool
 }

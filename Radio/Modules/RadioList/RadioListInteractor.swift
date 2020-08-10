@@ -23,7 +23,7 @@ extension RadioListInteractor: RadioListUseCase {
           return
         }
         if let radios = response as? [Radio] {
-          self.output?.fetchedData(radios)
+          self.output?.fetchedData(radios, type)
         }
       }
     case .favorite:
@@ -34,7 +34,7 @@ extension RadioListInteractor: RadioListUseCase {
         }
         
         if let radios = response as? [Radio] {
-          self.output?.fetchedData(radios)
+          self.output?.fetchedData(radios, type)
         }
       }
     }

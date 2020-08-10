@@ -9,6 +9,7 @@ target 'Radio' do
     pod 'Alamofire'
     pod 'AlamofireObjectMapper'
     pod 'ObjectMapper'
+    pod 'RealmSwift' 
 
 
 end

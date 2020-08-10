@@ -16,8 +16,8 @@ final class RadioListPresenter {
 }
 
 extension RadioListPresenter: RadioListPresentation {
-  func didTapShowFilterView() {
-    router?.showFilterView()
+  func didTapShowFilterView(with genres: [Genre], _ countries: [Country]) {
+    router?.showFilterView(with: genres, countries)
   }
   
   func getRadioList() {
@@ -50,9 +50,9 @@ extension RadioListPresenter: RadioListInteractorOutput {
     
   }
   
-  func fetchedData(_ data: [Radio]) {
+  func fetchedData(_ data: [Radio], _ type: RadioListType) {
     let availableRadios = data.filter { (radio) -> Bool in
-      return radio.enabled ?? false
+      return radio.enabled 
     }
     
     view?.updateViewFromModel(availableRadios)

@@ -16,7 +16,9 @@ final class RadioPlayerPresenter {
 }
 
 extension RadioPlayerPresenter: RadioPlayerPresentation {
-  // TODO: implement presentation methods
+  func didTapPlayStopButton() {
+    view?.updateView()
+  }
 }
 
 extension RadioPlayerPresenter: RadioPlayerInteractorOutput {

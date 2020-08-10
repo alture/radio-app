@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="Stack View standard spacing" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -16,31 +15,28 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="center" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="qYw-8c-IXM">
-                                <rect key="frame" x="16" y="327.5" width="382" height="241.5"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="wut-aL-509">
-                                        <rect key="frame" x="91" y="0.0" width="200" height="200"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="200" id="NVa-VY-hVs"/>
-                                            <constraint firstAttribute="width" constant="200" id="ggI-hd-iEz"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Радио в твоем кармане" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K6J-U6-KQs">
-                                        <rect key="frame" x="42" y="208" width="298" height="33.5"/>
-                                        <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
-                                        <color key="textColor" red="1" green="0.14913141730000001" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="wut-aL-509">
+                                <rect key="frame" x="157" y="353" width="100" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="100" id="FYL-Wg-Eoa"/>
+                                    <constraint firstAttribute="width" constant="100" id="qZ4-g4-7rg"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Радио в твоем кармане" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumScaleFactor="0.69999999999999996" translatesAutoresizingMaskIntoConstraints="NO" id="K6J-U6-KQs">
+                                <rect key="frame" x="86.5" y="820.5" width="241.5" height="25.5"/>
+                                <fontDescription key="fontDescription" name="HelveticaNeue-Medium" family="Helvetica Neue" pointSize="21"/>
+                                <color key="textColor" red="0.56862745098039214" green="0.56862745098039214" blue="0.56862745098039214" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <constraints>
-                            <constraint firstItem="qYw-8c-IXM" firstAttribute="centerX" secondItem="Ze5-6b-2t3" secondAttribute="centerX" id="9dR-xV-IDb"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="qYw-8c-IXM" secondAttribute="trailing" constant="16" id="NtB-Si-6uI"/>
-                            <constraint firstItem="qYw-8c-IXM" firstAttribute="centerY" secondItem="Ze5-6b-2t3" secondAttribute="centerY" id="i6Z-zc-uKm"/>
-                            <constraint firstItem="qYw-8c-IXM" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="uzL-un-Nru"/>
+                            <constraint firstItem="wut-aL-509" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" constant="-50" id="7iA-eh-wyw"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="K6J-U6-KQs" secondAttribute="bottom" constant="16" id="DvF-v6-kz4"/>
+                            <constraint firstItem="K6J-U6-KQs" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="ndd-eK-kTT"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="K6J-U6-KQs" secondAttribute="trailing" constant="16" id="obZ-Eo-DTp"/>
+                            <constraint firstItem="wut-aL-509" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="wSQ-WM-EfW"/>
+                            <constraint firstItem="K6J-U6-KQs" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="16" id="wWo-ep-IzN"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>

@@ -9,10 +9,10 @@
 import Foundation
 
 protocol InteractorOutputProtocol: class {
-  func handleError(_ error: Error, _ result: Result?)
+  func handleError(_ error: Error?, _ result: Result?)
 }
 
 extension InteractorOutputProtocol {
-  func handleError(_ error: Error, _ result: Result? = nil) { }
+  func handleError(_ error: Error?, _ result: Result? = nil) { }
 }
 

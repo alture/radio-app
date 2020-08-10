@@ -7,11 +7,11 @@
 //
 
 protocol RadioPlayerView: class {
-  // TODO: Declare view methods
+  func updateView()
 }
 
 protocol RadioPlayerPresentation: class {
-  // TODO: Declare presentation methods
+  func didTapPlayStopButton()
 }
 
 protocol RadioPlayerUseCase: class {

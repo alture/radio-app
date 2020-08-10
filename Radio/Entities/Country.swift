@@ -8,15 +8,25 @@
 
 import Foundation
 import ObjectMapper
-class Country: Mappable, Equatable {
-  static func == (lhs: Country, rhs: Country) -> Bool {
-    return lhs.id == rhs.id && lhs.name == rhs.name
-  }
+import RealmSwift
+
+final class Country: Object, Mappable, Codable {
+//  static func == (lhs: Country, rhs: Country) -> Bool {
+//    return lhs.id == rhs.id && lhs.name == rhs.name
+//  }
   
-  var id: Int?
-  var name: String?
+  override func isEqual(_ object: Any?) -> Bool {
+    return id == (object as? Country)?.id
+  }
+    
+  @objc dynamic var id: Int = 0
+  @objc dynamic var name: String? = ""
   
   required init?(map: Map) {}
+  
+  required init() {
+    super.init()
+  }
   
   func mapping(map: Map) {
     id <- map["id"]

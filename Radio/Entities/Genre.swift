@@ -8,16 +8,25 @@
 
 import Foundation
 import ObjectMapper
+import RealmSwift
 
-class Genre: Mappable, Equatable {
-  static func == (lhs: Genre, rhs: Genre) -> Bool {
-    return lhs.id == rhs.id && lhs.name == rhs.name
+final class Genre: Object, Mappable, Codable {
+//  static func == (lhs: Genre, rhs: Genre) -> Bool {
+//    return lhs.id == rhs.id && lhs.name == rhs.name
+//  }
+  
+  override func isEqual(_ object: Any?) -> Bool {
+    return id == (object as? Genre)?.id
   }
   
-  var id: Int?
-  var name: String?
+  @objc dynamic var id: Int = 0
+  @objc dynamic var name: String? = ""
   
   required init?(map: Map) {}
+  
+  required init() {
+    super.init()
+  }
   
   func mapping(map: Map) {
     id <- map["id"]

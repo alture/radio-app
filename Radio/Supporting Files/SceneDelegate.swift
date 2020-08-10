@@ -8,6 +8,7 @@
 
 import UIKit
 import AVFoundation
+import RealmSwift
 
 class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
@@ -16,7 +17,16 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 
   func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
     guard let windowScene = (scene as? UIWindowScene) else { return }
+    window = UIWindow(windowScene: windowScene)
+    window!.rootViewController = RadioTabBarViewController()
+    window!.makeKeyAndVisible()
     
+    configureRealm()
+    configureAVFoundation()
+    configureOverrideUserInterfaceStyle()
+  }
+  
+  func configureAVFoundation() {
     let audioSession = AVAudioSession.sharedInstance()
     do {
       try audioSession.setCategory(.playback)
@@ -24,10 +34,22 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     } catch {
         print("Failed to set audio session category.")
     }
-    
-    window = UIWindow(windowScene: windowScene)
-    window?.rootViewController = RadioTabBarViewController()
-    window?.makeKeyAndVisible()
+  }
+  
+  func configureRealm() {
+    let config = Realm.Configuration(
+    schemaVersion: 1,
+    migrationBlock: { migration, oldSchemaVersion in
+        if (oldSchemaVersion < 1) {
+
+        }
+    })
+    Realm.Configuration.defaultConfiguration = config
+  }
+  
+  func configureOverrideUserInterfaceStyle() {
+    let isDarkMode = UserDefaults.standard.bool(forKey: "DarkMode")
+    window!.overrideUserInterfaceStyle = isDarkMode ? .dark : .light
 
   }
 

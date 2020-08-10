@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import RealmSwift
 
 protocol RadioFilterViewControllerDelegate {
   func didTapAppendFilters(_ genres: [Genre], _ countries: [Country])
@@ -19,11 +20,26 @@ final class RadioFilterViewController: BaseViewController {
   var delegate: RadioFilterViewControllerDelegate?
   
   var presenter: RadioFilterPresentation?
-  private var genries: [Genre] = []
-  private var countries: [Country] = []
   
-  private var selectedGenries: [Genre] = []
-  private var selectedCountries: [Country] = []
+  private lazy var realm: Realm = {
+    let rlm: Realm
+    do {
+      rlm = try Realm()
+    } catch let error {
+      fatalError(error.localizedDescription)
+    }
+    return rlm
+  }()
+  
+  private var genries: [Genre] {
+    return Array(realm.objects(Genre.self))
+  }
+  private var countries: [Country] {
+    return Array(realm.objects(Country.self))
+  }
+  
+  var selectedGenries: [Genre] = []
+  var selectedCountries: [Country] = []
   private lazy var tableView: UITableView = {
     let tableView = UITableView(frame: .zero, style: .grouped)
     tableView.delegate = self
@@ -40,18 +56,18 @@ final class RadioFilterViewController: BaseViewController {
   override func viewDidLoad() {
     super.viewDidLoad()
     
-    presenter?.viewDidLoad()
     setupView()
     setupNavigationBar()
+    presenter?.viewDidLoad()
   }
-
+  
   private func setupNavigationBar() {
     let barButtonItem = UIBarButtonItem(
       title: "Готово",
       style: .done,
       target: self,
       action: #selector(didTapDoneButton))
-    barButtonItem.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    barButtonItem.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     navigationItem.rightBarButtonItem = barButtonItem
   }
   
@@ -77,7 +93,7 @@ final class RadioFilterViewController: BaseViewController {
     ])
   }
   
-  @objc private func didTapDoneButton() {
+  @objc private func didTapDoneButton() {    
     dismiss(animated: true) {
       self.delegate?.didTapAppendFilters(self.selectedGenries, self.selectedCountries)
     }
@@ -86,18 +102,17 @@ final class RadioFilterViewController: BaseViewController {
 
 extension RadioFilterViewController: RadioFilterView {
   func updateViewFromModel(_ genre: [Genre], _ country: [Country]) {
-    genries = genre
-    countries = country
-    tableView.beginUpdates()
-    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-    tableView.reloadSections(IndexSet(integer: 1), with: .automatic)
-    tableView.endUpdates()
-    tableView.selectRow(at: IndexPath(row: 0, section: 0),
-                        animated: false,
-                        scrollPosition: .none)
-    tableView.selectRow(at: IndexPath(row: 0, section: 1),
-                        animated: false,
-                        scrollPosition: .none)
+    do {
+      try realm.write {
+        realm.delete(genries)
+        realm.delete(countries)
+        realm.add(genre)
+        realm.add(country)
+      }
+    } catch let error {
+      fatalError(error.localizedDescription)
+    }
+    tableView.reloadData()
     return
   }
 }
@@ -124,15 +139,35 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as! RadioFilterCell
     cell.selectionStyle = .none
-    cell.tintColor = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    cell.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     if indexPath.row == 0 {
       cell.textLabel?.text = indexPath.section == 0
         ? "Все жанры"
         : "Все страны"
+      if indexPath.section == 0 {
+        if selectedGenries.isEmpty {
+          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+      } else {
+        if selectedCountries.isEmpty {
+          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+      }
     } else {
       cell.textLabel?.text = indexPath.section == 0
         ? genries[indexPath.row-1].name
         : countries[indexPath.row-1].name
+
+      if indexPath.section == 0 {
+        if selectedGenries.contains(genries[indexPath.row-1]) {
+          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+      } else {
+        if selectedCountries.contains(countries[indexPath.row-1]) {
+          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+      }
+      
     }
     return cell
   }
