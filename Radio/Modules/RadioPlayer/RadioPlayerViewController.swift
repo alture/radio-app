@@ -91,7 +91,6 @@ final class RadioPlayerViewController: BaseViewController {
     volumeSlider.value = audioSession.outputVolume
     
     let volumeView = MPVolumeView(frame: CGRect(x: -200, y: -200, width: 0.0, height: 0.0))
-//    volumeView.isHidden = true
     view.addSubview(volumeView)
     hiddenSystemVolumeSlider = volumeView.subviews.first(where: { $0 is UISlider }) as! UISlider
   }
@@ -146,9 +145,7 @@ final class RadioPlayerViewController: BaseViewController {
     let alertController = UIAlertController(title: "Выбора размера буффера", message: nil, preferredStyle: .alert)
     alertController.setValue(vc, forKey: "contentViewController")
     alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-    alertController.addAction(UIAlertAction(title: "Готово", style: .default, handler: { (_) in
-//      self.delegate?.didChangeBufferSize(with: self.bufferSize)
-    }))
+    alertController.addAction(UIAlertAction(title: "Готово", style: .default))
     present(alertController, animated: true, completion: nil)
   }
   

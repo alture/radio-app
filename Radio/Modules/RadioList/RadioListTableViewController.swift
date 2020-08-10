@@ -216,6 +216,7 @@ extension RadioListTableViewController: RadioListView {
     allRadioList = model
     radioList = model
     refreshControl?.endRefreshing()
+    loadFilter(selectedGenres, selectedCountries)
     tableView.reloadData()
   }
 }

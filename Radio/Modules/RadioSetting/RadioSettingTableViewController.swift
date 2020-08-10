@@ -91,7 +91,11 @@ final class RadioSettingTableViewController: BaseTableViewController {
     super.viewDidLoad()
     setupTableView()
     setupView()
-    pickerView.selectedRow(inComponent: defaults.integer(forKey: "BufferSizeIndex"))
+  }
+  
+  override func viewDidAppear(_ animated: Bool) {
+    super.viewDidAppear(animated)
+    pickerView.selectRow( defaults.integer(forKey: "BufferSizeIndex"), inComponent: 0, animated: false)
   }
   
   private func setupTableView() {
@@ -125,7 +129,7 @@ final class RadioSettingTableViewController: BaseTableViewController {
     let vc = UIViewController()
     vc.preferredContentSize = CGSize(width: 250, height: 150)
     vc.view.addSubview(pickerView)
-    
+        
     let alertController = UIAlertController(title: "Выбора размера буффера", message: nil, preferredStyle: .alert)
     alertController.setValue(vc, forKey: "contentViewController")
     alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
@@ -243,7 +247,7 @@ extension RadioSettingTableViewController: UIPickerViewDelegate, UIPickerViewDat
   }
   
   func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-    selectedBufferSizeIndex = component
+    selectedBufferSizeIndex = row
   }
 }
 
