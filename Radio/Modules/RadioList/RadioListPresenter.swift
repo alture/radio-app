@@ -42,6 +42,7 @@ extension RadioListPresenter: RadioListPresentation {
 }
 
 extension RadioListPresenter: RadioListInteractorOutput {
+  
   func addedToFavorite() {
     view?.prepareResultView(with: .sucess(text: "Добавлено в изрбанное"))
   }
@@ -52,7 +53,7 @@ extension RadioListPresenter: RadioListInteractorOutput {
   
   func fetchedData(_ data: [Radio], _ type: RadioListType) {
     let availableRadios = data.filter { (radio) -> Bool in
-      return radio.enabled 
+      return radio.enabled
     }
     
     view?.updateViewFromModel(availableRadios)

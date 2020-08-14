@@ -39,16 +39,16 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "3372AA49-8266-464D-B7EB-6A770779F710"
+            uuid = "A2C353AA-3B61-40E4-8F7C-A90E6F7B96C8"
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Radio/Modules/RadioList/RadioListTableViewController.swift"
+            filePath = "Radio/Controllers/BaseTableViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "182"
-            endingLineNumber = "182"
-            landmarkName = "loadFilter(_:_:animated:)"
+            startingLineNumber = "168"
+            endingLineNumber = "168"
+            landmarkName = "handleError(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

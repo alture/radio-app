@@ -32,6 +32,7 @@ final class Radio: Mappable, Codable, Equatable {
   var name: String?
   var rate: Int = 0
   var url: String?
+  var otherUrl: [RadioURL] = []
   
   required init?(map: Map) {}
   
@@ -44,6 +45,17 @@ final class Radio: Mappable, Codable, Equatable {
     logo <- map["logo"]
     name <- map["name"]
     rate <- map["rate"]
+    url <- map["url"]
+    otherUrl <- map["urls"]
+  }
+}
+
+final class RadioURL: Mappable, Codable {
+  var url: String?
+  
+  required init?(map: Map) {}
+  
+  func mapping(map: Map) {
     url <- map["url"]
   }
 }

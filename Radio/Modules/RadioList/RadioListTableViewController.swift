@@ -42,7 +42,28 @@ class RadioListTableViewController: BaseTableViewController {
   private var isSearchBarEmpty: Bool {
     return searchController.searchBar.text?.isEmpty ?? true
   }
-  @IBOutlet weak var emptyView: UIView!
+  
+
+  @IBOutlet var emptyView: UIView!
+  @IBOutlet weak var emptyViewTitle: UILabel!
+  @IBOutlet weak var emptyViewButton: UIButton! {
+    didSet {
+      emptyViewButton.layer.borderWidth = 1.0
+      emptyViewButton.layer.borderColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
+      emptyViewButton.layer.cornerRadius = 3.0
+      emptyViewButton.clipsToBounds = true
+    }
+  }
+  
+  @IBAction func didTapFetch(_ sender: UIButton) {
+    switch type {
+    case .favorite:
+      switchToDataTab()
+    case .all:
+      refresh()
+    }
+  }
+  
   private var tabBar: RadioTabBarViewController {
     return super.parent!.parent as! RadioTabBarViewController
   }
@@ -55,33 +76,36 @@ class RadioListTableViewController: BaseTableViewController {
     
     setupNavigationBar()
     setupTableView()
+    
+    switch type {
+    case .favorite:
+      emptyViewTitle.text = "Список моих станции пуст"
+      emptyViewButton.setTitle("Добавить", for: .normal)
+    case .all:
+      emptyViewTitle.text = "Cтанции еще нет,\nно мы работаем над этим"
+      emptyViewButton.setTitle("Обновить", for: .normal)
+    }
+    
+    tableView.refreshControl?.beginRefreshing()
+    refresh()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
     
-    setupView()
+    refresh()
   }
-    
-  private func setupView() {
-    switch type {
-    case .favorite:
-      presenter?.getFavoriteRadioList()
-    case .all:
-      presenter?.getRadioList()
-    }
-  }
-  
+      
   private func setupNavigationBar() {
     switch type {
     case .favorite:
-      title = "Мои станций"
+      title = "Мои станции"
     case .all:
-      title = "Станций"
+      title = "Станции"
       let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddBarButton))
       addBarButtonItem.tintColor =  #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
       
-      navigationItem.rightBarButtonItems = [addBarButtonItem, filterBarButtonItem]
+      navigationItem.rightBarButtonItems = [filterBarButtonItem]
     }
     
     navigationItem.largeTitleDisplayMode = .always
@@ -102,6 +126,7 @@ class RadioListTableViewController: BaseTableViewController {
   
   private func setupTableView() {
     tableView.backgroundView = emptyView
+    tableView.backgroundView?.isHidden = true
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     
   }
@@ -138,15 +163,24 @@ class RadioListTableViewController: BaseTableViewController {
   @IBAction func didTapAddButton(_ sender: UIButton) {
     presenter?.addNewRadio()
   }
+  
+  private func switchToDataTab() {
+      Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchToDataTabCont), userInfo: nil, repeats: false)
+  }
+
+  @objc private func switchToDataTabCont(){
+      tabBarController!.selectedIndex = 1
+  }
+  
   private func didTapMoreButton(_ radio: Radio) {
 
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    let addAction = UIAlertAction(title: "Добавить в избранное", style: .default) { (_) in
+    let addAction = UIAlertAction(title: "Добавить в Мои станции", style: .default) { (_) in
       self.presenter?.addToFavorite(radio.id)
-      self.prepareResultView(with: .sucess(text: "\(radio.name ?? "Cтанция") - теперь в избранном!"))
+      self.prepareResultView(with: .sucess(text: "Добавлено в Мои станции"))
     }
     
-    let removeAction = UIAlertAction(title: "Удалить", style: .destructive) { (_) in
+    let removeAction = UIAlertAction(title: "Убрать из Моих станции", style: .destructive) { (_) in
       self.presenter?.removeFromFavorite(radio.id)
       switch self.type {
       case .all: break
@@ -155,6 +189,7 @@ class RadioListTableViewController: BaseTableViewController {
           let indexPath = IndexPath(row: index, section: 0)
           self.radioList.remove(at: index)
           self.tableView.deleteRows(at: [indexPath], with: .automatic)
+          self.tableView.backgroundView?.isHidden = !self.radioList.isEmpty
         }
       }
     }
@@ -219,16 +254,16 @@ extension RadioListTableViewController: RadioListView {
   func updateViewFromModel(_ model: [Radio]) {
     allRadioList = model
     radioList = model
-    refreshControl?.endRefreshing()
     loadFilter(selectedGenres, selectedCountries, animated: false)
     tableView.reloadData()
+    refreshControl?.endRefreshing()
+
+    tableView.backgroundView?.isHidden = !model.isEmpty
   }
 }
 
 extension RadioListTableViewController {
   override func numberOfSections(in tableView: UITableView) -> Int {
-    tableView.backgroundView?.isHidden = !radioList.isEmpty
-    tableView.isScrollEnabled = !radioList.isEmpty
     return 1
   }
   
@@ -258,11 +293,15 @@ extension RadioListTableViewController {
       tabBar.playStream()
     } else {
       tabBar.currentRadio = radio
-      tabBar.prepareToPlay()
-      tabBar.playStream()
+      tabBar.prepareToPlay { (isPlayable) in
+        if isPlayable {
+          self.tabBar.playStream()
+        }
+      }
     }
     
-    tableView.reloadData()
+    self.tableView.reloadData()
+
   }
 }
 
@@ -283,7 +322,13 @@ extension RadioListTableViewController: RadioFilterViewControllerDelegate {
 
 extension RadioListTableViewController: RadioAddViewControllerDelegate {
   func radioAdded() {
-    prepareResultView(with: .sucess(text: "Станция в эфире!"))
+    prepareResultView(with: .sucess(text: "Станция появится после модераций"))
+  }
+}
+
+extension RadioListTableViewController: EmptyViewDelegate {
+  func didTapButton() {
+    refresh()
   }
 }
 

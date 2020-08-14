@@ -15,6 +15,7 @@ class RadioTabBarViewController: UITabBarController {
   private var player = AVPlayer()
   private var playerItem: AVPlayerItem!
   private var metadataOutput: AVPlayerItemMetadataOutput!
+  private var currentlyIndex = 0
   private var playerInfo: PlayerInfo? {
     didSet {
       guard let playerInfo = playerInfo else {
@@ -97,7 +98,7 @@ class RadioTabBarViewController: UITabBarController {
     
     let searchVC = RadioListRouter.setupModule()
     searchVC.type = .all
-    searchVC.tabBarItem = UITabBarItem(title: "Станций",
+    searchVC.tabBarItem = UITabBarItem(title: "Станции",
                                        image: UIImage(systemName: "dot.radiowaves.left.and.right"),
                                        tag: 1)
     
@@ -202,11 +203,13 @@ class RadioTabBarViewController: UITabBarController {
   
   func playStream() {
     if isPlaying == false {
-      prepareToPlay()
+      prepareToPlay { (status) in
+        if status  {
+          self.isPlaying = true
+          self.player.play()
+        }
+      }
     }
-    
-    isPlaying = true
-    player.play()
   }
   
   func pauseStream() {
@@ -214,30 +217,70 @@ class RadioTabBarViewController: UITabBarController {
     player.pause()
   }
   
-  func prepareToPlay() {
+  func prepareToPlay(completion: @escaping (Bool) -> ()) {
+    player.replaceCurrentItem(with: nil)
     guard
       let radio = currentRadio,
       let url = radio.url,
       let audioFileURL = URL(string: url)
     else {
-      if let parentVC = parent?.children[0] as? BaseViewController {
-        parentVC.showErrorAlert(with: "Неверный поток")
-      }
-      
-      pauseStream()
+      showErrorAlert(with: "Неверный адресс потока")
       return
     }
     
-    let asset = AVAsset(url: audioFileURL)
-    metadataOutput = AVPlayerItemMetadataOutput()
-    metadataOutput.setDelegate(self, queue: DispatchQueue.main)
-    
-    playerItem = AVPlayerItem(asset: asset)
-    playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
-    player.automaticallyWaitsToMinimizeStalling = true
-    playerItem.add(metadataOutput)
-    
-    player.replaceCurrentItem(with: playerItem)
+    isPlayable(url: audioFileURL) { (status) in
+      if status == true {
+        let asset = AVAsset(url: audioFileURL)
+        self.metadataOutput = AVPlayerItemMetadataOutput()
+        self.metadataOutput.setDelegate(self, queue: DispatchQueue.main)
+          
+        self.playerItem = AVPlayerItem(asset: asset)
+        self.playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
+        self.player.automaticallyWaitsToMinimizeStalling = true
+        self.playerItem.add(self.metadataOutput)
+          
+        self.player.replaceCurrentItem(with: self.playerItem)
+        
+        self.currentlyIndex = 0
+        completion(true)
+      } else {
+        guard
+          self.currentlyIndex < radio.otherUrl.count
+        else {
+          self.showErrorAlert(with: "Станция недоступна")
+          completion(false)
+          return
+        }
+        
+        let nextURL = radio.otherUrl[self.currentlyIndex].url
+        self.currentRadio?.url = nextURL ?? ""
+        self.currentlyIndex += 1
+        self.prepareToPlay { status in
+          completion(status)
+        }
+      }
+    }
+
+
+  }
+  
+  func isPlayable(url: URL, completion: @escaping (Bool) -> ()) {
+      let asset = AVAsset(url: url)
+      let playableKey = "playable"
+      asset.loadValuesAsynchronously(forKeys: [playableKey]) {
+          var error: NSError? = nil
+          let status = asset.statusOfValue(forKey: playableKey, error: &error)
+          let isPlayable = status == .loaded
+          DispatchQueue.main.async {
+              completion(isPlayable)
+          }
+      }
+  }
+  
+  func showErrorAlert(with message: String) {
+    let alertController = UIAlertController(title: nil, message: message, preferredStyle: .alert)
+    alertController.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+    present(alertController, animated: true, completion: nil)
   }
 }
 
