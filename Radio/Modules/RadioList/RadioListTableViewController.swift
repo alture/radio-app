@@ -17,8 +17,6 @@ enum RadioListType {
 class RadioListTableViewController: BaseTableViewController {
   
   // MARK: Properties
-  
-  
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
   private var allRadioList: [Radio] = []
@@ -293,11 +291,7 @@ extension RadioListTableViewController {
       tabBar.playStream()
     } else {
       tabBar.currentRadio = radio
-      tabBar.prepareToPlay { (isPlayable) in
-        if isPlayable {
-          self.tabBar.playStream()
-        }
-      }
+      tabBar.playStream()
     }
     
     self.tableView.reloadData()

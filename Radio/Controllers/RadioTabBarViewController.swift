@@ -51,7 +51,7 @@ class RadioTabBarViewController: UITabBarController {
                               author: "-",
                               image: radio.logo,
                               isPlaying: isPlaying)
-      
+      radioInfoView.isPlayble = true
       radioInfoView.titleLabel.text = radio.name
       if let radioLogoString = radio.logo {
         radioInfoView.logoImageView.load(radioLogoString)
@@ -202,13 +202,12 @@ class RadioTabBarViewController: UITabBarController {
   }
   
   func playStream() {
-    if isPlaying == false {
-      prepareToPlay { (status) in
-        if status  {
-          self.isPlaying = true
-          self.player.play()
-        }
+    let startingTime = Date().timeIntervalSince1970
+    prepareToPlay { (isSucess) in
+      if isSucess {
+        debugPrint("Ending at: \(((Date().timeIntervalSince1970 - startingTime) * 1000.0).rounded())")
       }
+      self.isPlaying = isSucess
     }
   }
   
@@ -242,6 +241,7 @@ class RadioTabBarViewController: UITabBarController {
         self.player.replaceCurrentItem(with: self.playerItem)
         
         self.currentlyIndex = 0
+        self.player.play()
         completion(true)
       } else {
         guard

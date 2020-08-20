@@ -85,7 +85,7 @@ final class RadioSettingTableViewController: BaseTableViewController {
   private lazy var titleLabel: UILabel = {
     let label = UILabel(frame: .zero)
     label.numberOfLines = 2
-    label.text = "Radio & Music\nv1.0"
+    label.text = "Radio & Music\nv\(UIApplication.appVersion ?? "1.0")"
     label.textAlignment = .center
     label.textColor = .systemGray2
     return label
@@ -283,4 +283,10 @@ extension RadioSettingTableViewController: MFMailComposeViewControllerDelegate {
 
 extension RadioSettingTableViewController: RadioSettingView {
   // TODO: implement view output methods
+}
+
+extension UIApplication {
+  static var appVersion: String? {
+    return Bundle.main.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+  }
 }

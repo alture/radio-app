@@ -16,6 +16,11 @@ protocol RadioInfoViewDelegate {
 class RadioInfoView: UIView {
 
   var delegate: RadioInfoViewDelegate?
+  var isPlayble: Bool = false {
+    didSet {
+      playButton.isUserInteractionEnabled = isPlayble
+    }
+  }
   
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var logoImageView: UIImageView! {
@@ -26,7 +31,11 @@ class RadioInfoView: UIView {
     }
   }
   @IBOutlet weak var titleLabel: UILabel!
-  @IBOutlet weak var playButton: UIButton!
+  @IBOutlet weak var playButton: UIButton! {
+    didSet {
+      playButton.isUserInteractionEnabled = false
+    }
+  }
   @IBAction func didTapPlayButton(_ sender: UIButton) {
     delegate?.didTapPlayButton()
   }

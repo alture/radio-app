@@ -55,7 +55,7 @@ extension RadioListPresenter: RadioListInteractorOutput {
     let availableRadios = data.filter { (radio) -> Bool in
       return radio.enabled
     }
-    
+
     view?.updateViewFromModel(availableRadios)
   }
 }
