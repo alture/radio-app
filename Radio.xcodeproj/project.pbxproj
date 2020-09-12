@@ -9,8 +9,10 @@
 /* Begin PBXBuildFile section */
 		900B1B1D473F6EE098F21A04 /* Pods_Radio.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2BD9AE632015996638F845F6 /* Pods_Radio.framework */; };
 		9A0126C124B3E3670027A431 /* RoundedTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0126C024B3E3670027A431 /* RoundedTextField.swift */; };
-		9A204EC224CE8D650004E2EB /* Player.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A204EC124CE8D650004E2EB /* Player.swift */; };
 		9A3A422A24DFAD0100033416 /* RadioControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3A422924DFAD0100033416 /* RadioControl.swift */; };
+		9A3B8F3D2500F74900FA4DE2 /* InfoAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B8F3C2500F74900FA4DE2 /* InfoAPI.swift */; };
+		9A3B8F3F2500F8F100FA4DE2 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */; };
+		9A3B8F412506593200FA4DE2 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B8F402506593200FA4DE2 /* Track.swift */; };
 		9A421B7D24D725880016DA43 /* FilterHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A421B7C24D725880016DA43 /* FilterHelper.swift */; };
 		9A43A31A24B9DA1700974171 /* RadioPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A43A31524B9DA1700974171 /* RadioPlayerContract.swift */; };
 		9A43A31B24B9DA1700974171 /* RadioPlayerPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A43A31624B9DA1700974171 /* RadioPlayerPresenter.swift */; };
@@ -73,8 +75,10 @@
 		2BD9AE632015996638F845F6 /* Pods_Radio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Radio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.debug.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0126C024B3E3670027A431 /* RoundedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
-		9A204EC124CE8D650004E2EB /* Player.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Player.swift; sourceTree = "<group>"; };
 		9A3A422924DFAD0100033416 /* RadioControl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioControl.swift; sourceTree = "<group>"; };
+		9A3B8F3C2500F74900FA4DE2 /* InfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAPI.swift; sourceTree = "<group>"; };
+		9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+ModelName.swift"; sourceTree = "<group>"; };
+		9A3B8F402506593200FA4DE2 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Radio/Controllers/Track.swift; sourceTree = SOURCE_ROOT; };
 		9A421B7C24D725880016DA43 /* FilterHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterHelper.swift; sourceTree = "<group>"; };
 		9A43A31524B9DA1700974171 /* RadioPlayerContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayerContract.swift; sourceTree = "<group>"; };
 		9A43A31624B9DA1700974171 /* RadioPlayerPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayerPresenter.swift; sourceTree = "<group>"; };
@@ -165,6 +169,7 @@
 				9A6B903524A6446C002FE34A /* CountryAPI.swift */,
 				9A6B903924A64EB9002FE34A /* GenreAPI.swift */,
 				9A43A32524BDDA4C00974171 /* Connectivity.swift */,
+				9A3B8F3C2500F74900FA4DE2 /* InfoAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -249,7 +254,7 @@
 				9A6B902A24A62B90002FE34A /* Country.swift */,
 				9A6B902C24A62C19002FE34A /* Genre.swift */,
 				9A6B902E24A62E50002FE34A /* Radio.swift */,
-				9A204EC124CE8D650004E2EB /* Player.swift */,
+				9A3B8F402506593200FA4DE2 /* Track.swift */,
 				9A421B7C24D725880016DA43 /* FilterHelper.swift */,
 				9A9F31EA24DA41A100D8DCF7 /* RadioHelper.swift */,
 			);
@@ -292,6 +297,7 @@
 				9A74E22024A809590059E48B /* UIImageView+LoadImg.swift */,
 				9A50F31524DC0A36006C0C5E /* UIStackView+AddSubviews.swift */,
 				9A6D533E24E166D100A1A214 /* UIImageView+DropShadow.swift */,
+				9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -524,10 +530,12 @@
 				9AC193DC24AB87E000C03C31 /* RadioFilterInteractor.swift in Sources */,
 				9AC9BA8824DC0658007B937B /* RadioSettingTableViewController.swift in Sources */,
 				9AD7481024B4AFA500ACE8E5 /* ResultView.swift in Sources */,
+				9A3B8F3D2500F74900FA4DE2 /* InfoAPI.swift in Sources */,
 				9A9F31EB24DA41A100D8DCF7 /* RadioHelper.swift in Sources */,
 				9A5DE3E424D5B35E00CE13D1 /* RadioVolumeSlider.swift in Sources */,
 				9AC9BA8724DC0658007B937B /* RadioSettingRouter.swift in Sources */,
 				9A6D533F24E166D100A1A214 /* UIImageView+DropShadow.swift in Sources */,
+				9A3B8F412506593200FA4DE2 /* Track.swift in Sources */,
 				9A43A31B24B9DA1700974171 /* RadioPlayerPresenter.swift in Sources */,
 				9A6B902B24A62B90002FE34A /* Country.swift in Sources */,
 				9A6B902F24A62E50002FE34A /* Radio.swift in Sources */,
@@ -543,6 +551,7 @@
 				9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */,
 				9AAE469C24A754FD005879AB /* RadioListRouter.swift in Sources */,
 				9AAE46A024A756D7005879AB /* RadioListTableViewCell.swift in Sources */,
+				9A3B8F3F2500F8F100FA4DE2 /* UIDevice+ModelName.swift in Sources */,
 				9A74E21E24A7E6800059E48B /* RadioInfoView.swift in Sources */,
 				9AC193E824B3AFFA00C03C31 /* RadioAddRouter.swift in Sources */,
 				9A74E22124A809590059E48B /* UIImageView+LoadImg.swift in Sources */,
@@ -556,7 +565,6 @@
 				9A6B902924A6291A002FE34A /* BaseViewController.swift in Sources */,
 				9AC193E024AB9EAC00C03C31 /* RadioFilterCellTableViewCell.swift in Sources */,
 				9A43A31A24B9DA1700974171 /* RadioPlayerContract.swift in Sources */,
-				9A204EC224CE8D650004E2EB /* Player.swift in Sources */,
 				9A6B902D24A62C19002FE34A /* Genre.swift in Sources */,
 				9A9B60A824E55CAF00D59D59 /* RadioPlayer.swift in Sources */,
 				9AC9BA8524DC0658007B937B /* RadioSettingContract.swift in Sources */,
@@ -709,7 +717,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = Radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -717,7 +725,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "Радио";
 				SWIFT_VERSION = 5.0;
@@ -731,7 +739,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 13;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = Radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
@@ -739,7 +747,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.1;
+				MARKETING_VERSION = 1.2;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "Радио";
 				SWIFT_VERSION = 5.0;

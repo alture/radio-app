@@ -18,7 +18,8 @@ final class RadioListTableViewCell: UITableViewCell {
   
   var isPlaying: Bool = false {
     didSet {
-      isPlayingImage.isHidden = !isPlaying
+//      isPlayingImage.isHidden = !isPlaying
+      radioTitleLabel.textColor = isPlaying ? #colorLiteral(red: 0.9024619972, green: 0, blue: 0, alpha: 1) : .label
     }
   }
   
@@ -36,6 +37,7 @@ final class RadioListTableViewCell: UITableViewCell {
     didSet {
       isPlayingImage.layer.cornerRadius = 5.0
       isPlayingImage.clipsToBounds = true
+      isPlayingImage.isHidden = true
     }
   }
   @IBOutlet weak var moreButton: UIImageView! {

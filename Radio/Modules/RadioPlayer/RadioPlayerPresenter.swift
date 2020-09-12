@@ -16,11 +16,20 @@ final class RadioPlayerPresenter {
 }
 
 extension RadioPlayerPresenter: RadioPlayerPresentation {
-  func didTapPlayStopButton() {
-    view?.updateView()
+  func didTapAddToFavorite(with id: Int) {
+    interactor?.addFavoriteRadio(with: id)
   }
+  
+  func didTapPlayStopButton() {
+   
+  }  
+  
 }
 
 extension RadioPlayerPresenter: RadioPlayerInteractorOutput {
+  func addedNewRadio() {
+    view?.radioAdded()
+  }
+  
   // TODO: implement interactor output methods
 }

@@ -10,17 +10,13 @@ import UIKit
 import AVFoundation
 import MediaPlayer
 
-protocol RadioPlayerViewControllerDelegate {
-  func didTapPlayStopButton()
-}
-
 final class RadioPlayerViewController: BaseViewController {
   
   // MARK: Properties
+  @objc dynamic var radioPlayer = RadioPlayer.shared
+  var observations = [NSKeyValueObservation]()
   
   var presenter: RadioPlayerPresentation?
-  var delegate: RadioPlayerViewControllerDelegate?
-  var playerInfo: PlayerInfo?
   private lazy var hiddenSystemVolumeSlider: UISlider = {
     let slider = UISlider(frame: .zero)
     return slider
@@ -70,11 +66,11 @@ final class RadioPlayerViewController: BaseViewController {
   }
   @IBOutlet weak var trackNameLabel: UILabel!
   @IBOutlet weak var authorNameLabel: UILabel!
-  @IBOutlet weak var optionImageView: UIImageView! {
+  @IBOutlet weak var plusImageView: UIImageView! {
     didSet {
       let tap = UITapGestureRecognizer(target: self,
                                        action: #selector(didTapOption))
-      optionImageView.addGestureRecognizer(tap)
+      plusImageView.addGestureRecognizer(tap)
     }
   }
   @IBOutlet weak var playStopButton: UIImageView! {
@@ -85,21 +81,82 @@ final class RadioPlayerViewController: BaseViewController {
     }
   }
   
+  @IBOutlet weak var prevButtonImage: UIImageView! {
+    didSet {
+      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapPrevButton))
+      prevButtonImage.addGestureRecognizer(tap)
+    }
+  }
+  @IBOutlet weak var nextButtonImage: UIImageView! {
+    didSet {
+      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapNextButton))
+      nextButtonImage.addGestureRecognizer(tap)
+    }
+  }
+  
+  private func updateControls() {
+    var isEnabled = radioPlayer.currentRadio?.prevStation != nil
+    prevButtonImage.isUserInteractionEnabled = isEnabled
+    prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    
+    isEnabled = radioPlayer.currentRadio?.nextStation != nil
+    nextButtonImage.isUserInteractionEnabled = isEnabled
+    nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    
+    isPlaying = radioPlayer.state == .playing
+  }
+  
+  private func updateLabels() {
+    let player = RadioPlayer.shared
+    trackNameLabel.text = player.track.trackName
+    authorNameLabel.text = player.track.artistName
+    if let logoURL = player.track.trackCover {
+      imageView.load(logoURL)
+    }
+  }
+  
   // MARK: Lifecycle
   
   override func viewDidLoad() {
     super.viewDidLoad()
     view.addSubview(volumeView)
+    observations = [
+      radioPlayer.observe(\.currentRadio,
+                          options: [.new, .old],
+                          changeHandler: { (player, value) in
+                            if let radio = player.currentRadio {
+                              let currentImageName = radio.rate > 0
+                                ? "plus"
+                                : "checkmark"
+                              self.plusImageView.image = UIImage(systemName: currentImageName)
+                            }
+                            self.updateControls()
+      }),
+      radioPlayer.observe(\.track,
+                          options: [.new, .old],
+                          changeHandler: { (player, value) in
+                            self.updateLabels()
+      }),
+      radioPlayer.observe(\.state,
+                          options: [.new, .old],
+                          changeHandler: { (player, value) in
+                            switch player.state {
+                            case .playing: self.isPlaying = true
+                            case .stoped: self.isPlaying = false
+                            case .fail: self.showErrorAlert(with: "Не удается воспроизвести поток")
+                            }
+      })]
+    updateControls()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    
-    configure()
-    
+        
     let audioSession = AVAudioSession.sharedInstance()
     audioSession.addObserver(self, forKeyPath: "outputVolume", options: NSKeyValueObservingOptions.new, context: nil)
     volumeSlider.value = audioSession.outputVolume
+    updateLabels()
+    updateControls()
   }
   
   override func viewDidDisappear(_ animated: Bool) {
@@ -121,38 +178,28 @@ final class RadioPlayerViewController: BaseViewController {
     containerView.backgroundColor = .red
   }
   
-  func configure() {
-    guard let playerInfo = playerInfo else {
-      isPlaying = false
-      return
-    }
-    
-    trackNameLabel?.text = playerInfo.title
-    authorNameLabel?.text = playerInfo.author
-    if let imgURL = playerInfo.image {
-      imageView.load(imgURL)
-    } else {
-      imageView.image = UIImage(named: "default-2")
-    }
-    
-    isPlaying = playerInfo.isPlaying
-  }
-  
   @objc private func didTapPlayStopButton() {
-    delegate?.didTapPlayStopButton()
-    isPlaying = playerInfo?.isPlaying ?? false
+    if isPlaying {
+      radioPlayer.stopRadio()
+    } else {
+      radioPlayer.playRadio()
+    }
   }
   
   @objc private func didTapOption() {
-    let vc = UIViewController()
-    vc.preferredContentSize = CGSize(width: 250, height: 150)
-    vc.view.addSubview(pickerView)
-    
-    let alertController = UIAlertController(title: "Выбора размера буффера", message: nil, preferredStyle: .alert)
-    alertController.setValue(vc, forKey: "contentViewController")
-    alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-    alertController.addAction(UIAlertAction(title: "Готово", style: .default))
-    present(alertController, animated: true, completion: nil)
+    if let currentRadio = RadioPlayer.shared.currentRadio {
+      presenter?.didTapAddToFavorite(with: currentRadio.id)
+      currentRadio.rate = 1
+      plusImageView.image = UIImage(systemName: "checkmark")
+    }
+  }
+  
+  @objc private func didTapPrevButton() {
+    radioPlayer.prevStation()
+  }
+  
+  @objc private func didTapNextButton() {
+    radioPlayer.nextStation()
   }
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
@@ -164,8 +211,8 @@ final class RadioPlayerViewController: BaseViewController {
 }
 
 extension RadioPlayerViewController: RadioPlayerView {
-  func updateView() {
-    
+  func radioAdded() {
+//    prepareResultView(with: .sucess(text: "Станция в эфире"), .showAndHide)
   }
 }
 

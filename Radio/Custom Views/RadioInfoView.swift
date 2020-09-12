@@ -14,11 +14,29 @@ protocol RadioInfoViewDelegate {
 }
 
 class RadioInfoView: UIView {
-
-  var delegate: RadioInfoViewDelegate?
-  var isPlayble: Bool = false {
+  
+  var track: Track? {
     didSet {
-      playButton.isUserInteractionEnabled = isPlayble
+      guard let track = track else {
+        return
+      }
+      
+      titleLabel.text = track.trackName
+      if let trackCover = track.trackCover {
+        logoImageView.load(trackCover)
+      } else {
+        logoImageView.image = UIImage(named: "default-2")
+      }
+      playButton.isUserInteractionEnabled = true
+    }
+  }
+  var delegate: RadioInfoViewDelegate?
+  var isPlaying: Bool = false {
+    didSet {
+      playButton.setImage(UIImage(systemName: isPlaying
+        ? "stop.fill"
+        : "play.fill" ),
+                          for: .normal)
     }
   }
   

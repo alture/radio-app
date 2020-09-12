@@ -6,22 +6,23 @@
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
-protocol RadioPlayerView: class {
-  func updateView()
+protocol RadioPlayerView: BaseViewController {
+  func radioAdded()
 }
 
 protocol RadioPlayerPresentation: class {
   func didTapPlayStopButton()
+  func didTapAddToFavorite(with id: Int)
 }
 
 protocol RadioPlayerUseCase: class {
-  // TODO: Declare use case methods
+  func addFavoriteRadio(with id: Int)
 }
 
 protocol RadioPlayerInteractorOutput: InteractorOutputProtocol {
-  // TODO: Declare interactor output methods
+  func addedNewRadio()
 }
 
 protocol RadioPlayerWireframe: class {
-  // TODO: Declare wireframe methods
+  
 }

@@ -10,18 +10,10 @@ import Foundation
 import ObjectMapper
 import RealmSwift
 
-final class Radio: Mappable, Codable, Equatable {
-  static func == (lhs: Radio, rhs: Radio) -> Bool {
-    return lhs.id == rhs.id
+final class Radio: NSObject, Mappable, Codable {
+  override func isEqual(_ object: Any?) -> Bool {
+    return id == (object as? Radio)?.id
   }
-  
-//  override static func ignoredProperties() -> [String] {
-//      return ["id"]
-//  }
-  
-//  override func isEqual(_ object: Any?) -> Bool {
-//    return id == (object as? Radio)?.id
-//  }
   
   var country: Country?
   var enabled: Bool = false
@@ -32,7 +24,12 @@ final class Radio: Mappable, Codable, Equatable {
   var name: String?
   var rate: Int = 0
   var url: String?
+  var currentUrlIndex = 0
   var otherUrl: [RadioURL] = []
+  var nextStation: Radio?
+  var prevStation: Radio?
+  
+  override init() {}
   
   required init?(map: Map) {}
   

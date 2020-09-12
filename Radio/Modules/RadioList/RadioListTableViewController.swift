@@ -16,9 +16,14 @@ enum RadioListType {
 
 class RadioListTableViewController: BaseTableViewController {
   
-  // MARK: Properties
+  // MARK: - Properties
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
+  @objc var radioPlayer = RadioPlayer.shared
+  private var observations = [NSKeyValueObservation]()
+  
+  
+  // MARK: - Private Properties
   private var allRadioList: [Radio] = []
   private var radioList: [Radio] = []
   
@@ -40,7 +45,6 @@ class RadioListTableViewController: BaseTableViewController {
   private var isSearchBarEmpty: Bool {
     return searchController.searchBar.text?.isEmpty ?? true
   }
-  
 
   @IBOutlet var emptyView: UIView!
   @IBOutlet weak var emptyViewTitle: UILabel!
@@ -67,13 +71,14 @@ class RadioListTableViewController: BaseTableViewController {
   }
   
   private lazy var searchController: UISearchController = UISearchController()
-  // MARK: Lifecycle
   
+  // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     
     setupNavigationBar()
     setupTableView()
+    setupObserver()
     
     switch type {
     case .favorite:
@@ -85,7 +90,6 @@ class RadioListTableViewController: BaseTableViewController {
     }
     
     tableView.refreshControl?.beginRefreshing()
-    refresh()
   }
   
   override func viewDidAppear(_ animated: Bool) {
@@ -94,13 +98,32 @@ class RadioListTableViewController: BaseTableViewController {
     refresh()
   }
       
+  // MARK: - Setup
+  private func setupObserver() {
+    observations = [
+      radioPlayer.observe(\.currentRadio,
+                                    options: .initial,
+                                   changeHandler: { (radio, value) in
+                                    self.tableView.reloadData()
+      }),
+      radioPlayer.observe(\.state,
+                           options: .initial,
+                           changeHandler: { (player, value) in
+                            if player.state == .fail {
+                              self.showErrorAlert(with: "Не удается воспроизвести поток")
+                            }
+      })]
+  }
+  
   private func setupNavigationBar() {
     switch type {
     case .favorite:
       title = "Мои станции"
     case .all:
       title = "Станции"
-      let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add, target: self, action: #selector(didTapAddBarButton))
+      let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
+                                             target: self,
+                                             action: #selector(didTapAddBarButton))
       addBarButtonItem.tintColor =  #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
       
       navigationItem.rightBarButtonItems = [filterBarButtonItem]
@@ -274,7 +297,7 @@ extension RadioListTableViewController {
     let currentRadioList = isFiltering ? filteredRadioList : radioList
     let radio = currentRadioList[indexPath.row]
     cell.radio = radio
-    cell.isPlaying = tabBar.currentRadio == radio
+    cell.isPlaying = radioPlayer.currentRadio == radio
     cell.didTapMoreButton = { radio in
       self.didTapMoreButton(radio)
     }
@@ -285,17 +308,8 @@ extension RadioListTableViewController {
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let currentRadioList = isFiltering ? filteredRadioList : radioList
     let radio = currentRadioList[indexPath.row]
-    if tabBar.currentRadio == radio && tabBar.isPlaying {
-      tabBar.pauseStream()
-    } else if tabBar.currentRadio == radio {
-      tabBar.playStream()
-    } else {
-      tabBar.currentRadio = radio
-      tabBar.playStream()
-    }
-    
-    self.tableView.reloadData()
-
+    radioPlayer.currentRadio = radio
+    radioPlayer.playRadio()
   }
 }
 

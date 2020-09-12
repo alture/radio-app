@@ -6,6 +6,7 @@
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
+import UIKit
 final class RadioListPresenter {
   
   // MARK: Properties
@@ -52,7 +53,14 @@ extension RadioListPresenter: RadioListInteractorOutput {
   }
   
   func fetchedData(_ data: [Radio], _ type: RadioListType) {
+    var prevRadio: Radio?
     let availableRadios = data.filter { (radio) -> Bool in
+      if let prevRadio = prevRadio {
+        prevRadio.nextStation = radio
+        radio.prevStation = prevRadio
+      }
+      
+      prevRadio = radio
       return radio.enabled
     }
 

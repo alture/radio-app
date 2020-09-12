@@ -10,11 +10,7 @@ import Foundation
 import ObjectMapper
 import RealmSwift
 
-final class Genre: Object, Mappable, Codable {
-//  static func == (lhs: Genre, rhs: Genre) -> Bool {
-//    return lhs.id == rhs.id && lhs.name == rhs.name
-//  }
-  
+final class Genre: Object, Mappable, Codable {  
   override func isEqual(_ object: Any?) -> Bool {
     return id == (object as? Genre)?.id
   }
