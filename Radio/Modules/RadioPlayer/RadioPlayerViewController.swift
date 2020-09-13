@@ -103,7 +103,15 @@ final class RadioPlayerViewController: BaseViewController {
     nextButtonImage.isUserInteractionEnabled = isEnabled
     nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
     
-    isPlaying = radioPlayer.state == .playing
+    switch radioPlayer.state {
+    case .playing, .loading:
+      isPlaying = true
+    case .stoped:
+      isPlaying = false
+    case .fail:
+      // Error Handle
+      break
+    }
   }
   
   private func updateLabels() {
@@ -112,6 +120,8 @@ final class RadioPlayerViewController: BaseViewController {
     authorNameLabel.text = player.track.artistName
     if let logoURL = player.track.trackCover {
       imageView.load(logoURL)
+    } else {
+      imageView.image = UIImage(named: "default-2")
     }
   }
   
@@ -138,10 +148,10 @@ final class RadioPlayerViewController: BaseViewController {
                             self.updateLabels()
       }),
       radioPlayer.observe(\.state,
-                          options: [.new, .old],
+                          options: [.initial],
                           changeHandler: { (player, value) in
                             switch player.state {
-                            case .playing: self.isPlaying = true
+                            case .playing, .loading: self.isPlaying = true
                             case .stoped: self.isPlaying = false
                             case .fail: self.showErrorAlert(with: "Не удается воспроизвести поток")
                             }

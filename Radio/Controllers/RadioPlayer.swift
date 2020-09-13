@@ -11,9 +11,10 @@ import AVFoundation
 import MediaPlayer
 
 final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
-  @objc enum RadioPlayerState: Int{
-    case stoped
+  @objc enum RadioPlayerState: Int {
+    case loading
     case playing
+    case stoped
     case fail
   }
   
@@ -24,6 +25,12 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     radioPlayer.setupNotificationCenter()
     return radioPlayer
   }()
+  
+  private var playerItemContext = 0
+  let requiredAssetKeys = [
+      "playable",
+      "hasProtectedContent"
+  ]
   
   @objc dynamic var currentRadio: Radio? {
     didSet(newValue)  {
@@ -43,10 +50,18 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   
   @objc dynamic var state: RadioPlayerState = .stoped {
     didSet {
-//      track.isPlaying = state == .playing
+      switch state {
+      case .loading:
+        print("Player Loading")
+      case .playing:
+        print("Player Playing")
+      case .stoped:
+        print("Player Stopped")
+      case .fail:
+        print("Player Fail")
+      }
     }
   }
-  
   @objc dynamic var track = Track(trackName: "Не воспроизводится",
                                   artistName: " ") {
     didSet {
@@ -67,6 +82,44 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     super.init()
     setupMediaPlayer()
     setupNotificationCenter()
+  }
+  
+  override func observeValue(forKeyPath keyPath: String?,
+                             of object: Any?,
+                             change: [NSKeyValueChangeKey : Any]?,
+                             context: UnsafeMutableRawPointer?) {
+    
+    guard context == &playerItemContext else {
+      super.observeValue(forKeyPath: keyPath,
+                         of: object,
+                         change: change,
+                         context: context)
+      return
+    }
+    
+    if keyPath == #keyPath(AVPlayerItem.status) {
+      let status: AVPlayerItem.Status
+      if let statusNumber = change?[.newKey] as? NSNumber {
+        status = AVPlayerItem.Status(rawValue: statusNumber.intValue)!
+      } else {
+        status = .unknown
+      }
+      
+      // Switch over status value
+      switch status {
+      case .readyToPlay:
+        state = .playing
+        break
+      case .failed:
+        state = .fail
+        break
+      case .unknown:
+        break
+        // Player item is not yet ready.
+      @unknown default:
+        break
+      }
+    }
   }
   
   // MARK: - Setup
@@ -124,8 +177,8 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     NotificationCenter.default.addObserver(forName: .AVPlayerItemPlaybackStalled,
                                            object: nil,
                                            queue: nil) { (_) in
-                                            print("PlaybackIsStalled")
-//                                            self.pauseRadio()
+                                            self.stopRadio()
+                                            self.state = .fail
     }
     
     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
@@ -145,11 +198,11 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   // MARK: - Methods
   func playRadio() {
     player.isMuted = true
+    state = .loading
     prepareToPlay { (isSucess) in
       if isSucess {
         self.player.isMuted = false
         self.player.play()
-        self.state = .playing
       } else {
         self.state = .fail
       }
@@ -158,7 +211,9 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   
   func stopRadio() {
     player.pause()
-    state = .stoped
+    if state != .fail {
+      state = .stoped
+    }
   }
   
   // MARK: - Private Methods
@@ -194,6 +249,10 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         self.playerItem = AVPlayerItem(asset: asset)
         self.playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
         self.player.automaticallyWaitsToMinimizeStalling = true
+        self.playerItem.addObserver(self,
+                               forKeyPath: #keyPath(AVPlayerItem.status),
+                               options: [.old, .new],
+                               context: &self.playerItemContext)
         self.playerItem.add(self.metadataOutput)
         self.player = AVPlayer(playerItem: self.playerItem)
         radio.currentUrlIndex = 0
@@ -282,7 +341,9 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
          return
        }
 
-      self.track = Track(trackName: trackName, artistName: artistName, trackCover: currentRadio?.logo)
+      self.track = Track(trackName: trackName,
+                         artistName: artistName,
+                         trackCover: currentRadio?.logo)
      }
    }
 }

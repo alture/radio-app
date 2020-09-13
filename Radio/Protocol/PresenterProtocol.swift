@@ -12,7 +12,3 @@ protocol InteractorOutputProtocol: class {
   func handleError(_ error: Error?, _ result: Result?)
 }
 
-extension InteractorOutputProtocol {
-  func handleError(_ error: Error?, _ result: Result? = nil) { }
-}
-

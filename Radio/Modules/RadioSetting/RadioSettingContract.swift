@@ -6,7 +6,7 @@
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
-protocol RadioSettingView: class {
+protocol RadioSettingView: BaseTableViewController {
   // TODO: Declare view methods
 }
 

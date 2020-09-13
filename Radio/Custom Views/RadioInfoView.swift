@@ -32,7 +32,7 @@ class RadioInfoView: UIView {
   }
   var delegate: RadioInfoViewDelegate?
   var isPlaying: Bool = false {
-    didSet {
+    didSet {      
       playButton.setImage(UIImage(systemName: isPlaying
         ? "stop.fill"
         : "play.fill" ),
@@ -40,6 +40,17 @@ class RadioInfoView: UIView {
     }
   }
   
+  var isLoading: Bool = false {
+    didSet {
+      if isLoading {
+        progressBarView.startAnimation()
+      } else {
+        progressBarView.stopAnimation()
+      }
+    }
+  }
+  
+  @IBOutlet weak var progressBarView: RadioProgressBar!
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var logoImageView: UIImageView! {
     didSet {
@@ -76,7 +87,6 @@ class RadioInfoView: UIView {
     addSubview(contentView)
     contentView.frame = bounds
     contentView.autoresizingMask = [.flexibleWidth, .flexibleHeight]
-    
   }
   
   @objc private func didTapSelf() {

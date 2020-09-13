@@ -123,7 +123,7 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
                                           constant: 16.0),
       resultView.trailingAnchor.constraint(equalTo: topViewController.view.trailingAnchor,
                                            constant: -16.0),
-      resultView.heightAnchor.constraint(equalToConstant: 40.0)
+      resultView.heightAnchor.constraint(equalToConstant: 35.0)
     ])
     
   }
@@ -164,11 +164,13 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
 }
 
 extension BaseTableViewController: InteractorOutputProtocol {
-  private func handleError(_ error: Error, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: Result?) {
     if let result = result {
       prepareResultView(with: result)
     } else {
-      showErrorAlert(with: error.localizedDescription)
+      if let error = error {
+        showErrorAlert(with: error.localizedDescription)
+      }
     }
   }
 }

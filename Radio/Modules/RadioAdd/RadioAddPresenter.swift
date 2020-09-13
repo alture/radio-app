@@ -23,6 +23,10 @@ extension RadioAddPresenter: RadioAddPresentation {
 }
 
 extension RadioAddPresenter: RadioAddInteractorOutput {
+  func handleError(_ error: Error?, _ result: Result?) {
+    view?.handleError(error, result)
+  }
+  
   func addedNewRadio() {
     view?.dismiss()
   }

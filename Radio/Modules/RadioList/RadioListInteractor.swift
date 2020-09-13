@@ -20,7 +20,7 @@ extension RadioListInteractor: RadioListUseCase {
     case .all:
       RadioAPI.getRadios { (response, error) in
         if let error = error {
-          self.output?.handleError(error)
+          self.output?.handleError(error, .failure(text: error.localizedDescription))
           return
         }
         if let radios = response as? [Radio] {
@@ -30,7 +30,7 @@ extension RadioListInteractor: RadioListUseCase {
     case .favorite:
       RadioAPI.getFavoriteRadios { (response, error) in
         if let error = error {
-          self.output?.handleError(error)
+          self.output?.handleError(error, .failure(text: error.localizedDescription))
           return
         }
         
@@ -44,7 +44,7 @@ extension RadioListInteractor: RadioListUseCase {
   func addData(id: Int) {
     RadioAPI.addToFavorite(id) { (error) in
       if let error = error {
-        self.output?.handleError(error)
+        self.output?.handleError(error, nil)
         return
       }
     }
@@ -53,7 +53,7 @@ extension RadioListInteractor: RadioListUseCase {
   func removeData(id: Int) {
     RadioAPI.removeFromFavorite(id) { (error) in
       if let error = error {
-        self.output?.handleError(error)
+        self.output?.handleError(error, nil)
         return
       }
     }
