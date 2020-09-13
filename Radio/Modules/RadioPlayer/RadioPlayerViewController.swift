@@ -136,8 +136,8 @@ final class RadioPlayerViewController: BaseViewController {
                           changeHandler: { (player, value) in
                             if let radio = player.currentRadio {
                               let currentImageName = radio.rate > 0
-                                ? "plus"
-                                : "checkmark"
+                                ? "checkmark"
+                                : "plus"
                               self.plusImageView.image = UIImage(systemName: currentImageName)
                             }
                             self.updateControls()
@@ -198,9 +198,16 @@ final class RadioPlayerViewController: BaseViewController {
   
   @objc private func didTapOption() {
     if let currentRadio = RadioPlayer.shared.currentRadio {
-      presenter?.didTapAddToFavorite(with: currentRadio.id)
-      currentRadio.rate = 1
-      plusImageView.image = UIImage(systemName: "checkmark")
+      if currentRadio.rate > 0 {
+        currentRadio.rate = 0
+        plusImageView.image = UIImage(systemName: "plus")
+        presenter?.didTapRemoveFromFavorite(with: currentRadio.id)
+      } else {
+        currentRadio.rate = 1
+        plusImageView.image = UIImage(systemName: "checkmark")
+        presenter?.didTapAddToFavorite(with: currentRadio.id)
+      }
+      
     }
   }
   

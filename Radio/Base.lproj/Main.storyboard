@@ -11,13 +11,13 @@
         <!--Мои станции-->
         <scene sceneID="N30-WO-5IX">
             <objects>
-                <tableViewController storyboardIdentifier="RadioListTVC" title="Мои станции" id="XdW-R1-yzs" customClass="RadioListTableViewController" customModule="Радио" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RadioListTVC" title="Мои станции" id="XdW-R1-yzs" customClass="RadioListTableViewController" customModule="RVISION_Радио" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" showsHorizontalScrollIndicator="NO" dataMode="prototypes" style="plain" separatorStyle="none" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="Ukz-76-RMn">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                         <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DataCell" rowHeight="80" id="Ojp-L9-PHP" customClass="RadioListTableViewCell" customModule="Радио" customModuleProvider="target">
+                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" selectionStyle="none" hidesAccessoryWhenEditing="NO" indentationLevel="1" indentationWidth="0.0" reuseIdentifier="DataCell" rowHeight="80" id="Ojp-L9-PHP" customClass="RadioListTableViewCell" customModule="RVISION_Радио" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="28" width="414" height="80"/>
                                 <autoresizingMask key="autoresizingMask"/>
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="Ojp-L9-PHP" id="h0G-ru-lsH">
@@ -172,7 +172,7 @@
         <!--Добавить станцию-->
         <scene sceneID="JtI-Is-bqX">
             <objects>
-                <tableViewController storyboardIdentifier="RadioAddVC" id="eRr-7m-Lum" customClass="RadioAddViewController" customModule="Радио" customModuleProvider="target" sceneMemberID="viewController">
+                <tableViewController storyboardIdentifier="RadioAddVC" id="eRr-7m-Lum" customClass="RadioAddViewController" customModule="RVISION_Радио" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" bouncesZoom="NO" dataMode="static" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" id="LG6-ku-vyz">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -218,7 +218,7 @@
                                                             <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Введите название станций" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Wy-oau" customClass="RoundedTextField" customModule="Радио" customModuleProvider="target">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Введите название станций" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="W2e-Wy-oau" customClass="RoundedTextField" customModule="RVISION_Радио" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28.5" width="370" height="30.5"/>
                                                             <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -251,7 +251,7 @@
                                                             <color key="textColor" white="0.33333333329999998" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Введите url потока" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h4W-nm-0PB" customClass="RoundedTextField" customModule="Радио" customModuleProvider="target">
+                                                        <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" placeholder="Введите url потока" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="h4W-nm-0PB" customClass="RoundedTextField" customModule="RVISION_Радио" customModuleProvider="target">
                                                             <rect key="frame" x="0.0" y="28.5" width="370" height="30.5"/>
                                                             <color key="backgroundColor" systemColor="systemGray5Color" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                             <fontDescription key="fontDescription" style="UICTFontTextStyleBody"/>
@@ -294,7 +294,7 @@
         <!--Radio Player View Controller-->
         <scene sceneID="fVd-dL-tL2">
             <objects>
-                <viewController storyboardIdentifier="RadioPlayerVC" id="gil-0z-QWc" customClass="RadioPlayerViewController" customModule="Радио" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="RadioPlayerVC" id="gil-0z-QWc" customClass="RadioPlayerViewController" customModule="RVISION_Радио" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="1Zd-SK-tdV">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -334,16 +334,16 @@
                                 <rect key="frame" x="28" y="490" width="358" height="46.5"/>
                                 <subviews>
                                     <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" spacingType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="I5Q-9c-Nbr">
-                                        <rect key="frame" x="0.0" y="0.0" width="325" height="46.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="320" height="46.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не воспроизводится" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h5w-3r-rwg">
-                                                <rect key="frame" x="0.0" y="0.0" width="325" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="0.0" width="320" height="20.5"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleHeadline"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text=" " textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9LW-H0-wsg">
-                                                <rect key="frame" x="0.0" y="28.5" width="325" height="18"/>
+                                                <rect key="frame" x="0.0" y="28.5" width="320" height="18"/>
                                                 <fontDescription key="fontDescription" style="UICTFontTextStyleSubhead"/>
                                                 <color key="textColor" white="0.33333333333333331" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
@@ -352,12 +352,13 @@
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
                                     <imageView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="I2B-b9-CIa">
-                                        <rect key="frame" x="333" y="2" width="25" height="21"/>
+                                        <rect key="frame" x="328" y="3.5" width="30" height="23"/>
                                         <color key="tintColor" red="0.96862745098039216" green="0.0" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
-                                            <constraint firstAttribute="height" constant="25" id="DXm-bQ-jFg"/>
-                                            <constraint firstAttribute="width" constant="25" id="jdr-eY-UqF"/>
+                                            <constraint firstAttribute="height" constant="30" id="DXm-bQ-jFg"/>
+                                            <constraint firstAttribute="width" constant="30" id="jdr-eY-UqF"/>
                                         </constraints>
+                                        <preferredSymbolConfiguration key="preferredSymbolConfiguration" scale="small"/>
                                     </imageView>
                                 </subviews>
                             </stackView>

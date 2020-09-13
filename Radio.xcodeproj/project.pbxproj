@@ -189,8 +189,8 @@
 				9A43A31524B9DA1700974171 /* RadioPlayerContract.swift */,
 				9A43A31624B9DA1700974171 /* RadioPlayerPresenter.swift */,
 				9A43A31724B9DA1700974171 /* RadioPlayerRouter.swift */,
-				9A43A31824B9DA1700974171 /* RadioPlayerViewController.swift */,
 				9A43A31924B9DA1700974171 /* RadioPlayerInteractor.swift */,
+				9A43A31824B9DA1700974171 /* RadioPlayerViewController.swift */,
 			);
 			path = RadioPlayer;
 			sourceTree = "<group>";

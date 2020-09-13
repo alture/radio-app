@@ -13,14 +13,17 @@ protocol RadioPlayerView: BaseViewController {
 protocol RadioPlayerPresentation: class {
   func didTapPlayStopButton()
   func didTapAddToFavorite(with id: Int)
+  func didTapRemoveFromFavorite(with id: Int)
 }
 
 protocol RadioPlayerUseCase: class {
-  func addFavoriteRadio(with id: Int)
+  func addToFavorite(with id: Int)
+  func removeFromFavorite(with id: Int)
 }
 
 protocol RadioPlayerInteractorOutput: InteractorOutputProtocol {
   func addedNewRadio()
+  func removedRadio()
 }
 
 protocol RadioPlayerWireframe: class {

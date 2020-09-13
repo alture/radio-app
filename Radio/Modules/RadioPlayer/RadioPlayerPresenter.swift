@@ -16,8 +16,12 @@ final class RadioPlayerPresenter {
 }
 
 extension RadioPlayerPresenter: RadioPlayerPresentation {
+  func didTapRemoveFromFavorite(with id: Int) {
+    interactor?.removeFromFavorite(with: id)
+  }
+  
   func didTapAddToFavorite(with id: Int) {
-    interactor?.addFavoriteRadio(with: id)
+    interactor?.addToFavorite(with: id)
   }
   
   func didTapPlayStopButton() {
@@ -27,6 +31,10 @@ extension RadioPlayerPresenter: RadioPlayerPresentation {
 }
 
 extension RadioPlayerPresenter: RadioPlayerInteractorOutput {
+  func removedRadio() {
+    
+  }
+  
   func handleError(_ error: Error?, _ result: Result?) {
     view?.handleError(error, result)
   }

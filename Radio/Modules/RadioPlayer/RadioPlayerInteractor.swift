@@ -14,12 +14,22 @@ final class RadioPlayerInteractor {
 }
 
 extension RadioPlayerInteractor: RadioPlayerUseCase {
-  func addFavoriteRadio(with id: Int) {
+  func addToFavorite(with id: Int) {
     RadioAPI.addToFavorite(id) { (error) in
       if let error = error {
         self.output?.handleError(error, nil)
       } else {
         self.output?.addedNewRadio()
+      }
+    }
+  }
+  
+  func removeFromFavorite(with id: Int) {
+    RadioAPI.removeFromFavorite(id) { (error) in
+      if let error = error {
+        self.output?.handleError(error, nil)
+      } else {
+        self.output?.removedRadio()
       }
     }
   }
