@@ -124,10 +124,10 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
     NSLayoutConstraint.activate([
       resultViewBottomConstraint,
       resultView.leadingAnchor.constraint(equalTo: topViewController.view.leadingAnchor,
-                                          constant: 16.0),
+                                          constant: 8.0),
       resultView.trailingAnchor.constraint(equalTo: topViewController.view.trailingAnchor,
-                                           constant: -16.0),
-      resultView.heightAnchor.constraint(equalToConstant: 40.0)
+                                           constant: -8.0),
+      resultView.heightAnchor.constraint(equalToConstant: 35.0)
     ])
     
   }
@@ -168,11 +168,13 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
 }
 
 extension BaseViewController: InteractorOutputProtocol {
-  private func handleError(_ error: Error, _ result: Result?) {
-        if let result = result {
-          prepareResultView(with: result)
-        } else {
-          showErrorAlert(with: error.localizedDescription)
-        }
+  func handleError(_ error: Error?, _ result: Result?) {
+    if let result = result {
+      prepareResultView(with: result)
+    } else {
+      if let error = error {
+        showErrorAlert(with: error.localizedDescription)
+      }
+    }
   }
 }

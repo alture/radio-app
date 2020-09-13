@@ -7,7 +7,7 @@
 //
 
 import UIKit
-protocol RadioAddView: class {
+protocol RadioAddView: BaseTableViewController {
   func dismiss()
 }
 

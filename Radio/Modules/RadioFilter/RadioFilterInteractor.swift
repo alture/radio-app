@@ -19,7 +19,7 @@ extension RadioFilterInteractor: RadioFilterUseCase {
     var countryData = [Country]()
     GenreAPI.getGenries { (response, error) in
       if let error = error {
-        self.output?.handleError(error)
+        self.output?.handleError(error, nil)
         return
       }
       
@@ -29,7 +29,7 @@ extension RadioFilterInteractor: RadioFilterUseCase {
       
       CountryAPI.getCountries { (response, error) in
         if let error = error {
-          self.output?.handleError(error)
+          self.output?.handleError(error, nil)
           return
         }
         

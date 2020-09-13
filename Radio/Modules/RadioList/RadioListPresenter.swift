@@ -43,6 +43,11 @@ extension RadioListPresenter: RadioListPresentation {
 }
 
 extension RadioListPresenter: RadioListInteractorOutput {
+  func handleError(_ error: Error?, _ result: Result?) {
+    view?.handleError(error, result)
+    view?.tableView.refreshControl?.endRefreshing()
+  }
+  
   
   func addedToFavorite() {
     view?.prepareResultView(with: .sucess(text: "Добавлено в изрбанное"))

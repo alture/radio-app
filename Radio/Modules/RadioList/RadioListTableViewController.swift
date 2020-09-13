@@ -13,9 +13,9 @@ enum RadioListType {
   case favorite
 }
 
-
 class RadioListTableViewController: BaseTableViewController {
   
+
   // MARK: - Properties
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
@@ -110,7 +110,8 @@ class RadioListTableViewController: BaseTableViewController {
                            options: .initial,
                            changeHandler: { (player, value) in
                             if player.state == .fail {
-                              self.showErrorAlert(with: "Не удается воспроизвести поток")
+                              self.handleError(nil, .warning(text: "Не удается воспроизвести поток"))
+      
                             }
       })]
   }
@@ -268,7 +269,6 @@ class RadioListTableViewController: BaseTableViewController {
     let barButtonTitle = "Фильтр (\(filterCount))"
     filterBarButtonItem.title = filterCount > 0 ? barButtonTitle : "Фильтр"
   }
-  
 }
 
 extension RadioListTableViewController: RadioListView {

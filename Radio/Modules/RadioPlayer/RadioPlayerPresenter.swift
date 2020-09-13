@@ -27,6 +27,10 @@ extension RadioPlayerPresenter: RadioPlayerPresentation {
 }
 
 extension RadioPlayerPresenter: RadioPlayerInteractorOutput {
+  func handleError(_ error: Error?, _ result: Result?) {
+    view?.handleError(error, result)
+  }
+  
   func addedNewRadio() {
     view?.radioAdded()
   }

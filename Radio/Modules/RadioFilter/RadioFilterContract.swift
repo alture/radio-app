@@ -6,7 +6,7 @@
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
-protocol RadioFilterView: class {
+protocol RadioFilterView: BaseViewController {
   func updateViewFromModel(_ genre: [Genre], _ country: [Country])
 }
 

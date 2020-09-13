@@ -43,7 +43,22 @@ class RadioTabBarViewController: UITabBarController {
       radioPlayer.observe(\.state,
                           options: .initial,
                           changeHandler: { (player, value) in
-                            self.radioInfoView.isPlaying = player.state == .playing
+                            switch player.state {
+                            case .loading:
+                              self.radioInfoView.isLoading = true
+                              self.radioInfoView.isPlaying = true
+                            case .playing:
+                              self.radioInfoView.isPlaying = true
+                              self.radioInfoView.isLoading = false
+                            case .stoped:
+                              self.radioInfoView.isPlaying = false
+                            case .fail:
+                              self.radioInfoView.isPlaying = false
+                              self.radioInfoView.isLoading = false
+                              // Error handle
+                              break
+                            }
+                            
       })
     ]
   }
@@ -100,11 +115,14 @@ extension RadioTabBarViewController: RadioInfoViewDelegate {
     present(radioPlayerVC, animated: true)
   }
   
-  func didTapPlayButton() {    
-    if radioPlayer.state == .playing {
+  func didTapPlayButton() {
+    switch radioPlayer.state {
+    case .playing, .loading:
       radioPlayer.stopRadio()
-    } else {
+    case .stoped:
       radioPlayer.playRadio()
+    case .fail:
+      break
     }
   }
 }
