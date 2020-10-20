@@ -33,7 +33,7 @@ class RadioListTableViewController: BaseTableViewController {
   // MARK: - Search & Filter Properties
   
   private lazy var filterBarButtonItem: UIBarButtonItem = {
-    let button = UIBarButtonItem(title: "Фильтр", style: .plain, target: self, action: #selector(didTapFilterButton))
+    let button = UIBarButtonItem(title: NSLocalizedString("Фильтр", comment: "Фильтр"), style: .plain, target: self, action: #selector(didTapFilterButton))
     button.tintColor =  #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     return button
   }()
@@ -82,11 +82,11 @@ class RadioListTableViewController: BaseTableViewController {
     
     switch type {
     case .favorite:
-      emptyViewTitle.text = "Список моих станции пуст"
-      emptyViewButton.setTitle("Добавить", for: .normal)
+      emptyViewTitle.text = NSLocalizedString("Список моих станции пуст", comment: "Список моих станции пуст")
+      emptyViewButton.setTitle(NSLocalizedString("Список моих станции пуст", comment: "Список моих станции пуст"), for: .normal)
     case .all:
-      emptyViewTitle.text = "Cтанции еще нет,\nно мы работаем над этим"
-      emptyViewButton.setTitle("Обновить", for: .normal)
+      emptyViewTitle.text = NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим")
+      emptyViewButton.setTitle(NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
     }
     
     tableView.refreshControl?.beginRefreshing()
@@ -110,7 +110,7 @@ class RadioListTableViewController: BaseTableViewController {
                            options: .initial,
                            changeHandler: { (player, value) in
                             if player.state == .fail {
-                              self.handleError(nil, .warning(text: "Не удается воспроизвести поток"))
+                              self.handleError(nil, .warning(text: NSLocalizedString("Не удается воспроизвести поток", comment: "Не удается воспроизвести поток")))
       
                             }
       })]
@@ -118,10 +118,8 @@ class RadioListTableViewController: BaseTableViewController {
   
   private func setupNavigationBar() {
     switch type {
-    case .favorite:
-      title = "Мои станции"
+    case .favorite: break
     case .all:
-      title = "Станции"
       let addBarButtonItem = UIBarButtonItem(barButtonSystemItem: .add,
                                              target: self,
                                              action: #selector(didTapAddBarButton))
@@ -139,7 +137,7 @@ class RadioListTableViewController: BaseTableViewController {
     searchController = UISearchController(searchResultsController: nil)
     searchController.searchResultsUpdater = self
     searchController.obscuresBackgroundDuringPresentation = false
-    searchController.searchBar.placeholder = "Поиск"
+    searchController.searchBar.placeholder = NSLocalizedString("Поиск", comment: "Поиск")
     searchController.searchBar.barTintColor = .white
     searchController.searchBar.backgroundImage = UIImage()
     navigationItem.searchController = searchController
@@ -197,18 +195,20 @@ class RadioListTableViewController: BaseTableViewController {
   private func didTapMoreButton(_ radio: Radio) {
 
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
-    let addAction = UIAlertAction(title: "Добавить в Мои станции", style: .default) { (_) in
+    let addAction = UIAlertAction(title: NSLocalizedString("Добавить в Мои станции", comment: "Добавить в Мои станции"), style: .default) { (_) in
       self.presenter?.addToFavorite(radio.id)
-      self.prepareResultView(with: .sucess(text: "Добавлено в Мои станции"))
+      radio.isFavorite = true
+      self.prepareResultView(with: .sucess(text: NSLocalizedString("Добавлено в Мои станции", comment: "Добавлено в Мои станции")))
     }
     
-    let removeAction = UIAlertAction(title: "Убрать из Моих станции", style: .destructive) { (_) in
+    let removeAction = UIAlertAction(title: NSLocalizedString("Убрать из Моих станции", comment: "Убрать из Моих станции"), style: .destructive) { (_) in
       self.presenter?.removeFromFavorite(radio.id)
       switch self.type {
       case .all: break
       case .favorite:
         if let index = self.radioList.firstIndex(of: radio) {
           let indexPath = IndexPath(row: index, section: 0)
+          radio.isFavorite = false
           self.radioList.remove(at: index)
           self.tableView.deleteRows(at: [indexPath], with: .automatic)
           self.tableView.backgroundView?.isHidden = !self.radioList.isEmpty
@@ -216,7 +216,7 @@ class RadioListTableViewController: BaseTableViewController {
       }
     }
     
-    let shareAction = UIAlertAction(title: "Поделится", style: .default) { (_) in
+    let shareAction = UIAlertAction(title: NSLocalizedString("Поделится", comment: "Поделится"), style: .default) { (_) in
       // TODO: - Implement Share
     }
     
@@ -229,7 +229,7 @@ class RadioListTableViewController: BaseTableViewController {
       alertController.addAction(removeAction)
     }
     
-    let cancelAction = UIAlertAction(title: "Отмена", style: .cancel)
+    let cancelAction = UIAlertAction(title: NSLocalizedString("Отмена", comment: "Отмена"), style: .cancel)
     alertController.addAction(cancelAction)
     present(alertController, animated: true)
   }
@@ -266,8 +266,8 @@ class RadioListTableViewController: BaseTableViewController {
   }
   
   private func updateFilterLabel(filterCount: Int) {
-    let barButtonTitle = "Фильтр (\(filterCount))"
-    filterBarButtonItem.title = filterCount > 0 ? barButtonTitle : "Фильтр"
+    let barButtonTitle = "\(NSLocalizedString("Фильтр", comment: "Фильтр")) (\(filterCount))"
+    filterBarButtonItem.title = filterCount > 0 ? barButtonTitle : NSLocalizedString("Фильтр", comment: "Фильтр")
   }
 }
 
@@ -330,7 +330,7 @@ extension RadioListTableViewController: RadioFilterViewControllerDelegate {
 
 extension RadioListTableViewController: RadioAddViewControllerDelegate {
   func radioAdded() {
-    prepareResultView(with: .sucess(text: "Станция появится после модераций"))
+    prepareResultView(with: .sucess(text: NSLocalizedString("Станция появится после модераций", comment: "Станция появится после модераций")))
   }
 }
 

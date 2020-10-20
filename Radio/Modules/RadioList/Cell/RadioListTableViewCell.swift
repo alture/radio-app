@@ -18,7 +18,6 @@ final class RadioListTableViewCell: UITableViewCell {
   
   var isPlaying: Bool = false {
     didSet {
-//      isPlayingImage.isHidden = !isPlaying
       radioTitleLabel.textColor = isPlaying ? #colorLiteral(red: 0.9024619972, green: 0, blue: 0, alpha: 1) : .label
     }
   }
@@ -33,19 +32,6 @@ final class RadioListTableViewCell: UITableViewCell {
   }
   @IBOutlet weak var radioTitleLabel: UILabel!
   @IBOutlet weak var radioInfoLabel: UILabel!
-  @IBOutlet weak var isPlayingImage: UIImageView! {
-    didSet {
-      isPlayingImage.layer.cornerRadius = 5.0
-      isPlayingImage.clipsToBounds = true
-      isPlayingImage.isHidden = true
-    }
-  }
-  @IBOutlet weak var moreButton: UIImageView! {
-    didSet {
-      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapFavoriteImage(_:)))
-      moreButton.addGestureRecognizer(tap)
-    }
-  }
   @IBOutlet weak var containerView: UIView! {
     didSet {
       containerView.clipsToBounds = false
@@ -58,7 +44,21 @@ final class RadioListTableViewCell: UITableViewCell {
                                                     cornerRadius: 5.0).cgPath
     }
   }
+  @IBOutlet weak var moreButton: UIButton! {
+    didSet {
+      moreButton.imageView!.contentMode = .scaleAspectFit
+      moreButton.contentVerticalAlignment = .center
+      moreButton.contentHorizontalAlignment = .center
+    }
+  }
   
+  @IBAction func didTapMoreButton(_ sender: UIButton) {
+    guard let radio = radio else {
+      return
+    }
+    
+    didTapMoreButton?(radio)
+  }
   private func setupView() {
     guard let radio = radio else {
       return
@@ -70,26 +70,13 @@ final class RadioListTableViewCell: UITableViewCell {
       logoImage.image = UIImage(named: "default-2")
     }
     
-    radioTitleLabel.text = radio.name ?? "Название"
+    radioTitleLabel.text = radio.name ?? NSLocalizedString("Название", comment: "Название станций в общем списке")
     if
       let genres = radio.genres {
       let genresNames = genres.map({ $0.name ?? "" })
-      radioInfoLabel.text = "\(radio.country?.name ?? "Страна") • \(genresNames.joined(separator: ", "))"
+      radioInfoLabel.text = "\(radio.country?.name ?? NSLocalizedString("Страна", comment: "Отображение стран в общем списке")) • \(genresNames.joined(separator: ", "))"
     } else {
-      radioInfoLabel.text = "\(radio.country?.name ?? "Страна")"
-    }
-    
-
-
-  }
-  
-  @objc private func didTapFavoriteImage(_ sender: UITapGestureRecognizer) {
-    if sender.state == .ended {
-      guard let radio = radio else {
-        return
-      }
-      
-      didTapMoreButton?(radio)
+      radioInfoLabel.text = "\(radio.country?.name ?? NSLocalizedString("Страна", comment: "Отображение стран в общем списке"))"
     }
   }
 }

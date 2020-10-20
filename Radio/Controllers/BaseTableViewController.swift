@@ -11,15 +11,13 @@ import Network
 
 protocol BaseTableViewControllerDelegate {
   func showErrorAlert(with message: String)
-  func prepareResultView(with result: Result, _ style: Style?)
+  func prepareResultView(with result: Result)
 }
 
 class BaseTableViewController: UITableViewController, BaseTableViewControllerDelegate {
   private lazy var resultView: ResulView = {
     let view = ResulView()
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.isHidden = true
-    view.alpha = 0.0
     return view
   }()
   
@@ -36,28 +34,19 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
     return topController
   }
   
-  private lazy var resultViewBottomConstraint = NSLayoutConstraint()
+  private lazy var resultViewTopConstraint = NSLayoutConstraint()
+  private var isShowing: Bool = false
     
-  func prepareResultView(with result: Result, _ style: Style? = .showAndHide) {
+  func prepareResultView(with result: Result) {
     resultView.result = result
-    topViewController.view.endEditing(true)
-    
-    switch style {
-    case .showAndHide:
-      showResultView()
-      hideResultView()
-    case .show: showResultView()
-    case .hide: hideResultView()
-    case .none:
-      break
-    }
+    presentResultView()
   }
   
   func showErrorAlert(with message: String) {
     let alertController = UIAlertController(title: message,
                                             message: nil,
                                             preferredStyle: .alert)
-    let alertAction = UIAlertAction(title: "Ок",
+    let alertAction = UIAlertAction(title: NSLocalizedString("Ok", comment: "Ok"),
                                     style: .default,
                                     handler: nil)
     alertController.addAction(alertAction)
@@ -66,39 +55,12 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
   
   override func viewDidLoad() {
     super.viewDidLoad()
-    setupNotificationCenter()
     setupResultView()
   }
   
   override func viewDidAppear(_ animated: Bool) {
     super.viewDidAppear(animated)
 //    setupMonitor()
-  }
-  
-//  override func viewWillAppear(_ animated: Bool) {
-//    super.viewWillAppear(animated)
-//    setupNotificationCenter()
-//  }
-//
-//  override func viewWillDisappear(_ animated: Bool) {
-//    super.viewWillDisappear(animated)
-//    removeNotificationCenter()
-//  }
-  
-  private func setupNotificationCenter() {
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(keyboardWillShow(_:)),
-                                           name: UIResponder.keyboardWillShowNotification ,
-                                           object:nil)
-    NotificationCenter.default.addObserver(self,
-                                           selector: #selector(keyboardWillHide(_:)),
-                                           name: UIResponder.keyboardWillHideNotification ,
-                                           object:nil)
-  }
-  
-  private func removeNotificationCenter() {
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-    NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
   }
   
   private func setupResultView() {
@@ -113,12 +75,12 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
   }
   
   private func configureResultConstraints() {
-    resultViewBottomConstraint = resultView.bottomAnchor.constraint(
-      equalTo: topViewController.view.safeAreaLayoutGuide.bottomAnchor,
-      constant: -134.0)
+    resultViewTopConstraint = resultView.topAnchor.constraint(
+      equalTo: topViewController.view.topAnchor,
+      constant: -35.0)
     
     NSLayoutConstraint.activate([
-      resultViewBottomConstraint,
+      resultViewTopConstraint,
       resultView.leadingAnchor.constraint(equalTo: topViewController.view.leadingAnchor,
                                           constant: 16.0),
       resultView.trailingAnchor.constraint(equalTo: topViewController.view.trailingAnchor,
@@ -128,37 +90,27 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
     
   }
   
-  private func showResultView() {
-    UIView.animate(withDuration: 0.4,
+  private func presentResultView() {
+    if isShowing {
+      return
+    }
+    
+    isShowing = true
+    resultViewTopConstraint.constant = topViewController.view.safeAreaInsets.top + 10
+    UIView.animate(withDuration: 0.5,
                    animations: {
-                    self.resultView.alpha = 1.0
-                    self.resultView.isHidden = false
-    }) { (_) in
-      self.resultView.alpha = 1.0
-    }
-  }
-  
-  private func hideResultView() {
-    DispatchQueue.main.asyncAfter(deadline: .now() + 4.0) {
-      UIView.animate(withDuration: 0.4,
+                    self.topViewController.view.layoutIfNeeded()
+    }, completion: { _ in
+      self.resultViewTopConstraint.constant = -35.0
+      UIView.animate(withDuration: 0.5,
+                     delay: 3.0,
+                     options: [],
                      animations: {
-                      self.resultView.alpha = 0.0
-      }) { (_) in
-        self.resultView.alpha = 0.0
-        self.resultView.isHidden = true
-      }
-    }
-  }
-  
-  
-  @objc private func keyboardWillShow(_ notification: Notification) {
-//    let keyboardHeight = (notification.userInfo![UIResponder.keyboardFrameEndUserInfoKey] as! NSValue).cgRectValue.height
-    
-    
-  }
-
-  @objc private func keyboardWillHide(_ notification: Notification) {
-    
+                      self.topViewController.view.layoutIfNeeded()
+      }, completion: { _ in
+        self.isShowing = false
+      })
+    })
   }
     
 }

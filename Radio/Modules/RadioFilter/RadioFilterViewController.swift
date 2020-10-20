@@ -63,7 +63,7 @@ final class RadioFilterViewController: BaseViewController {
   
   private func setupNavigationBar() {
     let barButtonItem = UIBarButtonItem(
-      title: "Готово",
+      title: NSLocalizedString("Готово", comment: "Готово"),
       style: .done,
       target: self,
       action: #selector(didTapDoneButton))
@@ -120,8 +120,8 @@ extension RadioFilterViewController: RadioFilterView {
 extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
     switch section {
-    case 0: return "Жанр"
-    case 1: return "Страна"
+    case 0: return NSLocalizedString("Жанр", comment: "Жанр")
+    case 1: return NSLocalizedString("Страна", comment: "Страна")
     default:
       return nil
     }
@@ -142,8 +142,8 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
     cell.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     if indexPath.row == 0 {
       cell.textLabel?.text = indexPath.section == 0
-        ? "Все жанры"
-        : "Все страны"
+        ? NSLocalizedString("Все жанры", comment: "Все жанры")
+        : NSLocalizedString("Все страны", comment: "Все страны")
       if indexPath.section == 0 {
         if selectedGenries.isEmpty {
           tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
@@ -174,7 +174,7 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
   
   func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row != 0 && (selectedGenries.count > 5 || selectedCountries.count > 5) {
-      prepareResultView(with: .warning(text: "Возможно выбрать максимум 5!"))
+      prepareResultView(with: .warning(text: NSLocalizedString("Возможно выбрать максимум 5!", comment: "Предупреждение в окне фильтра")))
       tableView.deselectRow(at: indexPath, animated: false)
       return
     }

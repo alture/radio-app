@@ -22,10 +22,10 @@ final class Radio: NSObject, Mappable, Codable {
   var id: Int = 0
   var logo: String?
   var name: String?
-  var rate: Int = 0
   var url: String?
   var currentUrlIndex = 0
   var otherUrl: [RadioURL] = []
+  var isFavorite: Bool = false
   var nextStation: Radio?
   var prevStation: Radio?
   
@@ -41,8 +41,8 @@ final class Radio: NSObject, Mappable, Codable {
     id <- map["id"]
     logo <- map["logo"]
     name <- map["name"]
-    rate <- map["rate"]
     url <- map["url"]
+    isFavorite <- map["isFavorite"]
     otherUrl <- map["urls"]
   }
 }

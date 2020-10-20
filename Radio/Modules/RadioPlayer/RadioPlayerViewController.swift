@@ -30,7 +30,11 @@ final class RadioPlayerViewController: BaseViewController {
     }
   }
   
-  private var bufferSizes = ["АВТО", "5 секунд", "10 секунд", "60 секунд"]
+  private var bufferSizes = [
+    NSLocalizedString("АВТО", comment: "Размер буфера"),
+    NSLocalizedString("5 секунд", comment: "Размер буфера"),
+    NSLocalizedString("10 секунд", comment: "Размер буфера"),
+    NSLocalizedString("60 секунд", comment: "Размер буфера")]
   private var bufferSize: Double = 0
   
   private lazy var volumeView: MPVolumeView = {
@@ -103,14 +107,15 @@ final class RadioPlayerViewController: BaseViewController {
     nextButtonImage.isUserInteractionEnabled = isEnabled
     nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
     
+    isEnabled = radioPlayer.currentRadio != nil
+    playStopButton.isUserInteractionEnabled = isEnabled
+    prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    
     switch radioPlayer.state {
     case .playing, .loading:
       isPlaying = true
-    case .stoped:
+    case .stoped, .fail:
       isPlaying = false
-    case .fail:
-      // Error Handle
-      break
     }
   }
   
@@ -135,7 +140,7 @@ final class RadioPlayerViewController: BaseViewController {
                           options: [.new, .old],
                           changeHandler: { (player, value) in
                             if let radio = player.currentRadio {
-                              let currentImageName = radio.rate > 0
+                              let currentImageName = radio.isFavorite
                                 ? "checkmark"
                                 : "plus"
                               self.plusImageView.image = UIImage(systemName: currentImageName)
@@ -153,7 +158,7 @@ final class RadioPlayerViewController: BaseViewController {
                             switch player.state {
                             case .playing, .loading: self.isPlaying = true
                             case .stoped: self.isPlaying = false
-                            case .fail: self.showErrorAlert(with: "Не удается воспроизвести поток")
+                            case .fail: self.showErrorAlert(with: NSLocalizedString("Не удается воспроизвести поток", comment: "Ошибка в плеере"))
                             }
       })]
     updateControls()
@@ -198,14 +203,15 @@ final class RadioPlayerViewController: BaseViewController {
   
   @objc private func didTapOption() {
     if let currentRadio = RadioPlayer.shared.currentRadio {
-      if currentRadio.rate > 0 {
-        currentRadio.rate = 0
+      if currentRadio.isFavorite {
+        currentRadio.isFavorite = false
         plusImageView.image = UIImage(systemName: "plus")
         presenter?.didTapRemoveFromFavorite(with: currentRadio.id)
       } else {
-        currentRadio.rate = 1
+        currentRadio.isFavorite = true
         plusImageView.image = UIImage(systemName: "checkmark")
         presenter?.didTapAddToFavorite(with: currentRadio.id)
+        handleError(nil, .sucess(text: NSLocalizedString("Добавлено в Мои станции", comment: "В плеере")))
       }
       
     }

@@ -1,0 +1,33 @@
+/* Class = "UILabel"; text = "Lost-Heaven FM"; ObjectID = "1uD-yL-Ebv"; */
+"1uD-yL-Ebv.text" = "Lost-Heaven FM";
+
+/* Class = "UILabel"; text = "Lost-Heaven FM"; ObjectID = "4tI-dp-QJx"; */
+"4tI-dp-QJx.text" = "Lost-Heaven FM";
+
+/* Class = "UILabel"; text = " "; ObjectID = "9LW-H0-wsg"; */
+"9LW-H0-wsg.text" = " ";
+
+/* Class = "UILabel"; text = "Поток"; ObjectID = "csR-FK-HK7"; */
+"csR-FK-HK7.text" = "Stream";
+
+/* Class = "UITextField"; placeholder = "Введите url потока"; ObjectID = "h4W-nm-0PB"; */
+"h4W-nm-0PB.placeholder" = "Enter stream url";
+
+/* Class = "UILabel"; text = "Не воспроизводится"; ObjectID = "h5w-3r-rwg"; */
+"h5w-3r-rwg.text" = "Not played";
+
+/* Class = "UILabel"; text = "Список моих станций пуст"; ObjectID = "kFR-z7-RiB"; */
+"kFR-z7-RiB.text" = "My station list is empty";
+
+/* Class = "UIButton"; normalTitle = "Обновить"; ObjectID = "OmC-Gw-8xr"; */
+"OmC-Gw-8xr.normalTitle" = "Update";
+
+/* Class = "UINavigationItem"; title = "Добавить станцию"; ObjectID = "peg-56-VwY"; */
+"peg-56-VwY.title" = "Add station";
+
+/* Class = "UILabel"; text = "Название"; ObjectID = "qhY-B9-ANg"; */
+"qhY-B9-ANg.text" = "Name";
+
+/* Class = "UITextField"; placeholder = "Введите название станций"; ObjectID = "W2e-Wy-oau"; */
+"W2e-Wy-oau.placeholder" = "Enter the name of the stations";
+

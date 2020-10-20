@@ -50,7 +50,7 @@ extension RadioListPresenter: RadioListInteractorOutput {
   
   
   func addedToFavorite() {
-    view?.prepareResultView(with: .sucess(text: "Добавлено в изрбанное"))
+    view?.prepareResultView(with: .sucess(text: NSLocalizedString("Добавлено в изрбанное", comment: "Добавлено в изрбанное")))
   }
   
   func removedFromFavorite() {

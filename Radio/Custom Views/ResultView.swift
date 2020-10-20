@@ -55,7 +55,6 @@ final class ResulView: UIView {
       contentView.backgroundColor = UIColor.systemRed
     case .warning(let text):
       titleLabel.text = text
-      titleLabel.textColor = .black
       contentView.backgroundColor = UIColor.systemYellow
     case .def(let text):
       titleLabel.text = text

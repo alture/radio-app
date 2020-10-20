@@ -18,7 +18,7 @@ extension RadioAddInteractor: RadioAddUseCase {
   func addNewRadio(with image: UIImage?, _ name: String, _ url: String) {
     RadioAPI.createRadio(with: name, url: url, image: image) { (error) in
       if let error = error {
-        self.output?.handleError(error, .failure(text: "Станция с таким потоком существует"))
+        self.output?.handleError(error, .failure(text: NSLocalizedString("Станция с таким потоком существует", comment: "Добавление новой станций")))
       } else {
         self.output?.addedNewRadio()
       }

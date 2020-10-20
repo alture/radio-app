@@ -21,12 +21,14 @@
 		9A43A32624BDDA4C00974171 /* Connectivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A43A32524BDDA4C00974171 /* Connectivity.swift */; };
 		9A4B7F44250DE9860077999B /* RadioProgressBar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A4B7F43250DE9860077999B /* RadioProgressBar.swift */; };
 		9A50F31624DC0A36006C0C5E /* UIStackView+AddSubviews.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A50F31524DC0A36006C0C5E /* UIStackView+AddSubviews.swift */; };
+		9A526FDF253F0351001F0561 /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A526FDD253F0351001F0561 /* InfoPlist.strings */; };
+		9A526FE2253F0351001F0561 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = 9A526FE0253F0351001F0561 /* Localizable.strings */; };
+		9A5A73F32537A17F00A5DA9D /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A5A73F52537A17F00A5DA9D /* Main.storyboard */; };
+		9A5A73F72537A19E00A5DA9D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A5A73F92537A19E00A5DA9D /* LaunchScreen.storyboard */; };
 		9A674D8824A7650B00C35732 /* RadioTabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */; };
 		9A6B901024A4B1F2002FE34A /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */; };
 		9A6B901224A4B1F2002FE34A /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */; };
-		9A6B901724A4B1F2002FE34A /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901524A4B1F2002FE34A /* Main.storyboard */; };
 		9A6B901924A4B1F4002FE34A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901824A4B1F4002FE34A /* Assets.xcassets */; };
-		9A6B901C24A4B1F4002FE34A /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */; };
 		9A6B902924A6291A002FE34A /* BaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902824A6291A002FE34A /* BaseViewController.swift */; };
 		9A6B902B24A62B90002FE34A /* Country.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902A24A62B90002FE34A /* Country.swift */; };
 		9A6B902D24A62C19002FE34A /* Genre.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A6B902C24A62C19002FE34A /* Genre.swift */; };
@@ -74,6 +76,7 @@
 		2BD9AE632015996638F845F6 /* Pods_Radio.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Radio.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		5A3618CD5D07EE84B100F06D /* Pods-Radio.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.debug.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.debug.xcconfig"; sourceTree = "<group>"; };
 		9A0126C024B3E3670027A431 /* RoundedTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RoundedTextField.swift; sourceTree = "<group>"; };
+		9A1E4975253EF6E600AE1B33 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Radio/Info.plist; sourceTree = "<group>"; };
 		9A3B8F3C2500F74900FA4DE2 /* InfoAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InfoAPI.swift; sourceTree = "<group>"; };
 		9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+ModelName.swift"; sourceTree = "<group>"; };
 		9A3B8F402506593200FA4DE2 /* Track.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = Track.swift; path = Radio/Controllers/Track.swift; sourceTree = SOURCE_ROOT; };
@@ -86,14 +89,19 @@
 		9A43A32524BDDA4C00974171 /* Connectivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Connectivity.swift; sourceTree = "<group>"; };
 		9A4B7F43250DE9860077999B /* RadioProgressBar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioProgressBar.swift; sourceTree = "<group>"; };
 		9A50F31524DC0A36006C0C5E /* UIStackView+AddSubviews.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIStackView+AddSubviews.swift"; sourceTree = "<group>"; };
+		9A526FDB253F01B4001F0561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A526FDC253F01B5001F0561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Main.strings; sourceTree = "<group>"; };
+		9A526FDE253F0351001F0561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9A526FE1253F0351001F0561 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A526FE8253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		9A526FE9253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A526FEA253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
+		9A526FEB253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
 		9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioTabBarViewController.swift; sourceTree = "<group>"; };
 		9A6B900C24A4B1F2002FE34A /* RVISION.Радио.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVISION.Радио.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		9A6B901624A4B1F2002FE34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9A6B901824A4B1F4002FE34A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		9A6B901B24A4B1F4002FE34A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
-		9A6B901D24A4B1F4002FE34A /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		9A6B902824A6291A002FE34A /* BaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; name = BaseViewController.swift; path = Radio/Controllers/BaseViewController.swift; sourceTree = SOURCE_ROOT; };
 		9A6B902A24A62B90002FE34A /* Country.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Country.swift; sourceTree = "<group>"; };
 		9A6B902C24A62C19002FE34A /* Genre.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Genre.swift; sourceTree = "<group>"; };
@@ -133,10 +141,10 @@
 		9AC9BA8224DC0658007B937B /* RadioSettingRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioSettingRouter.swift; sourceTree = "<group>"; };
 		9AC9BA8324DC0658007B937B /* RadioSettingTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioSettingTableViewController.swift; sourceTree = "<group>"; };
 		9AC9BA8424DC0658007B937B /* RadioSettingInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioSettingInteractor.swift; sourceTree = "<group>"; };
+		9AD70FCF253DF36F00C01346 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		9AD70FD0253DF37000C01346 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9AD7480D24B4AED300ACE8E5 /* ResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultView.xib; sourceTree = "<group>"; };
 		9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
-		9ADCB10724EE1E4500BB7607 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
-		9ADCB10824EE1E4500BB7607 /* ru */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ru; path = ru.lproj/Main.strings; sourceTree = "<group>"; };
 		BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.release.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -211,6 +219,9 @@
 			isa = PBXGroup;
 			children = (
 				9A6B900E24A4B1F2002FE34A /* Radio */,
+				9A1E4975253EF6E600AE1B33 /* Info.plist */,
+				9A526FE0253F0351001F0561 /* Localizable.strings */,
+				9A526FDD253F0351001F0561 /* InfoPlist.strings */,
 				9A6B900D24A4B1F2002FE34A /* Products */,
 				A985C6923ED7EF194537607F /* Pods */,
 				0E454E5B66263F5584B2CBB4 /* Frameworks */,
@@ -237,9 +248,8 @@
 				9A6B902524A4E040002FE34A /* Entities */,
 				9A6B903024A6425D002FE34A /* Modules */,
 				9A6B903124A6426E002FE34A /* Supporting Files */,
-				9A6B901524A4B1F2002FE34A /* Main.storyboard */,
+				9A5A73F52537A17F00A5DA9D /* Main.storyboard */,
 				9A6B901824A4B1F4002FE34A /* Assets.xcassets */,
-				9A6B901D24A4B1F4002FE34A /* Info.plist */,
 				9A6B903724A64478002FE34A /* Constant.swift */,
 			);
 			path = Radio;
@@ -273,9 +283,9 @@
 		9A6B903124A6426E002FE34A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9A5A73F92537A19E00A5DA9D /* LaunchScreen.storyboard */,
 				9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */,
 				9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */,
-				9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */,
 			);
 			path = "Supporting Files";
 			sourceTree = "<group>";
@@ -420,7 +430,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1140;
-				LastUpgradeCheck = 1140;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = Alisher;
 				TargetAttributes = {
 					9A6B900B24A4B1F2002FE34A = {
@@ -430,12 +440,13 @@
 			};
 			buildConfigurationList = 9A6B900724A4B1F2002FE34A /* Build configuration list for PBXProject "Radio" */;
 			compatibilityVersion = "Xcode 9.3";
-			developmentRegion = en;
+			developmentRegion = ru;
 			hasScannedForEncodings = 0;
 			knownRegions = (
-				en,
-				Base,
 				ru,
+				Base,
+				en,
+				es,
 			);
 			mainGroup = 9A6B900324A4B1F2002FE34A;
 			productRefGroup = 9A6B900D24A4B1F2002FE34A /* Products */;
@@ -453,10 +464,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				9AD7480E24B4AED300ACE8E5 /* ResultView.xib in Resources */,
+				9A526FDF253F0351001F0561 /* InfoPlist.strings in Resources */,
 				9A74E21C24A7E50A0059E48B /* RadioInfoView.xib in Resources */,
-				9A6B901C24A4B1F4002FE34A /* LaunchScreen.storyboard in Resources */,
+				9A526FE2253F0351001F0561 /* Localizable.strings in Resources */,
 				9A6B901924A4B1F4002FE34A /* Assets.xcassets in Resources */,
-				9A6B901724A4B1F2002FE34A /* Main.storyboard in Resources */,
+				9A5A73F72537A19E00A5DA9D /* LaunchScreen.storyboard in Resources */,
+				9A5A73F32537A17F00A5DA9D /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -570,20 +583,42 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		9A6B901524A4B1F2002FE34A /* Main.storyboard */ = {
+		9A526FDD253F0351001F0561 /* InfoPlist.strings */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9A6B901624A4B1F2002FE34A /* Base */,
-				9ADCB10824EE1E4500BB7607 /* ru */,
+				9A526FDE253F0351001F0561 /* en */,
+				9A526FE8253F07E8001F0561 /* es */,
+			);
+			name = InfoPlist.strings;
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		9A526FE0253F0351001F0561 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9A526FE1253F0351001F0561 /* en */,
+				9A526FEA253F07E8001F0561 /* es */,
+			);
+			name = Localizable.strings;
+			path = Radio;
+			sourceTree = "<group>";
+		};
+		9A5A73F52537A17F00A5DA9D /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				9AD70FD0253DF37000C01346 /* Base */,
+				9A526FDC253F01B5001F0561 /* en */,
+				9A526FEB253F07E8001F0561 /* es */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
 		};
-		9A6B901A24A4B1F4002FE34A /* LaunchScreen.storyboard */ = {
+		9A5A73F92537A19E00A5DA9D /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				9A6B901B24A4B1F4002FE34A /* Base */,
-				9ADCB10724EE1E4500BB7607 /* ru */,
+				9AD70FCF253DF36F00C01346 /* Base */,
+				9A526FDB253F01B4001F0561 /* en */,
+				9A526FE9253F07E8001F0561 /* es */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -618,6 +653,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -679,6 +715,7 @@
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -713,9 +750,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
-				INFOPLIST_FILE = Radio/Info.plist;
+				INFOPLIST_FILE = "";
+				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -735,9 +773,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
-				INFOPLIST_FILE = Radio/Info.plist;
+				INFOPLIST_FILE = "";
+				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

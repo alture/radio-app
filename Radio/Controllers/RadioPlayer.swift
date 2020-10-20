@@ -42,7 +42,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       scc.previousTrackCommand.isEnabled = radio.prevStation != nil
       scc.nextTrackCommand.isEnabled = radio.nextStation != nil
       
-      track = Track(trackName: currentRadio?.name ?? "Станция",
+      track = Track(trackName: currentRadio?.name ?? NSLocalizedString("Станция", comment:  "Станция"),
                     artistName: " ",
                     trackCover: currentRadio?.logo)
     }
@@ -62,7 +62,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       }
     }
   }
-  @objc dynamic var track = Track(trackName: "Не воспроизводится",
+  @objc dynamic var track = Track(trackName: NSLocalizedString("Не воспроизводится", comment: "Не воспроизводится"),
                                   artistName: " ") {
     didSet {
       updateInfoCenter()
@@ -112,6 +112,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         break
       case .failed:
         state = .fail
+        stopRadio()
         break
       case .unknown:
         break
@@ -177,8 +178,8 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     NotificationCenter.default.addObserver(forName: .AVPlayerItemPlaybackStalled,
                                            object: nil,
                                            queue: nil) { (_) in
-                                            self.stopRadio()
                                             self.state = .fail
+                                            self.stopRadio()
     }
     
     NotificationCenter.default.addObserver(forName: .AVPlayerItemDidPlayToEndTime,
@@ -241,6 +242,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       return
     }
     
+    player.replaceCurrentItem(with: nil)
     isPlayable(url: audioFileURL) { (status) in
       if status == true {
         let asset = AVAsset(url: audioFileURL)

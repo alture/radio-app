@@ -87,7 +87,7 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     if indexPath.row == 0 {
       
-      let photoSourceRequestController = UIAlertController(title: "", message: "Добавить изображение", preferredStyle: .actionSheet)
+      let photoSourceRequestController = UIAlertController(title: "", message: NSLocalizedString("Добавить изображение", comment: "Добавление новой станций"), preferredStyle: .actionSheet)
       
       let cameraAction = UIAlertAction(title: "Камера", style: .default, handler: { (action) in
         if UIImagePickerController.isSourceTypeAvailable(.camera) {
@@ -99,7 +99,7 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
         }
       })
       
-      let photoLibraryAction = UIAlertAction(title: "Библиотека", style: .default, handler: { (action) in
+      let photoLibraryAction = UIAlertAction(title: NSLocalizedString("Библиотека", comment: "Добавление новой станций"), style: .default, handler: { (action) in
         if UIImagePickerController.isSourceTypeAvailable(.photoLibrary) {
           let imagePicker = UIImagePickerController()
           imagePicker.allowsEditing = false
@@ -109,7 +109,7 @@ final class RadioAddViewController: BaseTableViewController, UINavigationControl
         }
       })
       
-      let cancelAction = UIAlertAction(title: "Отмена", style: .cancel, handler: nil)
+      let cancelAction = UIAlertAction(title: NSLocalizedString("Отмена", comment: "Отмена"), style: .cancel, handler: nil)
       
       photoSourceRequestController.addAction(cameraAction)
       photoSourceRequestController.addAction(photoLibraryAction)

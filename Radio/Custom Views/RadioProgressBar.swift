@@ -67,8 +67,6 @@ final class RadioProgressBar: UIView {
   
   private func reset() {
     progressBarIndicator.frame = CGRect(x: 0, y: 0, width: 0, height: frame.height)
-//    layer.removeAllAnimations()
-//    self.progressBarIndicator.layer.removeAllAnimations()
   }
   
 }

@@ -72,21 +72,22 @@ class RadioTabBarViewController: UITabBarController {
     let radioListVC = RadioListRouter.setupModule()
     radioListVC.type = .favorite
     radioListVC.radioPlayer = radioPlayer
-    
-    radioListVC.tabBarItem = UITabBarItem(title: "Избранное",
+    radioListVC.title = NSLocalizedString("Мои станции", comment: "Заголовок")
+    radioListVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Избранное", comment: "Владки"),
                                           image: UIImage(systemName: "star.fill"),
                                           tag: 0)
     
     let searchVC = RadioListRouter.setupModule()
     searchVC.type = .all
     searchVC.radioPlayer = radioPlayer
-    searchVC.tabBarItem = UITabBarItem(title: "Станции",
+    searchVC.title = NSLocalizedString("Cтанции", comment: "Заголовок")
+    searchVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Станции", comment: "Владки"),
                                        image: UIImage(systemName: "dot.radiowaves.left.and.right"),
                                        tag: 1)
     
     let settingVC = RadioSettingRouter.setupModule()
-    settingVC.title = "Настройки"
-    settingVC.tabBarItem = UITabBarItem(title: "Настройки",
+    settingVC.title = NSLocalizedString("Настройки", comment: "Владки")
+    settingVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Настройки", comment: "Настройки"),
                                         image: UIImage(systemName: "gear"),
                                         tag: 2)
     

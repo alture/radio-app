@@ -33,11 +33,17 @@ final class RadioSettingTableViewController: BaseTableViewController {
     }
   }
   
-  private var titleSections = ["Интерфейс", "Звук", "Поддержка", "О приложений"]
+  private var titleSections = [
+    NSLocalizedString("Интерфейс", comment: "Заголовок в настройках"),
+    NSLocalizedString("Звук", comment: "Заголовок в настройках"),
+    NSLocalizedString("Поддержка", comment: "Заголовок в настройках"),
+    NSLocalizedString("О приложений", comment: "Заголовок в настройках")]
   private var contentRows = [
-    ["Темная тема"],
-    ["Размер буфера"],
-    ["Обратная связь", "Оценить"],
+    [NSLocalizedString("Ночная тема", comment: "Окно настроек")],
+    [NSLocalizedString("Размер буфера", comment: "Размер буфера")],
+    [
+      NSLocalizedString("Обратная связь", comment: "Размер буфера"),
+      NSLocalizedString("Оценить", comment: "Размер буфера")],
     [""]
   ]
   private var selectedBufferSizeIndex = 0
@@ -47,19 +53,24 @@ final class RadioSettingTableViewController: BaseTableViewController {
     2:15.0,
     3:60.0
   ]
-  private var bufferSizes = ["АВТО", "5 секунд", "10 секунд", "60 секунд"]
+  private var bufferSizes = [
+    NSLocalizedString("АВТО", comment: "Размер буфера"),
+    NSLocalizedString("5 секунд", comment: "Размер буфера"),
+    NSLocalizedString("10 секунд", comment: "Размер буфера"),
+    NSLocalizedString("60 секунд", comment: "Размер буфера")
+  ]
   
   private lazy var alertController: UIAlertController = {
     let vc = UIViewController()
     vc.preferredContentSize = CGSize(width: 250, height: 150)
     vc.view.addSubview(pickerView)
     
-    let alertController = UIAlertController(title: "Выбора размера буффера",
+    let alertController = UIAlertController(title: NSLocalizedString("Выбора размера буфера", comment: "Окно настроек при нажатий буфера"),
                                             message: nil,
                                             preferredStyle: .alert)
     alertController.setValue(vc, forKey: "contentViewController")
-    alertController.addAction(UIAlertAction(title: "Отмена", style: .cancel))
-    alertController.addAction(UIAlertAction(title: "Готово", style: .default, handler: { (_) in
+    alertController.addAction(UIAlertAction(title: NSLocalizedString("Отмена", comment: "Отмена"), style: .cancel))
+    alertController.addAction(UIAlertAction(title: NSLocalizedString("Готово", comment: "Готово"), style: .default, handler: { (_) in
       self.defaults.set(self.bufferSize[self.selectedBufferSizeIndex], forKey: "BufferSize")
       self.defaults.set(self.selectedBufferSizeIndex, forKey: "BufferSizeIndex")
     }))
@@ -270,7 +281,7 @@ extension RadioSettingTableViewController: MFMailComposeViewControllerDelegate {
     case .saved:
         break
     case .sent:
-        handleError(error, .sucess(text: "Отзыв был отправлен!"))
+        handleError(error, .sucess(text: NSLocalizedString("Отзыв был отправлен!", comment: "Окно настроек")))
     case MFMailComposeResult.failed:
         handleError(error, nil)
     @unknown default:

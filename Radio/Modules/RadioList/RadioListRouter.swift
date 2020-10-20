@@ -50,7 +50,7 @@ extension RadioListRouter: RadioListWireframe {
   
   func showNewRadioView() {
     let vc = RadioAddRouter.setupModule()
-    vc.title = "Добавить станцию"
+    vc.title = NSLocalizedString("Добавить станцию", comment: "Добавить станцию")
     vc.delegate = view as? RadioAddViewControllerDelegate
     let navVC = UINavigationController(rootViewController: vc)
     view?.present(navVC, animated: true)
