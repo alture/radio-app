@@ -8,7 +8,7 @@
 
 import UIKit
 
-enum Result {
+enum ViewResult {
   case sucess(text: String)
   case failure(text: String)
   case warning(text: String)
@@ -23,7 +23,7 @@ final class ResulView: UIView {
     }
   }
   @IBOutlet weak var titleLabel: UILabel!
-  var result: Result = .def(text: "Some Text") {
+  var result: ViewResult = .def(text: "Some Text") {
     didSet {
       updateView()
     }

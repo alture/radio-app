@@ -27,13 +27,13 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   }()
   
   private var playerItemContext = 0
-  let requiredAssetKeys = [
-      "playable",
-      "hasProtectedContent"
-  ]
   
   @objc dynamic var currentRadio: Radio? {
     didSet(newValue)  {
+      if state == .playing {
+        playerItem.asset.cancelLoading()
+      }
+      
       guard let radio = currentRadio else {
         return
       }
@@ -62,15 +62,14 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       }
     }
   }
-  @objc dynamic var track = Track(trackName: NSLocalizedString("Не воспроизводится", comment: "Не воспроизводится"),
+  @objc dynamic var track = Track(trackName: NSLocalizedString("Не воспроизводится",
+                                  comment: "Не воспроизводится"),
                                   artistName: " ") {
     didSet {
       updateInfoCenter()
     }
   }
-  
-  var delegate: AVPlayerItemMetadataOutputPushDelegate?
-  
+    
   // MARK: - Private Properties
   private var player = AVPlayer()
   private var playerItem: AVPlayerItem!
@@ -116,7 +115,6 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
         break
       case .unknown:
         break
-        // Player item is not yet ready.
       @unknown default:
         break
       }
@@ -203,6 +201,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     prepareToPlay { (isSucess) in
       if isSucess {
         self.player.isMuted = false
+        self.state = .playing
         self.player.play()
       } else {
         self.state = .fail
@@ -235,59 +234,47 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   func prepareToPlay(completion: @escaping (Bool) -> ()) {
     guard
       let radio = currentRadio,
-      let url = radio.url,
-      let audioFileURL = URL(string: url)
+      let urlString = radio.url,
+      let audioFileURL = URL(string: urlString)
     else {
       completion(false)
       return
     }
     
     player.replaceCurrentItem(with: nil)
-    isPlayable(url: audioFileURL) { (status) in
-      if status == true {
-        let asset = AVAsset(url: audioFileURL)
-        self.metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
-        self.metadataOutput.setDelegate(self, queue: DispatchQueue.main)
-        self.playerItem = AVPlayerItem(asset: asset)
-        self.playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
-        self.player.automaticallyWaitsToMinimizeStalling = true
-        self.playerItem.addObserver(self,
-                               forKeyPath: #keyPath(AVPlayerItem.status),
-                               options: [.old, .new],
-                               context: &self.playerItemContext)
-        self.playerItem.add(self.metadataOutput)
-        self.player = AVPlayer(playerItem: self.playerItem)
-        radio.currentUrlIndex = 0
+    loadFrom(audioFileURL) { [weak self] (status, asset) in
+      if status == .loaded {
+        self?.setupPlayerWith(asset)
         completion(true)
-      } else {
-        guard
-          radio.otherUrl.count > radio.currentUrlIndex
-        else {
-          completion(false)
-          return
-        }
-        
-        let nextURL = radio.otherUrl[radio.currentUrlIndex].url
-        radio.currentUrlIndex += 1
-        self.currentRadio?.url = nextURL ?? ""
-        self.prepareToPlay { status in
-          completion(status)
-        }
+      } else if status == .failed {
+        completion(false)
       }
     }
   }
   
-  func isPlayable(url: URL, completion: @escaping (Bool) -> ()) {
-      let asset = AVAsset(url: url)
-      let playableKey = "playable"
-      asset.loadValuesAsynchronously(forKeys: [playableKey]) {
-          var error: NSError? = nil
-          let status = asset.statusOfValue(forKey: playableKey, error: &error)
-          let isPlayable = status == .loaded
-          DispatchQueue.main.async {
-              completion(isPlayable)
-          }
-      }
+  func loadFrom(_ url: URL,
+                completion: @escaping (_ status: AVKeyValueStatus, _ asset: AVAsset) -> Void) {
+    let playableKey = "playable"
+    let asset = AVAsset(url: url)
+    asset.loadValuesAsynchronously(forKeys: [playableKey]) {
+      var error: NSError? = nil
+      let status = asset.statusOfValue(forKey: playableKey, error: &error)
+      completion(status, asset)
+    }
+  }
+  
+  func setupPlayerWith(_ asset: AVAsset) {
+    metadataOutput = AVPlayerItemMetadataOutput(identifiers: nil)
+    metadataOutput.setDelegate(self, queue: DispatchQueue.main)
+    playerItem = AVPlayerItem(asset: asset)
+    playerItem.preferredForwardBufferDuration = TimeInterval(UserDefaults.standard.double(forKey: "BufferSize"))
+    player.automaticallyWaitsToMinimizeStalling = true
+    playerItem.addObserver(self,
+                                forKeyPath: #keyPath(AVPlayerItem.status),
+                                options: [.old, .new],
+                                context: &self.playerItemContext)
+    playerItem.add(self.metadataOutput)
+    player = AVPlayer(playerItem: self.playerItem)
   }
     
   // MARK: - Private Actions

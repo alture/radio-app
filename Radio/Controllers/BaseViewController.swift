@@ -11,7 +11,7 @@ import Network
 
 protocol BaseViewControllerDelegate {
   func showErrorAlert(with message: String)
-  func prepareResultView(with result: Result)
+  func prepareResultView(with result: ViewResult)
 }
 
 class BaseViewController: UIViewController, BaseViewControllerDelegate {
@@ -37,7 +37,7 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
   private lazy var resultViewTopConstraint = NSLayoutConstraint()
   private var isShowing: Bool = false
     
-  func prepareResultView(with result: Result) {
+  func prepareResultView(with result: ViewResult) {
     resultView.result = result
     presentResultView()
   }
@@ -114,7 +114,7 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
 }
 
 extension BaseViewController: InteractorOutputProtocol {
-  func handleError(_ error: Error?, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: ViewResult?) {
     if let result = result {
       prepareResultView(with: result)
     } else {

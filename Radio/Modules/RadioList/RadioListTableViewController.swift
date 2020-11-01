@@ -13,15 +13,14 @@ enum RadioListType {
   case favorite
 }
 
-class RadioListTableViewController: BaseTableViewController {
+final class RadioListTableViewController: BaseTableViewController {
   
-
+  
   // MARK: - Properties
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
   @objc var radioPlayer = RadioPlayer.shared
-  private var observations = [NSKeyValueObservation]()
-  
+  private var observation: NSKeyValueObservation?
   
   // MARK: - Private Properties
   private var allRadioList: [Radio] = []
@@ -29,7 +28,7 @@ class RadioListTableViewController: BaseTableViewController {
   
   private var selectedGenres: [Genre] = []
   private var selectedCountries: [Country] = []
-    
+  
   // MARK: - Search & Filter Properties
   
   private lazy var filterBarButtonItem: UIBarButtonItem = {
@@ -45,7 +44,7 @@ class RadioListTableViewController: BaseTableViewController {
   private var isSearchBarEmpty: Bool {
     return searchController.searchBar.text?.isEmpty ?? true
   }
-
+  
   @IBOutlet var emptyView: UIView!
   @IBOutlet weak var emptyViewTitle: UILabel!
   @IBOutlet weak var emptyViewButton: UIButton! {
@@ -97,23 +96,20 @@ class RadioListTableViewController: BaseTableViewController {
     
     refresh()
   }
-      
-  // MARK: - Setup
+  
+  // MARK: - Setup  
   private func setupObserver() {
-    observations = [
-      radioPlayer.observe(\.currentRadio,
-                                    options: .initial,
-                                   changeHandler: { (radio, value) in
-                                    self.tableView.reloadData()
-      }),
+    observation =
       radioPlayer.observe(\.state,
-                           options: .initial,
-                           changeHandler: { (player, value) in
+                          options: .initial,
+                          changeHandler: { (player, value) in
                             if player.state == .fail {
-                              self.handleError(nil, .warning(text: NSLocalizedString("Не удается воспроизвести поток", comment: "Не удается воспроизвести поток")))
-      
+                              self.handleError(nil,
+                                               .warning(text: NSLocalizedString("Не удается воспроизвести поток",
+                                                        comment: "Не удается воспроизвести поток")))
+                              
                             }
-      })]
+                          })
   }
   
   private func setupNavigationBar() {
@@ -146,6 +142,7 @@ class RadioListTableViewController: BaseTableViewController {
   
   private func setupTableView() {
     tableView.backgroundView = emptyView
+    tableView.allowsMultipleSelection = false
     tableView.backgroundView?.isHidden = true
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     
@@ -156,7 +153,7 @@ class RadioListTableViewController: BaseTableViewController {
       guard let radioName = radio.name else {
         return false
       }
-    
+      
       return radioName.lowercased().contains(searchText.lowercased())
     }
     
@@ -185,15 +182,15 @@ class RadioListTableViewController: BaseTableViewController {
   }
   
   private func switchToDataTab() {
-      Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchToDataTabCont), userInfo: nil, repeats: false)
+    Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchToDataTabCont), userInfo: nil, repeats: false)
   }
-
+  
   @objc private func switchToDataTabCont(){
-      tabBarController!.selectedIndex = 1
+    tabBarController!.selectedIndex = 1
   }
   
   private func didTapMoreButton(_ radio: Radio) {
-
+    
     let alertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
     let addAction = UIAlertAction(title: NSLocalizedString("Добавить в Мои станции", comment: "Добавить в Мои станции"), style: .default) { (_) in
       self.presenter?.addToFavorite(radio.id)
@@ -278,12 +275,13 @@ extension RadioListTableViewController: RadioListView {
     loadFilter(selectedGenres, selectedCountries, animated: false)
     tableView.reloadData()
     refreshControl?.endRefreshing()
-
     tableView.backgroundView?.isHidden = !model.isEmpty
   }
 }
 
-extension RadioListTableViewController {
+
+// MARK: - TableViewDelegate
+extension RadioListTableViewController {  
   override func numberOfSections(in tableView: UITableView) -> Int {
     return 1
   }
@@ -296,12 +294,15 @@ extension RadioListTableViewController {
     let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell") as! RadioListTableViewCell
     let currentRadioList = isFiltering ? filteredRadioList : radioList
     let radio = currentRadioList[indexPath.row]
+    if
+      let urlString = radio.logo,
+      let url = URL(string: urlString) {
+      cell.logoImage.loadImage(at: url)
+    }
     cell.radio = radio
-    cell.isPlaying = radioPlayer.currentRadio == radio
     cell.didTapMoreButton = { radio in
       self.didTapMoreButton(radio)
     }
-    
     return cell
   }
   

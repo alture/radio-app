@@ -70,6 +70,7 @@
 		9AC9BA8924DC0658007B937B /* RadioSettingInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AC9BA8424DC0658007B937B /* RadioSettingInteractor.swift */; };
 		9AD7480E24B4AED300ACE8E5 /* ResultView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9AD7480D24B4AED300ACE8E5 /* ResultView.xib */; };
 		9AD7481024B4AFA500ACE8E5 /* ResultView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */; };
+		9ADCDE772542FA0F00589370 /* ImageLoader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9ADCDE762542FA0F00589370 /* ImageLoader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -97,6 +98,26 @@
 		9A526FE9253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9A526FEA253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Localizable.strings; sourceTree = "<group>"; };
 		9A526FEB253F07E8001F0561 /* es */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = es; path = es.lproj/Main.strings; sourceTree = "<group>"; };
+		9A526FFB253F1CFE001F0561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9A526FFC253F1CFE001F0561 /* zh-Hans */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "zh-Hans"; path = "zh-Hans.lproj/Main.strings"; sourceTree = "<group>"; };
+		9A526FFD253F1D37001F0561 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A526FFE253F1D38001F0561 /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
+		9A526FFF253F1D61001F0561 /* id-ID */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "id-ID"; path = "id-ID.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9A527000253F1D61001F0561 /* id-ID */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "id-ID"; path = "id-ID.lproj/Main.strings"; sourceTree = "<group>"; };
+		9A527001253F1DA1001F0561 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9A527002253F1DA1001F0561 /* pt-BR */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "pt-BR"; path = "pt-BR.lproj/Main.strings"; sourceTree = "<group>"; };
+		9A527003253F1E01001F0561 /* bn-BD */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bn-BD"; path = "bn-BD.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9A527004253F1E01001F0561 /* bn-BD */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "bn-BD"; path = "bn-BD.lproj/Main.strings"; sourceTree = "<group>"; };
+		9A527005253F1E7A001F0561 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/LaunchScreen.strings"; sourceTree = "<group>"; };
+		9A527006253F1E7A001F0561 /* es-MX */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = "es-MX"; path = "es-MX.lproj/Main.strings"; sourceTree = "<group>"; };
+		9A527007253F1EC3001F0561 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A527008253F1EC3001F0561 /* ja */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ja; path = ja.lproj/Main.strings; sourceTree = "<group>"; };
+		9A527009253F1F03001F0561 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A52700A253F1F03001F0561 /* ko */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = ko; path = ko.lproj/Main.strings; sourceTree = "<group>"; };
+		9A52700B253F1F3B001F0561 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A52700C253F1F3B001F0561 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Main.strings; sourceTree = "<group>"; };
+		9A52700D253F1F71001F0561 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
+		9A52700E253F1F72001F0561 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/Main.strings; sourceTree = "<group>"; };
 		9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioTabBarViewController.swift; sourceTree = "<group>"; };
 		9A6B900C24A4B1F2002FE34A /* RVISION.Радио.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVISION.Радио.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -145,6 +166,7 @@
 		9AD70FD0253DF37000C01346 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		9AD7480D24B4AED300ACE8E5 /* ResultView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ResultView.xib; sourceTree = "<group>"; };
 		9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResultView.swift; sourceTree = "<group>"; };
+		9ADCDE762542FA0F00589370 /* ImageLoader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImageLoader.swift; sourceTree = "<group>"; };
 		BFAD53520056188370FDD90D /* Pods-Radio.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Radio.release.xcconfig"; path = "Target Support Files/Pods-Radio/Pods-Radio.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -247,6 +269,7 @@
 				9A6B903224A64446002FE34A /* Data Source */,
 				9A6B902524A4E040002FE34A /* Entities */,
 				9A6B903024A6425D002FE34A /* Modules */,
+				9ADCDE652542F56500589370 /* Utilities */,
 				9A6B903124A6426E002FE34A /* Supporting Files */,
 				9A5A73F52537A17F00A5DA9D /* Main.storyboard */,
 				9A6B901824A4B1F4002FE34A /* Assets.xcassets */,
@@ -392,6 +415,14 @@
 			path = Templates;
 			sourceTree = "<group>";
 		};
+		9ADCDE652542F56500589370 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				9ADCDE762542FA0F00589370 /* ImageLoader.swift */,
+			);
+			path = Utilities;
+			sourceTree = "<group>";
+		};
 		A985C6923ED7EF194537607F /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -447,6 +478,16 @@
 				Base,
 				en,
 				es,
+				"zh-Hans",
+				de,
+				"id-ID",
+				"pt-BR",
+				"bn-BD",
+				"es-MX",
+				ja,
+				ko,
+				fr,
+				vi,
 			);
 			mainGroup = 9A6B900324A4B1F2002FE34A;
 			productRefGroup = 9A6B900D24A4B1F2002FE34A /* Products */;
@@ -536,6 +577,7 @@
 				9AC193E924B3AFFA00C03C31 /* RadioAddViewController.swift in Sources */,
 				9AC193E724B3AFFA00C03C31 /* RadioAddPresenter.swift in Sources */,
 				9AC193ED24B3B19E00C03C31 /* BaseTableViewController.swift in Sources */,
+				9ADCDE772542FA0F00589370 /* ImageLoader.swift in Sources */,
 				9A43A32624BDDA4C00974171 /* Connectivity.swift in Sources */,
 				9AC193DC24AB87E000C03C31 /* RadioFilterInteractor.swift in Sources */,
 				9AC9BA8824DC0658007B937B /* RadioSettingTableViewController.swift in Sources */,
@@ -609,6 +651,16 @@
 				9AD70FD0253DF37000C01346 /* Base */,
 				9A526FDC253F01B5001F0561 /* en */,
 				9A526FEB253F07E8001F0561 /* es */,
+				9A526FFC253F1CFE001F0561 /* zh-Hans */,
+				9A526FFE253F1D38001F0561 /* de */,
+				9A527000253F1D61001F0561 /* id-ID */,
+				9A527002253F1DA1001F0561 /* pt-BR */,
+				9A527004253F1E01001F0561 /* bn-BD */,
+				9A527006253F1E7A001F0561 /* es-MX */,
+				9A527008253F1EC3001F0561 /* ja */,
+				9A52700A253F1F03001F0561 /* ko */,
+				9A52700C253F1F3B001F0561 /* fr */,
+				9A52700E253F1F72001F0561 /* vi */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -619,6 +671,16 @@
 				9AD70FCF253DF36F00C01346 /* Base */,
 				9A526FDB253F01B4001F0561 /* en */,
 				9A526FE9253F07E8001F0561 /* es */,
+				9A526FFB253F1CFE001F0561 /* zh-Hans */,
+				9A526FFD253F1D37001F0561 /* de */,
+				9A526FFF253F1D61001F0561 /* id-ID */,
+				9A527001253F1DA1001F0561 /* pt-BR */,
+				9A527003253F1E01001F0561 /* bn-BD */,
+				9A527005253F1E7A001F0561 /* es-MX */,
+				9A527007253F1EC3001F0561 /* ja */,
+				9A527009253F1F03001F0561 /* ko */,
+				9A52700B253F1F3B001F0561 /* fr */,
+				9A52700D253F1F71001F0561 /* vi */,
 			);
 			name = LaunchScreen.storyboard;
 			sourceTree = "<group>";
@@ -750,7 +812,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -759,7 +821,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "RVISION.Радио";
 				SWIFT_VERSION = 5.0;
@@ -773,7 +835,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 18;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -782,7 +844,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.2;
+				MARKETING_VERSION = 1.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "RVISION.Радио";
 				SWIFT_VERSION = 5.0;

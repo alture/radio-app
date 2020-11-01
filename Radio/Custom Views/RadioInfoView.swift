@@ -21,12 +21,15 @@ class RadioInfoView: UIView {
         return
       }
       
+      logoImageView.cancelImageLoading()
       titleLabel.text = track.trackName
-      if let trackCover = track.trackCover {
-        logoImageView.load(trackCover)
-      } else {
-        logoImageView.image = UIImage(named: "default-2")
+      logoImageView.image = UIImage(named: "default-2")
+      if
+        let trackCover = track.trackCover,
+        let url = URL(string: trackCover){
+        logoImageView.loadImage(at: url)
       }
+      
       playButton.isUserInteractionEnabled = true
     }
   }

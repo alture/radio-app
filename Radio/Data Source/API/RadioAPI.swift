@@ -15,6 +15,8 @@ class RadioAPI {
   static func getRadios(completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/radio"
     
+    print("Code: \(Locale.current.languageCode), Region: \(Locale.current)")
+    
     Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).validate().responseArray() { (response: DataResponse<[Radio]>) in
       switch response.result {
       case .success(let value):

@@ -43,7 +43,7 @@ extension RadioListPresenter: RadioListPresentation {
 }
 
 extension RadioListPresenter: RadioListInteractorOutput {
-  func handleError(_ error: Error?, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: ViewResult?) {
     view?.handleError(error, result)
     view?.tableView.refreshControl?.endRefreshing()
   }

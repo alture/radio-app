@@ -23,7 +23,7 @@ extension RadioFilterPresenter: RadioFilterPresentation {
 }
 
 extension RadioFilterPresenter: RadioFilterInteractorOutput {
-  func handleError(_ error: Error?, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: ViewResult?) {
     view?.handleError(error, result)
   }
   func fetchedDate(_ genre: [Genre], _ country: [Country]) {

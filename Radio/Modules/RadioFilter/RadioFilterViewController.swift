@@ -47,7 +47,6 @@ final class RadioFilterViewController: BaseViewController {
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.register(RadioFilterCell.self, forCellReuseIdentifier: "DataCell")
     tableView.allowsMultipleSelection = true
-    
     return tableView
   }()
   
@@ -104,8 +103,14 @@ extension RadioFilterViewController: RadioFilterView {
   func updateViewFromModel(_ genre: [Genre], _ country: [Country]) {
     do {
       try realm.write {
-        realm.delete(genries)
-        realm.delete(countries)
+        if !realm.objects(Genre.self).isEmpty {
+          realm.delete(genries)
+        }
+        
+        if !realm.objects(Country.self).isEmpty {
+          realm.delete(countries)
+        }
+        
         realm.add(genre)
         realm.add(country)
       }
@@ -137,9 +142,10 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
 
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-    let cell = tableView.dequeueReusableCell(withIdentifier: "DataCell", for: indexPath) as! RadioFilterCell
+    let cell = RadioFilterCell(style: .subtitle, reuseIdentifier: "DataCell")
     cell.selectionStyle = .none
     cell.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
+    cell.detailTextLabel?.textColor = .darkGray
     if indexPath.row == 0 {
       cell.textLabel?.text = indexPath.section == 0
         ? NSLocalizedString("Все жанры", comment: "Все жанры")
@@ -154,21 +160,31 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
         }
       }
     } else {
-      cell.textLabel?.text = indexPath.section == 0
-        ? genries[indexPath.row-1].name
-        : countries[indexPath.row-1].name
-
+      let currentTitle: String?
+      let numberStation: Int
+      
       if indexPath.section == 0 {
-        if selectedGenries.contains(genries[indexPath.row-1]) {
+        let currentGenre = genries[indexPath.row-1]
+        currentTitle = currentGenre.name
+        numberStation = currentGenre.stations
+        
+        if selectedGenries.contains(currentGenre) {
           tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
       } else {
-        if selectedCountries.contains(countries[indexPath.row-1]) {
+        let currentCountry = countries[indexPath.row-1]
+        currentTitle = currentCountry.name
+        numberStation = currentCountry.stations
+        
+        if selectedCountries.contains(currentCountry) {
           tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
         }
       }
       
+      cell.textLabel?.text = currentTitle
+      cell.detailTextLabel?.text = NSLocalizedString("Станции - ", comment: "Станции") + "\(numberStation)"
     }
+    
     return cell
   }
   

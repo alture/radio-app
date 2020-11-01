@@ -17,6 +17,7 @@ final class Country: Object, Mappable, Codable {
     
   @objc dynamic var id: Int = 0
   @objc dynamic var name: String? = ""
+  @objc dynamic var stations: Int = 0
   
   required init?(map: Map) {}
   
@@ -27,5 +28,6 @@ final class Country: Object, Mappable, Codable {
   func mapping(map: Map) {
     id <- map["id"]
     name <- map["name"]
+    stations <- map["stations"]
   }
 }

@@ -9,6 +9,6 @@
 import Foundation
 
 protocol InteractorOutputProtocol: class {
-  func handleError(_ error: Error?, _ result: Result?)
+  func handleError(_ error: Error?, _ result: ViewResult?)
 }
 

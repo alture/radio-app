@@ -20,7 +20,7 @@ extension RadioSettingPresenter: RadioSettingPresentation {
 }
 
 extension RadioSettingPresenter: RadioSettingInteractorOutput {
-  func handleError(_ error: Error?, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: ViewResult?) {
     view?.handleError(error, result)
   }
   // TODO: implement interactor output methods

@@ -35,7 +35,7 @@ extension RadioPlayerPresenter: RadioPlayerInteractorOutput {
     
   }
   
-  func handleError(_ error: Error?, _ result: Result?) {
+  func handleError(_ error: Error?, _ result: ViewResult?) {
     view?.handleError(error, result)
   }
   

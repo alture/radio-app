@@ -8,7 +8,6 @@
 
 import Foundation
 import ObjectMapper
-import RealmSwift
 
 final class Radio: NSObject, Mappable, Codable {
   override func isEqual(_ object: Any?) -> Bool {

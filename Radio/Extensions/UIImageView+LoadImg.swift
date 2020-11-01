@@ -7,11 +7,12 @@
 //
 
 import UIKit
-private var imageCache = NSCache<AnyObject, AnyObject>()
+private var imageCache = NSCache<NSString, UIImage>()
 
 extension UIImageView {
-  func load(_ urlString: String) {    
-    if let cacheImage = imageCache.object(forKey: urlString as AnyObject) as? UIImage {
+  func load(_ urlString: String) {
+    let itemString = NSString(string: urlString)
+    if let cacheImage = imageCache.object(forKey: itemString) {
       self.image = cacheImage
       return
     }
@@ -20,19 +21,18 @@ extension UIImageView {
       return
     }
     
-    URLSession.shared.dataTask(with: url) { (data, response, error) in
-      if let error = error {
-        print("Couldn't download image: ", error)
+    DispatchQueue.global().async { [weak self] in
+      guard
+        let data = try? Data(contentsOf: url),
+        let image = UIImage(data: data)
+      else {
         return
       }
       
-      guard let data = data else { return }
-      let image = UIImage(data: data)
-      imageCache.setObject(data as AnyObject,
-                           forKey: urlString as AnyObject)
+      imageCache.setObject(image, forKey: itemString)
       DispatchQueue.main.async {
-        self.image = image
+        self?.image = image
       }
-    }.resume()
+    }
   }
 }
