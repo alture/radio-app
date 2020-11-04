@@ -38,8 +38,10 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
   private var isShowing: Bool = false
     
   func prepareResultView(with result: ViewResult) {
-    resultView.result = result
-    presentResultView()
+    DispatchQueue.main.async { [weak self] in
+      self?.resultView.result = result
+      self?.presentResultView()
+    }
   }
   
   func showErrorAlert(with message: String) {
@@ -56,11 +58,6 @@ class BaseTableViewController: UITableViewController, BaseTableViewControllerDel
   override func viewDidLoad() {
     super.viewDidLoad()
     setupResultView()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-//    setupMonitor()
   }
   
   private func setupResultView() {

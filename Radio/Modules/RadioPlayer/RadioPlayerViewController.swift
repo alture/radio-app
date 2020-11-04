@@ -24,9 +24,11 @@ final class RadioPlayerViewController: BaseViewController {
 
   private var isPlaying: Bool = false {
     didSet {
-      playStopButton?.image = UIImage(systemName: isPlaying
-      ? "stop.fill"
-      : "play.fill")
+      DispatchQueue.main.async {
+        self.playStopButton?.image = UIImage(systemName: self.isPlaying
+        ? "stop.fill"
+        : "play.fill")
+      }
     }
   }
   
@@ -123,8 +125,12 @@ final class RadioPlayerViewController: BaseViewController {
     let player = RadioPlayer.shared
     trackNameLabel.text = player.track.trackName
     authorNameLabel.text = player.track.artistName
-    if let logoURL = player.track.trackCover {
-      imageView.load(logoURL)
+    imageView.image = nil
+    imageView.cancelImageLoading()
+    if
+      let logo = player.track.trackCover,
+      let url = URL(string: logo) {
+      imageView.loadImage(at: url)
     } else {
       imageView.image = UIImage(named: "default-2")
     }
@@ -139,29 +145,34 @@ final class RadioPlayerViewController: BaseViewController {
       radioPlayer.observe(\.currentRadio,
                           options: [.new, .old],
                           changeHandler: { (player, value) in
-                            if let radio = player.currentRadio {
-                              let currentImageName = radio.isFavorite
-                                ? "checkmark"
-                                : "plus"
-                              self.plusImageView.image = UIImage(systemName: currentImageName)
+                            DispatchQueue.main.async {
+                              if let radio = player.currentRadio {
+                                let currentImageName = radio.isFavorite
+                                  ? "checkmark"
+                                  : "plus"
+                                self.plusImageView.image = UIImage(systemName: currentImageName)
+                              }
+                              self.updateControls()
                             }
-                            self.updateControls()
       }),
       radioPlayer.observe(\.track,
                           options: [.new, .old],
                           changeHandler: { (player, value) in
-                            self.updateLabels()
+                            DispatchQueue.main.async {
+                              self.updateLabels()
+                            }
       }),
       radioPlayer.observe(\.state,
                           options: [.initial],
                           changeHandler: { (player, value) in
-                            switch player.state {
-                            case .playing, .loading: self.isPlaying = true
-                            case .stoped: self.isPlaying = false
-                            case .fail: self.showErrorAlert(with: NSLocalizedString("Не удается воспроизвести поток", comment: "Ошибка в плеере"))
+                            DispatchQueue.main.async {
+                              switch player.state {
+                              case .playing, .loading: self.isPlaying = true
+                              case .stoped: self.isPlaying = false
+                              case .fail: self.showErrorAlert(with: NSLocalizedString("Не удается воспроизвести поток", comment: "Ошибка в плеере"))
+                              }
                             }
       })]
-    updateControls()
   }
   
   override func viewWillAppear(_ animated: Bool) {

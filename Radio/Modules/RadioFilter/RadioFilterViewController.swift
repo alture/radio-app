@@ -60,6 +60,12 @@ final class RadioFilterViewController: BaseViewController {
     presenter?.viewDidLoad()
   }
   
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    
+    
+  }
+  
   private func setupNavigationBar() {
     let barButtonItem = UIBarButtonItem(
       title: NSLocalizedString("Готово", comment: "Готово"),
@@ -182,7 +188,7 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
       }
       
       cell.textLabel?.text = currentTitle
-      cell.detailTextLabel?.text = NSLocalizedString("Станции - ", comment: "Станции") + "\(numberStation)"
+      cell.detailTextLabel?.text = "\(numberStation)"
     }
     
     return cell

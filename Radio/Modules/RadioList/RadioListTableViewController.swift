@@ -20,7 +20,7 @@ final class RadioListTableViewController: BaseTableViewController {
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
   @objc var radioPlayer = RadioPlayer.shared
-  private var observation: NSKeyValueObservation?
+  private var observations = [NSKeyValueObservation]()
   
   // MARK: - Private Properties
   private var allRadioList: [Radio] = []
@@ -28,6 +28,8 @@ final class RadioListTableViewController: BaseTableViewController {
   
   private var selectedGenres: [Genre] = []
   private var selectedCountries: [Country] = []
+  
+  private var lastSelectedIndexPath: IndexPath?
   
   // MARK: - Search & Filter Properties
   
@@ -88,28 +90,52 @@ final class RadioListTableViewController: BaseTableViewController {
       emptyViewButton.setTitle(NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
     }
     
-    tableView.refreshControl?.beginRefreshing()
-  }
-  
-  override func viewDidAppear(_ animated: Bool) {
-    super.viewDidAppear(animated)
-    
     refresh()
   }
   
   // MARK: - Setup  
   private func setupObserver() {
-    observation =
+    observations = [
       radioPlayer.observe(\.state,
                           options: .initial,
                           changeHandler: { (player, value) in
                             if player.state == .fail {
-                              self.handleError(nil,
-                                               .warning(text: NSLocalizedString("Не удается воспроизвести поток",
-                                                        comment: "Не удается воспроизвести поток")))
-                              
+                              DispatchQueue.global().async {
+                                self.handleError(nil,
+                                                 .warning(text: NSLocalizedString("Не удается воспроизвести поток",
+                                                          comment: "Не удается воспроизвести поток")))
+                              }
                             }
+                          }),
+      radioPlayer.observe(\.currentRadio,
+                          options: .initial,
+                          changeHandler: { (player, value) in
+                            self.setSelectedCell(from: player.currentRadio)
                           })
+    ]
+  }
+  
+  private func setSelectedCell(from radio: Radio?) {
+    guard let radio = radio else {
+      return
+    }
+    
+    let currentRadioList = isFiltering
+      ? filteredRadioList
+      : radioList
+
+    if let index = currentRadioList.firstIndex(of: radio) {
+      let indexPath = IndexPath(row: index, section: 0)
+      defer {
+        lastSelectedIndexPath = indexPath
+      }
+      if let lastSelectedIndexPath = lastSelectedIndexPath {
+        tableView.reloadRows(at: [indexPath, lastSelectedIndexPath], with: .none)
+      } else {
+        tableView.reloadRows(at: [indexPath], with: .none)
+      }
+      
+    }
   }
   
   private func setupNavigationBar() {
@@ -143,6 +169,7 @@ final class RadioListTableViewController: BaseTableViewController {
   private func setupTableView() {
     tableView.backgroundView = emptyView
     tableView.allowsMultipleSelection = false
+    tableView.allowsSelection = true
     tableView.backgroundView?.isHidden = true
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
     
@@ -169,6 +196,8 @@ final class RadioListTableViewController: BaseTableViewController {
   }
   
   @objc private func refresh() {
+    tableView.refreshControl?.beginRefreshing()
+    
     switch type {
     case .all:
       presenter?.getRadioList()
@@ -303,14 +332,19 @@ extension RadioListTableViewController {
     cell.didTapMoreButton = { radio in
       self.didTapMoreButton(radio)
     }
+    
     return cell
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let currentRadioList = isFiltering ? filteredRadioList : radioList
     let radio = currentRadioList[indexPath.row]
-    radioPlayer.currentRadio = radio
-    radioPlayer.playRadio()
+    if radioPlayer.currentRadio == radio && radioPlayer.state == .playing {
+      radioPlayer.stopRadio()
+    } else {
+      radioPlayer.currentRadio = radio
+      radioPlayer.playRadio()
+    }
   }
 }
 

@@ -241,6 +241,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       return
     }
     
+    player.pause()
     player.replaceCurrentItem(with: nil)
     loadFrom(audioFileURL) { [weak self] (status, asset) in
       if status == .loaded {
@@ -272,9 +273,9 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     playerItem.addObserver(self,
                                 forKeyPath: #keyPath(AVPlayerItem.status),
                                 options: [.old, .new],
-                                context: &self.playerItemContext)
-    playerItem.add(self.metadataOutput)
-    player = AVPlayer(playerItem: self.playerItem)
+                                context: &playerItemContext)
+    playerItem.add(metadataOutput)
+    player = AVPlayer(playerItem: playerItem)
   }
     
   // MARK: - Private Actions

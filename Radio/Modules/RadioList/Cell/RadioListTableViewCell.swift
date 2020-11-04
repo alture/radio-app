@@ -16,9 +16,6 @@ final class RadioListTableViewCell: UITableViewCell {
     }
   }
   
-  @objc var radioPlayer = RadioPlayer.shared
-  private var observation: NSKeyValueObservation?
-  
   private var isPlaying: Bool = false {
     didSet {
       radioTitleLabel.textColor = isPlaying ? #colorLiteral(red: 0.9024619972, green: 0, blue: 0, alpha: 1) : .label
@@ -67,9 +64,7 @@ final class RadioListTableViewCell: UITableViewCell {
     guard let radio = radio else {
       return
     }
-     
-    setupObservation()
-    isPlaying = radioPlayer.currentRadio == radio
+
     radioTitleLabel.text = radio.name ?? NSLocalizedString("Название", comment: "Название станций в общем списке")
     if
       let genres = radio.genres {
@@ -78,19 +73,8 @@ final class RadioListTableViewCell: UITableViewCell {
     } else {
       radioInfoLabel.text = "\(radio.country?.name ?? NSLocalizedString("Страна", comment: "Отображение стран в общем списке"))"
     }
-  }
-  
-  private func setupObservation() {
-    observation = radioPlayer.observe(\.currentRadio,
-                                      options: .initial,
-                                      changeHandler: { [weak self] (player, value) in
-                                        self?.isPlaying = player.currentRadio == self?.radio
-                                      })
-  }
-  
-  override func setSelected(_ selected: Bool, animated: Bool) {
-    super.setSelected(selected, animated: animated)
-    isPlaying = selected
+    
+    isPlaying = RadioPlayer.shared.currentRadio == radio
   }
   
   override func prepareForReuse() {

@@ -35,11 +35,14 @@ class RadioInfoView: UIView {
   }
   var delegate: RadioInfoViewDelegate?
   var isPlaying: Bool = false {
-    didSet {      
-      playButton.setImage(UIImage(systemName: isPlaying
-        ? "stop.fill"
-        : "play.fill" ),
-                          for: .normal)
+    didSet {
+      DispatchQueue.main.async {
+        self.playButton.setImage(UIImage(systemName: self.isPlaying
+          ? "stop.fill"
+          : "play.fill" ),
+                            for: .normal)
+      }
+
     }
   }
   

@@ -21,10 +21,6 @@ final class ImageLoader {
     
     let uuid = UUID()
     let task = URLSession.shared.dataTask(with: url as URL) { (data, response, error) in
-      if let error = error {
-        completion(.failure(error))
-        return
-      }
       
       defer { self.runningRequests.removeValue(forKey: uuid) }
       
@@ -35,13 +31,15 @@ final class ImageLoader {
         return
       }
       
-      guard let error = error else { return }
+      guard let error = error else {
+        return
+      }
+      
       guard (error as NSError).code == NSURLErrorCancelled else {
         completion(.failure(error))
         return
       }
     }
-    
     task.resume()
     runningRequests[uuid] = task
     return uuid
@@ -57,7 +55,7 @@ final class UIImageLoader {
   static let shared = UIImageLoader()
   
   private lazy var imageLoader = ImageLoader()
-  private var uuidMap = [UIImageView: UUID]()
+  private lazy var uuidMap = [UIImageView: UUID]()
   
   private init() {}
   
@@ -86,11 +84,8 @@ final class UIImageLoader {
   
   func cancel(for imageView: UIImageView) {
     if let uuid = uuidMap[imageView] {
-      print("UUID: \(uuid) is removed")
       imageLoader.cancelLoad(uuid)
       uuidMap.removeValue(forKey: imageView)
-    } else {
-      print("Cancel is not working")
     }
   }
 }

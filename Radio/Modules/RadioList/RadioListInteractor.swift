@@ -24,7 +24,6 @@ extension RadioListInteractor: RadioListUseCase {
           return
         }
         if let radios = response as? [Radio] {
-          print(radios.count)
           self.output?.fetchedData(radios, type)
         }
       }
