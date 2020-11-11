@@ -10,16 +10,16 @@ import UIKit
 import RealmSwift
 
 protocol RadioFilterViewControllerDelegate {
-  func didTapAppendFilters(_ genres: [Genre], _ countries: [Country])
+  func didTapDone()
 }
 
 final class RadioFilterViewController: BaseViewController {
   
   // MARK: Properties
-  
-  var delegate: RadioFilterViewControllerDelegate?
-  
+
   var presenter: RadioFilterPresentation?
+  var delegate: RadioFilterViewControllerDelegate?
+  private var filterHelper: Filter?
   
   private lazy var realm: Realm = {
     let rlm: Realm
@@ -31,15 +31,16 @@ final class RadioFilterViewController: BaseViewController {
     return rlm
   }()
   
-  private var genries: [Genre] {
-    return Array(realm.objects(Genre.self))
-  }
-  private var countries: [Country] {
-    return Array(realm.objects(Country.self))
-  }
+  private var titleOfSections = [
+    NSLocalizedString("Жанр", comment: "Жанр"),
+    NSLocalizedString("Страна", comment: "Страна")
+  ]
   
-  var selectedGenries: [Genre] = []
-  var selectedCountries: [Country] = []
+  private var defaultFirstRowContent = [
+    NSLocalizedString("Все жанры", comment: "Все жанры"),
+    NSLocalizedString("Все страны", comment: "Все страны")
+  ]
+  
   private lazy var tableView: UITableView = {
     let tableView = UITableView(frame: .zero, style: .grouped)
     tableView.delegate = self
@@ -47,6 +48,7 @@ final class RadioFilterViewController: BaseViewController {
     tableView.translatesAutoresizingMaskIntoConstraints = false
     tableView.register(RadioFilterCell.self, forCellReuseIdentifier: "DataCell")
     tableView.allowsMultipleSelection = true
+    
     return tableView
   }()
   
@@ -60,12 +62,6 @@ final class RadioFilterViewController: BaseViewController {
     presenter?.viewDidLoad()
   }
   
-  override func viewWillAppear(_ animated: Bool) {
-    super.viewWillAppear(animated)
-    
-    
-  }
-  
   private func setupNavigationBar() {
     let barButtonItem = UIBarButtonItem(
       title: NSLocalizedString("Готово", comment: "Готово"),
@@ -74,6 +70,7 @@ final class RadioFilterViewController: BaseViewController {
       action: #selector(didTapDoneButton))
     barButtonItem.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     navigationItem.rightBarButtonItem = barButtonItem
+    navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .cancel, target: self, action: #selector(didTapCancelButton))
   }
   
   private func setupView() {
@@ -99,155 +96,128 @@ final class RadioFilterViewController: BaseViewController {
   }
   
   @objc private func didTapDoneButton() {    
-    dismiss(animated: true) {
-      self.delegate?.didTapAppendFilters(self.selectedGenries, self.selectedCountries)
-    }
+//    navigationController?.navigationItem.rightBarButtonItem?.isSpringLoaded = true
+    
+    guard let lastFilterHelper = filterHelper else { return }
+    lastFilterHelper.genre = lastFilterHelper[0].filter({ $0.selected })
+    lastFilterHelper.country = lastFilterHelper[1].filter({ $0.selected })
+    presenter?.appendNewFilter(lastFilterHelper)
+  }
+  
+  @objc private func didTapCancelButton() {
+    dismiss(animated: true)
   }
 }
 
 extension RadioFilterViewController: RadioFilterView {
-  func updateViewFromModel(_ genre: [Genre], _ country: [Country]) {
-    do {
-      try realm.write {
-        if !realm.objects(Genre.self).isEmpty {
-          realm.delete(genries)
-        }
-        
-        if !realm.objects(Country.self).isEmpty {
-          realm.delete(countries)
-        }
-        
-        realm.add(genre)
-        realm.add(country)
-      }
-    } catch let error {
-      fatalError(error.localizedDescription)
-    }
+  func updateViewFromModel(_ filter: Filter) {
+    self.filterHelper = filter
     tableView.reloadData()
     return
+  }
+  
+  func uploaded() {
+    dismiss(animated: true) {
+      self.delegate?.didTapDone()
+    }
   }
 }
 
 extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate {
   func tableView(_ tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-    switch section {
-    case 0: return NSLocalizedString("Жанр", comment: "Жанр")
-    case 1: return NSLocalizedString("Страна", comment: "Страна")
-    default:
-      return nil
-    }
+    return titleOfSections[section]
   }
   
   func numberOfSections(in tableView: UITableView) -> Int {
-    return 2
+    guard filterHelper != nil else {
+      return 0
+    }
+    
+    return titleOfSections.count
   }
   
   func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-    return (section == 0 ? genries.count : countries.count) + 1
+    guard let filter = filterHelper else {
+      return 0
+    }
+    
+    return filter[section].count + 1
   }
-
+  
   
   func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
     let cell = RadioFilterCell(style: .subtitle, reuseIdentifier: "DataCell")
+    let section = indexPath.section, row = indexPath.row
     cell.selectionStyle = .none
     cell.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     cell.detailTextLabel?.textColor = .darkGray
-    if indexPath.row == 0 {
-      cell.textLabel?.text = indexPath.section == 0
-        ? NSLocalizedString("Все жанры", comment: "Все жанры")
-        : NSLocalizedString("Все страны", comment: "Все страны")
-      if indexPath.section == 0 {
-        if selectedGenries.isEmpty {
-          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-      } else {
-        if selectedCountries.isEmpty {
-          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-      }
-    } else {
-      let currentTitle: String?
-      let numberStation: Int
-      
-      if indexPath.section == 0 {
-        let currentGenre = genries[indexPath.row-1]
-        currentTitle = currentGenre.name
-        numberStation = currentGenre.stations
-        
-        if selectedGenries.contains(currentGenre) {
-          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-      } else {
-        let currentCountry = countries[indexPath.row-1]
-        currentTitle = currentCountry.name
-        numberStation = currentCountry.stations
-        
-        if selectedCountries.contains(currentCountry) {
-          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-        }
-      }
-      
-      cell.textLabel?.text = currentTitle
-      cell.detailTextLabel?.text = "\(numberStation)"
+    
+    guard let lastFilterHelper = filterHelper else {
+      return cell
     }
     
+    if row == 0 {
+      cell.textLabel?.text = defaultFirstRowContent[section]
+        if lastFilterHelper[section].filter({ $0.selected }).isEmpty {
+          DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+            tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+          }
+        }
+    } else {
+      let filterItem = lastFilterHelper[section][row - 1]
+      cell.textLabel?.text = filterItem.name
+      cell.detailTextLabel?.text = "\(filterItem.stations)"
+      if filterItem.selected {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 0.01) {
+          tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
+        }
+      }
+    }
+
     return cell
   }
   
-  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-    if indexPath.row != 0 && (selectedGenries.count > 5 || selectedCountries.count > 5) {
-      prepareResultView(with: .warning(text: NSLocalizedString("Возможно выбрать максимум 5!", comment: "Предупреждение в окне фильтра")))
-      tableView.deselectRow(at: indexPath, animated: false)
-      return
+  func tableView(_ tableView: UITableView, willSelectRowAt indexPath: IndexPath) -> IndexPath? {
+    guard indexPath.row != 0 else {
+      tableView.deselectRows(at: indexPath.section)
+      return indexPath
     }
     
+    if let selectedRows = tableView.indexPathsForSelectedRows?.filter({ $0.section == indexPath.section }) {
+      if selectedRows.count == 5 {
+        prepareResultView(
+          with: .warning(text: NSLocalizedString("Возможно выбрать максимум 5!",
+                         comment: "Предупреждение в окне фильтра")))
+        return nil
+      }
+    }
     
-    if indexPath.row == 0 {
-      tableView.deselectAll(except: indexPath.row, at: indexPath.section)
-
-      if indexPath.section == 0 {
-        selectedGenries = []
-      } else {
-        selectedCountries = []
-      }
+    return indexPath
+  }
+  
+  func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+    guard let lastFilterHelper = filterHelper else { return }
+    let section = indexPath.section, row = indexPath.row
+    if row == 0 {
+      lastFilterHelper.deselectItems(at: section)
     } else {
-      tableView.deselectRow(at: IndexPath(row: 0, section: indexPath.section), animated: true)
-      if indexPath.section == 0 {
-        selectedGenries.append(genries[indexPath.row - 1])
-      } else {
-        selectedCountries.append(countries[indexPath.row - 1])
-      }
+      lastFilterHelper[section][row - 1].selected = true
+      tableView.deselectRow(at: IndexPath(row: 0, section: section), animated: false)
     }
   }
   
   func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-    guard indexPath.row != 0 else {
-      tableView.selectRow(at: indexPath, animated: true, scrollPosition: .none)
-      return
-    }
-      
-    if indexPath.section == 0 {
-      if let indexOfItem = selectedGenries.firstIndex(of: genries[indexPath.row - 1]) {
-        selectedGenries.remove(at: indexOfItem)
-      }
-    } else {
-      if let indexOfItem = selectedCountries.firstIndex(of: countries[indexPath.row - 1]) {
-        selectedCountries.remove(at: indexOfItem)
-      }
-    }
-  }
-}
-
-extension UITableView {
-  func deselectAll(except index: Int, at section: Int) {
-    guard let indexPathsForSelectedRows = indexPathsForSelectedRows else {
+    guard let lastFilterHelper = filterHelper else {
       return
     }
     
-    for indexPath in indexPathsForSelectedRows {
-      if indexPath.row != index {
-        deselectRow(at: IndexPath(row: indexPath.row, section: section), animated: false)
-      }
-    }
+    let section = indexPath.section, row = indexPath.row
+    lastFilterHelper[section][row - 1].selected = false
+    tableView.reloadRows(at: [IndexPath(row: 0, section: indexPath.section)], with: .none)
+  }
+  
+  func tableView(_ tableView: UITableView, willDeselectRowAt indexPath: IndexPath) -> IndexPath? {
+    return indexPath.row != 0 ? indexPath : nil
   }
 }
+

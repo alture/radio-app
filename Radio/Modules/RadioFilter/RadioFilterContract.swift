@@ -7,19 +7,23 @@
 //
 
 protocol RadioFilterView: BaseViewController {
-  func updateViewFromModel(_ genre: [Genre], _ country: [Country])
+  func updateViewFromModel(_ filter: Filter)
+  func uploaded()
 }
 
 protocol RadioFilterPresentation: class {
   func viewDidLoad()
+  func appendNewFilter(_ newFilter: Filter)
 }
 
 protocol RadioFilterUseCase: class {
   func fetchData()
+  func uploaData(_ data: Filter)
 }
 
 protocol RadioFilterInteractorOutput: InteractorOutputProtocol {
-  func fetchedDate(_ genre: [Genre], _ country: [Country])
+  func fetchedDate(_ filter: Filter)
+  func uploadedData()
 }
 
 protocol RadioFilterWireframe: class {

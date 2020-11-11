@@ -20,13 +20,21 @@ extension RadioFilterPresenter: RadioFilterPresentation {
     interactor?.fetchData()
   }
   
+  func appendNewFilter(_ newFilter: Filter) {
+    interactor?.uploaData(newFilter)
+  }
 }
 
 extension RadioFilterPresenter: RadioFilterInteractorOutput {
+  func fetchedDate(_ filter: Filter) {
+    view?.updateViewFromModel(filter)
+  }
+  
   func handleError(_ error: Error?, _ result: ViewResult?) {
     view?.handleError(error, result)
   }
-  func fetchedDate(_ genre: [Genre], _ country: [Country]) {
-    view?.updateViewFromModel(genre, country)
+  
+  func uploadedData() {
+    view?.uploaded()
   }
 }

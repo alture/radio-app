@@ -14,10 +14,10 @@ final class Radio: NSObject, Mappable, Codable {
     return id == (object as? Radio)?.id
   }
   
-  var country: Country?
+  var country: FilterItem?
   var enabled: Bool = false
   var genre: String?
-  var genres: [Genre]?
+  var genres: [FilterItem]?
   var id: Int = 0
   var logo: String?
   var name: String?

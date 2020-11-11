@@ -17,16 +17,16 @@ final class RadioListPresenter {
 }
 
 extension RadioListPresenter: RadioListPresentation {
-  func didTapShowFilterView(with genres: [Genre], _ countries: [Country]) {
-    router?.showFilterView(with: genres, countries)
+  func didTapShowFilterView() {
+    router?.showFilterView()
   }
   
-  func getRadioList() {
-    interactor?.fetchData(of: .all)
+  func getRadioList(from index: Int) {
+    interactor?.fetchData(of: .all, from: index)
   }
   
-  func getFavoriteRadioList() {
-    interactor?.fetchData(of: .favorite)
+  func getFavoriteRadioList(from index: Int) {
+    interactor?.fetchData(of: .favorite, from: index)
   }
   
   func addToFavorite(_ id: Int) {

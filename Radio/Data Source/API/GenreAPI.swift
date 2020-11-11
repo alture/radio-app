@@ -12,7 +12,7 @@ import Alamofire
 class GenreAPI {
   static func getGenries(completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/genre"
-    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[Genre]>) in
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[FilterItem]>) in
       switch response.result {
       case .success(let value):
         completion(value, nil)

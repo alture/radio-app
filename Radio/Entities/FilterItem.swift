@@ -1,8 +1,8 @@
 //
-//  Country.swift
+//  FilterItem.swift
 //  Radio
 //
-//  Created by Alisher on 6/26/20.
+//  Created by Alisher on 11/6/20.
 //  Copyright © 2020 Alisher. All rights reserved.
 //
 
@@ -10,16 +10,17 @@ import Foundation
 import ObjectMapper
 import RealmSwift
 
-final class Country: Object, Mappable, Codable {  
+final class FilterItem: Object, Mappable, Codable {
   override func isEqual(_ object: Any?) -> Bool {
-    return id == (object as? Country)?.id
+    return id == (object as? FilterItem)?.id
   }
-    
+  
   @objc dynamic var id: Int = 0
   @objc dynamic var name: String? = ""
   @objc dynamic var stations: Int = 0
+  @objc dynamic var selected: Bool = false
   
-  required init?(map: Map) {}
+  init?(map: Map) {}
   
   required init() {
     super.init()
@@ -29,5 +30,7 @@ final class Country: Object, Mappable, Codable {
     id <- map["id"]
     name <- map["name"]
     stations <- map["stations"]
+    selected <- map["selected"]
   }
+  
 }

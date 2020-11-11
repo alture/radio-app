@@ -39,12 +39,10 @@ final class RadioListRouter {
 }
 
 extension RadioListRouter: RadioListWireframe {
-  func showFilterView(with genres: [Genre], _ countries: [Country]) {
+  func showFilterView() {
     let vc = RadioFilterRouter.setupModule()
     let navVC = UINavigationController(rootViewController: vc)
     vc.delegate = view as? RadioFilterViewControllerDelegate
-//    vc.selectedGenries = genres
-//    vc.selectedCountries = countries
     view?.present(navVC, animated: true, completion: nil)
   }
   

@@ -12,7 +12,7 @@ import Alamofire
 class CountryAPI {
   static func getCountries(completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/country"
-    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[Country]>) in
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.default, headers: headers).responseArray() { (response: DataResponse<[FilterItem]>) in
       switch response.result {
       case .success(let value):
         completion(value, nil)

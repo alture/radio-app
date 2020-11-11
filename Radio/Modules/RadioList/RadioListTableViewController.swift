@@ -23,11 +23,7 @@ final class RadioListTableViewController: BaseTableViewController {
   private var observations = [NSKeyValueObservation]()
   
   // MARK: - Private Properties
-  private var allRadioList: [Radio] = []
   private var radioList: [Radio] = []
-  
-  private var selectedGenres: [Genre] = []
-  private var selectedCountries: [Country] = []
   
   private var lastSelectedIndexPath: IndexPath?
   
@@ -172,7 +168,7 @@ final class RadioListTableViewController: BaseTableViewController {
     tableView.allowsSelection = true
     tableView.backgroundView?.isHidden = true
     tableView.refreshControl?.addTarget(self, action: #selector(refresh), for: .valueChanged)
-    
+    tableView.refreshControl?.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
   }
   
   private func filterContentForSearchText(_ searchText: String) {
@@ -192,17 +188,16 @@ final class RadioListTableViewController: BaseTableViewController {
   }
   
   @objc private func didTapFilterButton() {
-    presenter?.didTapShowFilterView(with: selectedGenres, selectedCountries)
+    presenter?.didTapShowFilterView()
   }
   
   @objc private func refresh() {
     tableView.refreshControl?.beginRefreshing()
-    
     switch type {
     case .all:
-      presenter?.getRadioList()
+      presenter?.getRadioList(from: 0)
     default:
-      presenter?.getFavoriteRadioList()
+      presenter?.getFavoriteRadioList(from: 0)
     }
   }
   
@@ -260,37 +255,6 @@ final class RadioListTableViewController: BaseTableViewController {
     present(alertController, animated: true)
   }
   
-  private func loadFilter(_ genres: [Genre], _ countries: [Country], animated: Bool) {
-    var filterCount = 0
-    
-    if !genres.isEmpty { filterCount += 1 }
-    if !countries.isEmpty { filterCount += 1 }
-    updateFilterLabel(filterCount: filterCount)
-    if animated {
-      tableView.beginUpdates()
-    }
-    radioList = allRadioList.filter({ (radio) -> Bool in
-      if let radioGenres = radio.genres, !genres.isEmpty {
-        for genre in radioGenres {
-          if !genres.contains(genre) {
-            return false
-          }
-        }
-      }
-      
-      guard let country = radio.country else {
-        return true
-      }
-      
-      return countries.isEmpty ? true : countries.contains(country)
-    })
-    if animated {
-      tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-      tableView.endUpdates()
-    }
-    
-  }
-  
   private func updateFilterLabel(filterCount: Int) {
     let barButtonTitle = "\(NSLocalizedString("Фильтр", comment: "Фильтр")) (\(filterCount))"
     filterBarButtonItem.title = filterCount > 0 ? barButtonTitle : NSLocalizedString("Фильтр", comment: "Фильтр")
@@ -299,12 +263,13 @@ final class RadioListTableViewController: BaseTableViewController {
 
 extension RadioListTableViewController: RadioListView {
   func updateViewFromModel(_ model: [Radio]) {
-    allRadioList = model
-    radioList = model
-    loadFilter(selectedGenres, selectedCountries, animated: false)
-    tableView.reloadData()
+    radioList += model
+    
+    if model.count > 0 {
+      tableView.reloadData()
+    }
     refreshControl?.endRefreshing()
-    tableView.backgroundView?.isHidden = !model.isEmpty
+    tableView.backgroundView?.isHidden = !radioList.isEmpty
   }
 }
 
@@ -333,6 +298,18 @@ extension RadioListTableViewController {
       self.didTapMoreButton(radio)
     }
     
+    let lastIndex = radioList.count
+    if indexPath.row == lastIndex - 5 {
+      if !isFiltering {
+        switch type {
+        case .all:
+          presenter?.getRadioList(from: lastIndex)
+        case .favorite:
+          presenter?.getFavoriteRadioList(from: lastIndex)
+        }
+      }
+    }
+    
     return cell
   }
   
@@ -355,23 +332,30 @@ extension RadioListTableViewController: UISearchResultsUpdating {
   }
 }
 
-extension RadioListTableViewController: RadioFilterViewControllerDelegate {
-  func didTapAppendFilters(_ genres: [Genre], _ countries: [Country]) {
-    selectedGenres = genres
-    selectedCountries = countries
-    loadFilter(genres, countries, animated: true)
-  }
-}
-
 extension RadioListTableViewController: RadioAddViewControllerDelegate {
   func radioAdded() {
-    prepareResultView(with: .sucess(text: NSLocalizedString("Станция появится после модераций", comment: "Станция появится после модераций")))
+    prepareResultView(with: .sucess(text: NSLocalizedString("Станция появится после модераций",
+                                                            comment: "Станция появится после модераций")))
   }
 }
 
 extension RadioListTableViewController: EmptyViewDelegate {
   func didTapButton() {
     refresh()
+  }
+}
+
+extension RadioListTableViewController: RadioFilterViewControllerDelegate {
+  func didTapDone() {
+    radioList = []
+    tableView.refreshControl?.beginRefreshing()
+    tableView.reloadData()
+    switch type {
+    case .all:
+      presenter?.getRadioList(from: 0)
+    default:
+      presenter?.getFavoriteRadioList(from: 0)
+    }
   }
 }
 

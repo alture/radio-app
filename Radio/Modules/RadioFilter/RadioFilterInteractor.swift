@@ -15,29 +15,24 @@ final class RadioFilterInteractor {
 
 extension RadioFilterInteractor: RadioFilterUseCase {
   func fetchData() {
-    var genriesData = [Genre]()
-    var countryData = [Country]()
-    GenreAPI.getGenries { (response, error) in
+    FilterAPI.getFilter { (response, error) in
       if let error = error {
-        self.output?.handleError(error, nil)
+        self.output?.handleError(error, .failure(text: error.localizedDescription))
         return
       }
       
-      if let genries = response as? [Genre] {
-        genriesData = genries
+      if let filter = response as? Filter {
+        self.output?.fetchedDate(filter)
       }
-      
-      CountryAPI.getCountries { (response, error) in
-        if let error = error {
-          self.output?.handleError(error, nil)
-          return
-        }
-        
-        if let country = response as? [Country]  {
-          countryData = country
-        }
-        
-        self.output?.fetchedDate(genriesData, countryData)
+    }
+  }
+  
+  func uploaData(_ data: Filter) {
+    FilterAPI.uploadFilter(data) { (error) in
+      if let error = error {
+        self.output?.handleError(error, .warning(text: error.localizedDescription))
+      } else {
+        self.output?.uploadedData()
       }
     }
   }
