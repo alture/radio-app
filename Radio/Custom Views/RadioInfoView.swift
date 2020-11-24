@@ -28,9 +28,9 @@ class RadioInfoView: UIView {
         let trackCover = track.trackCover,
         let url = URL(string: trackCover){
         logoImageView.loadImage(at: url)
+        playButton.isUserInteractionEnabled = true
       }
       
-      playButton.isUserInteractionEnabled = true
     }
   }
   var delegate: RadioInfoViewDelegate?
@@ -48,15 +48,21 @@ class RadioInfoView: UIView {
   
   var isLoading: Bool = false {
     didSet {
-      if isLoading {
-        progressBarView.startAnimation()
-      } else {
-        progressBarView.stopAnimation()
+      progressViewHeight.constant = isLoading ? 3 : 1
+      UIView.animate(withDuration: 0.2) {
+        self.layoutIfNeeded()
+      } completion: { [weak self] _ in
+        if self?.isLoading ?? false {
+          self?.progressBarView.startAnimation()
+        } else {
+          self?.progressBarView.stopAnimation()
+        }
       }
     }
   }
   
   @IBOutlet weak var progressBarView: RadioProgressBar!
+  @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var logoImageView: UIImageView! {
     didSet {

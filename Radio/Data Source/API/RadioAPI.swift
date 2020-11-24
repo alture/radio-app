@@ -12,11 +12,11 @@ import AlamofireObjectMapper
 
 class RadioAPI {
   
-  static func getRadios(from index: Int, completion: @escaping ResponseHandler) {
+  static func getRadios(from startIndex: Int, to endIndex: Int, completion: @escaping ResponseHandler) {
     let fullURL = baseAPI + "/radio"
     let parameters = [
-      "index": index,
-      "limit": 20
+      "index": startIndex,
+      "limit": endIndex
     ]
     
     Alamofire.request(fullURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers).validate().responseArray() { (response: DataResponse<[Radio]>) in
@@ -63,13 +63,8 @@ class RadioAPI {
   }
   
   static func getFavoriteRadios(from index: Int, completion: @escaping ResponseHandler) {
-    let parameters = [
-      "index": index,
-      "limit": 20
-    ]
-    
     let fullURL = baseAPI + "/radio/my"
-    Alamofire.request(fullURL, method: .get, parameters: parameters, encoding: URLEncoding.queryString, headers: headers).responseArray() { (response: DataResponse<[Radio]>) in
+    Alamofire.request(fullURL, method: .get, encoding: URLEncoding.queryString, headers: headers).responseArray() { (response: DataResponse<[Radio]>) in
       switch response.result {
       case .success(let value):
         completion(value, nil)

@@ -62,6 +62,23 @@ final class RadioFilterViewController: BaseViewController {
     presenter?.viewDidLoad()
   }
   
+  override func viewWillDisappear(_ animated: Bool) {
+    super.viewWillDisappear(animated)
+    
+    let defaults = UserDefaults.standard
+    var filterCount = 0
+    
+    if let filter = filterHelper {
+      switch (!filter.genre.isEmpty, !filter.country.isEmpty) {
+      case (true, true): filterCount = 2
+      case (true, false), (false, true): filterCount = 1
+      default: filterCount = 0
+      }
+    }
+    
+    defaults.set(filterCount, forKey: "Filter")
+  }
+  
   private func setupNavigationBar() {
     let barButtonItem = UIBarButtonItem(
       title: NSLocalizedString("Готово", comment: "Готово"),

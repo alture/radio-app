@@ -27,24 +27,32 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   }()
   
   private var playerItemContext = 0
+  private var currentStationList: [Radio] = []
+  private var currentRadioIndex: Int = 0
   
-  @objc dynamic var currentRadio: Radio? {
+  private(set) var type: RadioListType = .all
+  
+  @objc dynamic private(set) var currentRadio: Radio? {
     didSet(newValue)  {
-      if state == .playing {
-        playerItem.asset.cancelLoading()
-      }
-      
       guard let radio = currentRadio else {
         return
       }
       
-      let scc = MPRemoteCommandCenter.shared()
-      scc.previousTrackCommand.isEnabled = radio.prevStation != nil
-      scc.nextTrackCommand.isEnabled = radio.nextStation != nil
+      if let playerItem = player.currentItem {
+        playerItem.asset.cancelLoading()
+      }
       
-      track = Track(trackName: currentRadio?.name ?? NSLocalizedString("Станция", comment:  "Станция"),
+      track = Track(trackName: radio.name ?? NSLocalizedString("Станция", comment:  "Станция"),
                     artistName: " ",
-                    trackCover: currentRadio?.logo)
+                    trackCover: radio.logo)
+      updateCommandCenter()
+      
+      // TODO: - Create other operation
+      if newValue == radio && (state == .playing || state == .loading) {
+        stopRadio()
+      } else {
+        playRadio()
+      }
     }
   }
   
@@ -107,11 +115,12 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       // Switch over status value
       switch status {
       case .readyToPlay:
-        state = .playing
+        if state == .loading {
+          state = .playing
+        }
         break
       case .failed:
         state = .fail
-        stopRadio()
         break
       case .unknown:
         break
@@ -134,6 +143,12 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
       MPNowPlayingInfoPropertyIsLiveStream: true,
       MPMediaItemPropertyArtwork: artwork
     ]
+  }
+  
+  private func updateCommandCenter() {
+    let scc = MPRemoteCommandCenter.shared()
+    scc.previousTrackCommand.isEnabled = currentStationList.indices.contains(currentRadioIndex - 1)
+    scc.nextTrackCommand.isEnabled = currentStationList.indices.contains(currentRadioIndex + 1)
   }
   
   private func setupMediaPlayer() {
@@ -195,64 +210,74 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
 
   
   // MARK: - Methods
+  func load(_ radio: Radio, from stations: [Radio], with type: RadioListType) {
+    self.type = type
+    if let index = stations.firstIndex(of: radio) {
+      currentRadioIndex = index
+      currentRadio = radio
+      currentStationList = stations
+      updateCommandCenter()
+    }
+  }
+  
+  func update(_ stations: [Radio]) {
+    currentStationList = stations
+    updateCommandCenter()
+  }
+  
   func playRadio() {
     player.isMuted = true
     state = .loading
-    prepareToPlay { (isSucess) in
-      if isSucess {
-        self.player.isMuted = false
-        self.state = .playing
-        self.player.play()
-      } else {
-        self.state = .fail
-      }
-    }
+    prepareToPlay()
+    player.play()
   }
   
   func stopRadio() {
     player.pause()
-    if state != .fail {
-      state = .stoped
-    }
+    state = .stoped
   }
   
   // MARK: - Private Methods
   func nextStation() {
-    currentRadio = currentRadio?.nextStation
-    if state == .playing {
-      playRadio()
+    if currentStationList.indices.contains(currentRadioIndex + 1) {
+      currentRadioIndex += 1
+
+      currentRadio = currentStationList[currentRadioIndex]
+      if state == .playing {
+        playRadio()
+      }
     }
+    
+    updateCommandCenter()
   }
   
   func prevStation() {
-    currentRadio = currentRadio?.prevStation
-    if state == .playing {
-      playRadio()
+    if currentStationList.indices.contains(currentRadioIndex - 1) {
+      currentRadioIndex -= 1
+
+      currentRadio = currentStationList[currentRadioIndex]
+      if state == .playing {
+        playRadio()
+      }
     }
+    
+    updateCommandCenter()
   }
   
-  func prepareToPlay(completion: @escaping (Bool) -> ()) {
+  func prepareToPlay() {
     guard
       let radio = currentRadio,
       let urlString = radio.url,
       let audioFileURL = URL(string: urlString)
     else {
-      completion(false)
       return
     }
     
-    player.pause()
     player.replaceCurrentItem(with: nil)
-    loadFrom(audioFileURL) { [weak self] (status, asset) in
-      if status == .loaded {
-        self?.setupPlayerWith(asset)
-        completion(true)
-      } else if status == .failed {
-        completion(false)
-      }
-    }
+    setupPlayerWith(AVAsset(url: audioFileURL))
   }
   
+  // Currently not supported
   func loadFrom(_ url: URL,
                 completion: @escaping (_ status: AVKeyValueStatus, _ asset: AVAsset) -> Void) {
     let playableKey = "playable"

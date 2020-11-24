@@ -15,10 +15,10 @@ final class RadioListInteractor {
 }
 
 extension RadioListInteractor: RadioListUseCase {
-  func fetchData(of type: RadioListType, from index: Int) {
+  func fetchData(of type: RadioListType, from startIndex: Int, to endIndex: Int) {
     switch type {
     case .all:
-      RadioAPI.getRadios(from: index) { (response, error) in
+      RadioAPI.getRadios(from: startIndex, to: endIndex) { (response, error) in
         if let error = error {
           self.output?.handleError(error, .failure(text: error.localizedDescription))
           return
@@ -28,7 +28,7 @@ extension RadioListInteractor: RadioListUseCase {
         }
       }
     case .favorite:
-        RadioAPI.getFavoriteRadios(from: index) { (response, error) in
+      RadioAPI.getFavoriteRadios(from: startIndex) { (response, error) in
         if let error = error {
           self.output?.handleError(error, .failure(text: error.localizedDescription))
           return

@@ -14,18 +14,18 @@ enum RadioListType {
 }
 
 final class RadioListTableViewController: BaseTableViewController {
-  
-  
+
   // MARK: - Properties
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
+  private var isPaginated = false
   @objc var radioPlayer = RadioPlayer.shared
   private var observations = [NSKeyValueObservation]()
   
   // MARK: - Private Properties
   private var radioList: [Radio] = []
-  
   private var lastSelectedIndexPath: IndexPath?
+  
   
   // MARK: - Search & Filter Properties
   
@@ -86,6 +86,13 @@ final class RadioListTableViewController: BaseTableViewController {
       emptyViewButton.setTitle(NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
     }
     
+//    refresh()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    setupSearchController()
+//    updateFilterTitle()
     refresh()
   }
   
@@ -148,7 +155,9 @@ final class RadioListTableViewController: BaseTableViewController {
     
     navigationItem.largeTitleDisplayMode = .always
     navigationController?.navigationBar.prefersLargeTitles = true
-    setupSearchController()
+    if type == .favorite {
+      setupSearchController()
+    }
   }
   
   private func setupSearchController() {
@@ -183,6 +192,13 @@ final class RadioListTableViewController: BaseTableViewController {
     tableView.reloadData()
   }
   
+  private func updateFilterTitle() {
+    let filterCount = UserDefaults.standard.integer(forKey: "Filter")
+    if let title = filterBarButtonItem.title, filterCount > 0 {
+      filterBarButtonItem.title = "\(title) \(filterCount)"
+    }
+  }
+  
   @objc private func didTapAddBarButton() {
     presenter?.addNewRadio()
   }
@@ -195,9 +211,9 @@ final class RadioListTableViewController: BaseTableViewController {
     tableView.refreshControl?.beginRefreshing()
     switch type {
     case .all:
-      presenter?.getRadioList(from: 0)
+      presenter?.getRadioList(from: 0, to: radioList.count)
     default:
-      presenter?.getFavoriteRadioList(from: 0)
+      presenter?.getFavoriteRadioList(from: 0, to: radioList.count)
     }
   }
   
@@ -206,7 +222,11 @@ final class RadioListTableViewController: BaseTableViewController {
   }
   
   private func switchToDataTab() {
-    Timer.scheduledTimer(timeInterval: 0.2, target: self, selector: #selector(switchToDataTabCont), userInfo: nil, repeats: false)
+    Timer.scheduledTimer(timeInterval: 0.2,
+                         target: self,
+                         selector: #selector(switchToDataTabCont),
+                         userInfo: nil,
+                         repeats: false)
   }
   
   @objc private func switchToDataTabCont(){
@@ -263,11 +283,20 @@ final class RadioListTableViewController: BaseTableViewController {
 
 extension RadioListTableViewController: RadioListView {
   func updateViewFromModel(_ model: [Radio]) {
-    radioList += model
     
-    if model.count > 0 {
-      tableView.reloadData()
+    if !isPaginated {
+      radioList = model
+    } else {
+      radioList += model
+      if radioPlayer.type == .all, radioPlayer.currentRadio != nil {
+        radioPlayer.update(radioList)
+      }
     }
+    
+    isPaginated = false
+    
+    tableView.reloadData()
+    
     refreshControl?.endRefreshing()
     tableView.backgroundView?.isHidden = !radioList.isEmpty
   }
@@ -298,31 +327,25 @@ extension RadioListTableViewController {
       self.didTapMoreButton(radio)
     }
     
-    let lastIndex = radioList.count
-    if indexPath.row == lastIndex - 5 {
-      if !isFiltering {
-        switch type {
-        case .all:
-          presenter?.getRadioList(from: lastIndex)
-        case .favorite:
-          presenter?.getFavoriteRadioList(from: lastIndex)
-        }
-      }
-    }
-    
     return cell
   }
   
   override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
     let currentRadioList = isFiltering ? filteredRadioList : radioList
-    let radio = currentRadioList[indexPath.row]
-    if radioPlayer.currentRadio == radio && radioPlayer.state == .playing {
-      radioPlayer.stopRadio()
-    } else {
-      radioPlayer.currentRadio = radio
-      radioPlayer.playRadio()
+    radioPlayer.load(currentRadioList[indexPath.row], from: currentRadioList, with: type)
+  }
+  
+  override func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    let currentOffset = scrollView.contentOffset.y
+    let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
+    if maximumOffset - currentOffset <= 450.0 {
+      if type == .all {
+        isPaginated = true
+        presenter?.getRadioList(from: radioList.count, to: 50)
+      }
     }
   }
+  
 }
 
 extension RadioListTableViewController: UISearchResultsUpdating {
@@ -347,16 +370,25 @@ extension RadioListTableViewController: EmptyViewDelegate {
 
 extension RadioListTableViewController: RadioFilterViewControllerDelegate {
   func didTapDone() {
-    radioList = []
+//    radioList = []
+//    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
     tableView.refreshControl?.beginRefreshing()
-    tableView.reloadData()
+    tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentOffset.y - (tableView.refreshControl!.frame.size.height)), animated: true)
     switch type {
     case .all:
-      presenter?.getRadioList(from: 0)
+      presenter?.getRadioList(from: 0, to: 50)
     default:
-      presenter?.getFavoriteRadioList(from: 0)
+      presenter?.getRadioList(from: 0, to: 50)
     }
   }
 }
 
+extension UIRefreshControl {
+  func beginRefreshingManually() {
+    if let scrollView = superview as? UIScrollView {
+      scrollView.setContentOffset(CGPoint(x: 0, y: scrollView.contentOffset.y - frame.height), animated: true)
+      beginRefreshing()
+    }
+  }
+}
 

@@ -1,4 +1,3 @@
-
 /* Class = "UILabel"; text = "Lost-Heaven FM"; ObjectID = "1uD-yL-Ebv"; */
 "1uD-yL-Ebv.text" = "Lost-Heaven FM";
 
@@ -8,26 +7,27 @@
 /* Class = "UILabel"; text = " "; ObjectID = "9LW-H0-wsg"; */
 "9LW-H0-wsg.text" = " ";
 
-/* Class = "UIButton"; normalTitle = "Обновить"; ObjectID = "OmC-Gw-8xr"; */
-"OmC-Gw-8xr.normalTitle" = "Обновить";
-
-/* Class = "UITextField"; placeholder = "Введите название станций"; ObjectID = "W2e-Wy-oau"; */
-"W2e-Wy-oau.placeholder" = "Введите название станций";
-
 /* Class = "UILabel"; text = "Поток"; ObjectID = "csR-FK-HK7"; */
-"csR-FK-HK7.text" = "Поток";
+"csR-FK-HK7.text" = "Luồng";
 
 /* Class = "UITextField"; placeholder = "Введите url потока"; ObjectID = "h4W-nm-0PB"; */
-"h4W-nm-0PB.placeholder" = "Введите url потока";
+"h4W-nm-0PB.placeholder" = "Nhập url luồng";
 
 /* Class = "UILabel"; text = "Не воспроизводится"; ObjectID = "h5w-3r-rwg"; */
-"h5w-3r-rwg.text" = "Не воспроизводится";
+"h5w-3r-rwg.text" = "Không được phát";
 
 /* Class = "UILabel"; text = "Список моих станций пуст"; ObjectID = "kFR-z7-RiB"; */
-"kFR-z7-RiB.text" = "Список моих станций пуст";
+"kFR-z7-RiB.text" = "Danh sách các trạm của tôi trống";
+
+/* Class = "UIButton"; normalTitle = "Обновить"; ObjectID = "OmC-Gw-8xr"; */
+"OmC-Gw-8xr.normalTitle" = "Cập nhật";
 
 /* Class = "UINavigationItem"; title = "Добавить станцию"; ObjectID = "peg-56-VwY"; */
-"peg-56-VwY.title" = "Добавить станцию";
+"peg-56-VwY.title" = "Thêm trạm";
 
 /* Class = "UILabel"; text = "Название"; ObjectID = "qhY-B9-ANg"; */
-"qhY-B9-ANg.text" = "Название";
+"qhY-B9-ANg.text" = "Tên";
+
+/* Class = "UITextField"; placeholder = "Введите название станций"; ObjectID = "W2e-Wy-oau"; */
+"W2e-Wy-oau.placeholder" = "Nhập tên của các trạm";
+

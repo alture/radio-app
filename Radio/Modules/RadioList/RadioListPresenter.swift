@@ -21,12 +21,12 @@ extension RadioListPresenter: RadioListPresentation {
     router?.showFilterView()
   }
   
-  func getRadioList(from index: Int) {
-    interactor?.fetchData(of: .all, from: index)
+  func getRadioList(from startIndex: Int, to endIndex: Int) {
+    interactor?.fetchData(of: .all, from: startIndex, to: endIndex)
   }
   
-  func getFavoriteRadioList(from index: Int) {
-    interactor?.fetchData(of: .favorite, from: index)
+  func getFavoriteRadioList(from startIndex: Int, to endIndex: Int) {
+    interactor?.fetchData(of: .favorite, from: startIndex, to: endIndex)
   }
   
   func addToFavorite(_ id: Int) {
@@ -58,14 +58,7 @@ extension RadioListPresenter: RadioListInteractorOutput {
   }
   
   func fetchedData(_ data: [Radio], _ type: RadioListType) {
-    var prevRadio: Radio?
     let availableRadios = data.filter { (radio) -> Bool in
-      if let prevRadio = prevRadio {
-        prevRadio.nextStation = radio
-        radio.prevStation = prevRadio
-      }
-      
-      prevRadio = radio
       return radio.enabled
     }
 

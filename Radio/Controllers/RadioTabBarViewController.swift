@@ -52,6 +52,7 @@ class RadioTabBarViewController: UITabBarController {
                               self.radioInfoView.isLoading = false
                             case .stoped:
                               self.radioInfoView.isPlaying = false
+                              self.radioInfoView.isLoading = false
                             case .fail:
                               self.radioInfoView.isPlaying = false
                               self.radioInfoView.isLoading = false

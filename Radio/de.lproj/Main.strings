@@ -8,26 +8,26 @@
 "9LW-H0-wsg.text" = " ";
 
 /* Class = "UILabel"; text = "Поток"; ObjectID = "csR-FK-HK7"; */
-"csR-FK-HK7.text" = "流";
+"csR-FK-HK7.text" = "Stream";
 
 /* Class = "UITextField"; placeholder = "Введите url потока"; ObjectID = "h4W-nm-0PB"; */
-"h4W-nm-0PB.placeholder" = "输入流url";
+"h4W-nm-0PB.placeholder" = "Stream-url eingeben";
 
 /* Class = "UILabel"; text = "Не воспроизводится"; ObjectID = "h5w-3r-rwg"; */
-"h5w-3r-rwg.text" = "不玩";
+"h5w-3r-rwg.text" = "Nicht gespielt";
 
 /* Class = "UILabel"; text = "Список моих станций пуст"; ObjectID = "kFR-z7-RiB"; */
-"kFR-z7-RiB.text" = "我的电台列表是空的";
+"kFR-z7-RiB.text" = "Die Liste meiner Stationen ist leer";
 
 /* Class = "UIButton"; normalTitle = "Обновить"; ObjectID = "OmC-Gw-8xr"; */
-"OmC-Gw-8xr.normalTitle" = "更新";
+"OmC-Gw-8xr.normalTitle" = "Aktualisieren";
 
 /* Class = "UINavigationItem"; title = "Добавить станцию"; ObjectID = "peg-56-VwY"; */
-"peg-56-VwY.title" = "添加站";
+"peg-56-VwY.title" = "Station hinzufügen";
 
 /* Class = "UILabel"; text = "Название"; ObjectID = "qhY-B9-ANg"; */
-"qhY-B9-ANg.text" = "标题";
+"qhY-B9-ANg.text" = "Namen";
 
 /* Class = "UITextField"; placeholder = "Введите название станций"; ObjectID = "W2e-Wy-oau"; */
-"W2e-Wy-oau.placeholder" = "输入电台名称";
+"W2e-Wy-oau.placeholder" = "Geben Sie den Namen der Stationen ein";
 

@@ -13,8 +13,8 @@ protocol RadioListView: BaseTableViewController {
 }
 
 protocol RadioListPresentation: class {
-  func getRadioList(from index: Int)
-  func getFavoriteRadioList(from index: Int)
+  func getRadioList(from startIndex: Int, to endIndex: Int)
+  func getFavoriteRadioList(from startIndex: Int, to endIndex: Int)
   func addToFavorite(_ id: Int)
   func removeFromFavorite(_ id: Int)
   func didTapShowFilterView()
@@ -22,7 +22,7 @@ protocol RadioListPresentation: class {
 }
 
 protocol RadioListUseCase: class {
-  func fetchData(of type: RadioListType, from index: Int)
+  func fetchData(of type: RadioListType, from index: Int, to endIndex: Int)
   func addData(id: Int)
   func removeData(id: Int)
 }

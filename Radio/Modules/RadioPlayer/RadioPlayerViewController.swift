@@ -101,17 +101,20 @@ final class RadioPlayerViewController: BaseViewController {
   }
   
   private func updateControls() {
-    var isEnabled = radioPlayer.currentRadio?.prevStation != nil
+    let scc = MPRemoteCommandCenter.shared()
+    var isEnabled = scc.previousTrackCommand.isEnabled
     prevButtonImage.isUserInteractionEnabled = isEnabled
     prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
-    
-    isEnabled = radioPlayer.currentRadio?.nextStation != nil
+    print("Prev: \(isEnabled)")
+
+    isEnabled = scc.nextTrackCommand.isEnabled
     nextButtonImage.isUserInteractionEnabled = isEnabled
     nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
-    
+    print("Next: \(isEnabled)")
+
     isEnabled = radioPlayer.currentRadio != nil
     playStopButton.isUserInteractionEnabled = isEnabled
-    prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    playStopButton.alpha = isEnabled ? 1.0 : 0.3
     
     switch radioPlayer.state {
     case .playing, .loading:

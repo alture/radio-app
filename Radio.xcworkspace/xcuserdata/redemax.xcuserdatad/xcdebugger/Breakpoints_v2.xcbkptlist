@@ -80,7 +80,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
                   endingLineNumber = "92"
-                  offsetFromSymbolStart = "744">
+                  offsetFromSymbolStart = "625">
                </Location>
                <Location
                   uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 5d8eaf77f124f10c"
@@ -95,7 +95,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
                   endingLineNumber = "93"
-                  offsetFromSymbolStart = "44">
+                  offsetFromSymbolStart = "103">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -113,6 +113,38 @@
             startingLineNumber = "62"
             endingLineNumber = "62"
             landmarkName = "viewDidLoad()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "BFB00519-870A-4E10-A9AB-FCAB988A485B"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Radio/Modules/RadioList/RadioListTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "335"
+            endingLineNumber = "335"
+            landmarkName = "tableView(_:didSelectRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "8950B522-CA34-46C7-9770-1AE67E4F2116"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Radio/Modules/RadioList/RadioListTableViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "389"
+            endingLineNumber = "389"
+            landmarkName = "beginRefreshingManually()"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
