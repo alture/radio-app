@@ -12,6 +12,7 @@
 		9A0332B325555BA200432D38 /* Filter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0332B225555BA200432D38 /* Filter.swift */; };
 		9A0332B825555E6A00432D38 /* FilterAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0332B725555E6A00432D38 /* FilterAPI.swift */; };
 		9A0332C52555715F00432D38 /* FilterItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0332C42555715F00432D38 /* FilterItem.swift */; };
+		9A0B572B256E599A00BA9753 /* BadgeBarButtonItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A0B572A256E599A00BA9753 /* BadgeBarButtonItem.swift */; };
 		9A3B8F3F2500F8F100FA4DE2 /* UIDevice+ModelName.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */; };
 		9A3B8F412506593200FA4DE2 /* Track.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A3B8F402506593200FA4DE2 /* Track.swift */; };
 		9A43A31A24B9DA1700974171 /* RadioPlayerContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A43A31524B9DA1700974171 /* RadioPlayerContract.swift */; };
@@ -79,6 +80,7 @@
 		9A0332B225555BA200432D38 /* Filter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Filter.swift; sourceTree = "<group>"; };
 		9A0332B725555E6A00432D38 /* FilterAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterAPI.swift; sourceTree = "<group>"; };
 		9A0332C42555715F00432D38 /* FilterItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterItem.swift; sourceTree = "<group>"; };
+		9A0B572A256E599A00BA9753 /* BadgeBarButtonItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BadgeBarButtonItem.swift; sourceTree = "<group>"; };
 		9A1E4975253EF6E600AE1B33 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = Info.plist; path = Radio/Info.plist; sourceTree = "<group>"; };
 		9A2C4C71256C1E7E00D7D7EA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9A2C4C72256C1E7E00D7D7EA /* de */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = de; path = de.lproj/Main.strings; sourceTree = "<group>"; };
@@ -251,6 +253,7 @@
 				9AD7480F24B4AFA500ACE8E5 /* ResultView.swift */,
 				9A9B60A524E3DD7A00D59D59 /* EmptyView.swift */,
 				9A4B7F43250DE9860077999B /* RadioProgressBar.swift */,
+				9A0B572A256E599A00BA9753 /* BadgeBarButtonItem.swift */,
 			);
 			path = "Custom Views";
 			sourceTree = "<group>";
@@ -610,6 +613,7 @@
 				9AC193E624B3AFFA00C03C31 /* RadioAddContract.swift in Sources */,
 				9AC9BA8624DC0658007B937B /* RadioSettingPresenter.swift in Sources */,
 				9AC193D824AB87E000C03C31 /* RadioFilterContract.swift in Sources */,
+				9A0B572B256E599A00BA9753 /* BadgeBarButtonItem.swift in Sources */,
 				9A9F31E924D9B7FE00D8DCF7 /* RadioListTableViewController.swift in Sources */,
 				9A43A31E24B9DA1700974171 /* RadioPlayerInteractor.swift in Sources */,
 				9A9B60A624E3DD7A00D59D59 /* EmptyView.swift in Sources */,

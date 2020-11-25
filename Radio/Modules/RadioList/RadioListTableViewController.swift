@@ -13,12 +13,18 @@ enum RadioListType {
   case favorite
 }
 
+enum RadioListState {
+  case loaded
+  case paginted
+  case filtered
+}
+
 final class RadioListTableViewController: BaseTableViewController {
 
   // MARK: - Properties
   var presenter: RadioListPresentation?
   var type: RadioListType = .favorite
-  private var isPaginated = false
+  private var state: RadioListState = .loaded
   @objc var radioPlayer = RadioPlayer.shared
   private var observations = [NSKeyValueObservation]()
   
@@ -30,10 +36,16 @@ final class RadioListTableViewController: BaseTableViewController {
   // MARK: - Search & Filter Properties
   
   private lazy var filterBarButtonItem: UIBarButtonItem = {
-    let button = UIBarButtonItem(title: NSLocalizedString("Фильтр", comment: "Фильтр"), style: .plain, target: self, action: #selector(didTapFilterButton))
-    button.tintColor =  #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
-    return button
+    let badgeBarButton = BadgeBarButton(frame: CGRect(x: 0, y: 0, width: 30, height: 26))
+    badgeBarButton.setBackgroundImage(UIImage(systemName: "slider.horizontal.3"), for: .normal)
+    badgeBarButton.imageView?.contentMode = .scaleAspectFill
+    badgeBarButton.addTarget(self, action: #selector(didTapFilterButton), for: .touchUpInside)
+    let barButtonItem = UIBarButtonItem(customView: badgeBarButton)
+    barButtonItem.customView?.heightAnchor.constraint(equalToConstant: 26.0).isActive = true
+    barButtonItem.customView?.widthAnchor.constraint(equalToConstant: 30.0).isActive = true
+    return barButtonItem
   }()
+  
   private var filteredRadioList = [Radio]()
   private var isFiltering: Bool {
     return searchController.isActive && !isSearchBarEmpty
@@ -85,14 +97,11 @@ final class RadioListTableViewController: BaseTableViewController {
       emptyViewTitle.text = NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим")
       emptyViewButton.setTitle(NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
     }
-    
-//    refresh()
   }
   
   override func viewWillAppear(_ animated: Bool) {
     super.viewWillAppear(animated)
-    setupSearchController()
-//    updateFilterTitle()
+    updateFilterLabel()
     refresh()
   }
   
@@ -275,28 +284,31 @@ final class RadioListTableViewController: BaseTableViewController {
     present(alertController, animated: true)
   }
   
-  private func updateFilterLabel(filterCount: Int) {
-    let barButtonTitle = "\(NSLocalizedString("Фильтр", comment: "Фильтр")) (\(filterCount))"
-    filterBarButtonItem.title = filterCount > 0 ? barButtonTitle : NSLocalizedString("Фильтр", comment: "Фильтр")
+  private func updateFilterLabel() {
+    let filterCount = UserDefaults.standard.integer(forKey: "Filter")
+    if let badgeBarButton = filterBarButtonItem.customView as? BadgeBarButton {
+      badgeBarButton.badgeNumber = filterCount
+    }
   }
 }
 
 extension RadioListTableViewController: RadioListView {
   func updateViewFromModel(_ model: [Radio]) {
-    
-    if !isPaginated {
+    switch state {
+    case .loaded:
       radioList = model
-    } else {
+    case .paginted:
       radioList += model
       if radioPlayer.type == .all, radioPlayer.currentRadio != nil {
         radioPlayer.update(radioList)
       }
+    case .filtered:
+      radioList = model
+      lastSelectedIndexPath = nil
     }
     
-    isPaginated = false
-    
+    state = .loaded
     tableView.reloadData()
-    
     refreshControl?.endRefreshing()
     tableView.backgroundView?.isHidden = !radioList.isEmpty
   }
@@ -340,7 +352,7 @@ extension RadioListTableViewController {
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
     if maximumOffset - currentOffset <= 450.0 {
       if type == .all {
-        isPaginated = true
+        state = .paginted
         presenter?.getRadioList(from: radioList.count, to: 50)
       }
     }
@@ -370,10 +382,12 @@ extension RadioListTableViewController: EmptyViewDelegate {
 
 extension RadioListTableViewController: RadioFilterViewControllerDelegate {
   func didTapDone() {
-//    radioList = []
-//    tableView.reloadSections(IndexSet(integer: 0), with: .automatic)
-    tableView.refreshControl?.beginRefreshing()
+    radioList = []
+    tableView.reloadData()
+    state = .filtered
+    updateFilterLabel()
     tableView.setContentOffset(CGPoint(x: 0, y: tableView.contentOffset.y - (tableView.refreshControl!.frame.size.height)), animated: true)
+    tableView.refreshControl?.beginRefreshing()
     switch type {
     case .all:
       presenter?.getRadioList(from: 0, to: 50)

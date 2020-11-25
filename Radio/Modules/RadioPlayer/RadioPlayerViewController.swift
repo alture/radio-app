@@ -105,12 +105,10 @@ final class RadioPlayerViewController: BaseViewController {
     var isEnabled = scc.previousTrackCommand.isEnabled
     prevButtonImage.isUserInteractionEnabled = isEnabled
     prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
-    print("Prev: \(isEnabled)")
 
     isEnabled = scc.nextTrackCommand.isEnabled
     nextButtonImage.isUserInteractionEnabled = isEnabled
     nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
-    print("Next: \(isEnabled)")
 
     isEnabled = radioPlayer.currentRadio != nil
     playStopButton.isUserInteractionEnabled = isEnabled
