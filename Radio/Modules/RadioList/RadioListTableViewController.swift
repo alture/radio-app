@@ -32,7 +32,6 @@ final class RadioListTableViewController: BaseTableViewController {
   private var radioList: [Radio] = []
   private var lastSelectedIndexPath: IndexPath?
   
-  
   // MARK: - Search & Filter Properties
   
   private lazy var filterBarButtonItem: UIBarButtonItem = {
@@ -92,10 +91,10 @@ final class RadioListTableViewController: BaseTableViewController {
     switch type {
     case .favorite:
       emptyViewTitle.text = NSLocalizedString("Список моих станции пуст", comment: "Список моих станции пуст")
-      emptyViewButton.setTitle(NSLocalizedString("Список моих станции пуст", comment: "Список моих станции пуст"), for: .normal)
+      emptyViewButton.setTitle(NSLocalizedString("Выбрать и добавить", comment: "Список моих станции пуст"), for: .normal)
     case .all:
       emptyViewTitle.text = NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим")
-      emptyViewButton.setTitle(NSLocalizedString("Cтанции еще нет,\nно мы работаем над этим", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
+      emptyViewButton.setTitle(NSLocalizedString("Обновить", comment: "Cтанции еще нет,\nно мы работаем над этим"), for: .normal)
     }
   }
   
@@ -287,7 +286,7 @@ final class RadioListTableViewController: BaseTableViewController {
   private func updateFilterLabel() {
     let filterCount = UserDefaults.standard.integer(forKey: "Filter")
     if let badgeBarButton = filterBarButtonItem.customView as? BadgeBarButton {
-      badgeBarButton.badgeNumber = filterCount
+      badgeBarButton.setBadgeNumber(filterCount)
     }
   }
 }
@@ -351,8 +350,9 @@ extension RadioListTableViewController {
     let currentOffset = scrollView.contentOffset.y
     let maximumOffset = scrollView.contentSize.height - scrollView.frame.size.height
     if maximumOffset - currentOffset <= 450.0 {
-      if type == .all {
+      if type == .all, state == .loaded {
         state = .paginted
+        print("Load: \(radioList.count)")
         presenter?.getRadioList(from: radioList.count, to: 50)
       }
     }

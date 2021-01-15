@@ -68,12 +68,12 @@
             landmarkType = "7">
             <Locations>
                <Location
-                  uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 3835a4b915cd6470"
+                  uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 29ae8419a63deea4"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "RVISION_&#x420;&#x430;&#x434;&#x438;&#x43e;.RadioAddViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RVISION.&#x420;&#x430;&#x434;&#x438;&#x43e;"
+                  symbolName = "R_&#x420;&#x430;&#x434;&#x438;&#x43e;.RadioAddViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "R.&#x420;&#x430;&#x434;&#x438;&#x43e;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redemax/Developer/Radio/Radio/Modules/RadioAdd/RadioAddViewController.swift"
                   startingColumnNumber = "9223372036854775807"
@@ -83,12 +83,12 @@
                   offsetFromSymbolStart = "625">
                </Location>
                <Location
-                  uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 5d8eaf77f124f10c"
+                  uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 2d3dc804d5081793"
                   shouldBeEnabled = "Yes"
                   ignoreCount = "0"
                   continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in RVISION_&#x420;&#x430;&#x434;&#x438;&#x43e;.RadioAddViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
-                  moduleName = "RVISION.&#x420;&#x430;&#x434;&#x438;&#x43e;"
+                  symbolName = "closure #1 (__C.UIAlertAction) -&gt; () in R_&#x420;&#x430;&#x434;&#x438;&#x43e;.RadioAddViewController.tableView(_: __C.UITableView, didSelectRowAt: Foundation.IndexPath) -&gt; ()"
+                  moduleName = "R.&#x420;&#x430;&#x434;&#x438;&#x43e;"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/redemax/Developer/Radio/Radio/Modules/RadioAdd/RadioAddViewController.swift"
                   startingColumnNumber = "9223372036854775807"

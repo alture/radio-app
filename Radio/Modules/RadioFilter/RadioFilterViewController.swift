@@ -169,7 +169,11 @@ extension RadioFilterViewController: UITableViewDataSource, UITableViewDelegate 
     cell.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     cell.detailTextLabel?.textColor = .darkGray
     
-    guard let lastFilterHelper = filterHelper else {
+    guard
+      let lastFilterHelper = filterHelper,
+      !lastFilterHelper.genre.isEmpty,
+      !lastFilterHelper.country.isEmpty
+    else {
       return cell
     }
     

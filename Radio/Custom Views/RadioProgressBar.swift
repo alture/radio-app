@@ -9,9 +9,11 @@
 import UIKit
 
 final class RadioProgressBar: UIView {
+  var completion: (() -> Void)?
   private var isRunningAnimation: Bool = false
   private lazy var progressBarIndicator: UIView = {
     let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: frame.height))
+    view.translatesAutoresizingMaskIntoConstraints = false
     view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     return view
   }()
@@ -19,8 +21,20 @@ final class RadioProgressBar: UIView {
   private var screenSize: CGRect = UIScreen.main.bounds
   override func layoutSubviews() {
     super.layoutSubviews()
-    
     addSubview(progressBarIndicator)
+    NSLayoutConstraint.activate([
+      progressBarIndicator.topAnchor.constraint(equalTo: topAnchor),
+      progressBarIndicator.bottomAnchor.constraint(equalTo: bottomAnchor)
+    ])
+  }
+  override init(frame: CGRect) {
+    super.init(frame: frame)
+    
+
+  }
+  
+  required init?(coder aDecoder: NSCoder) {
+    super.init(coder: aDecoder)
   }
   
   func startAnimation() {
@@ -41,7 +55,7 @@ final class RadioProgressBar: UIView {
           withRelativeStartTime: 0.0,
           relativeDuration: 0.5) {
             self.progressBarIndicator.frame = CGRect(
-              x: 0,y: 0,
+              x: 0, y: 0,
               width: self.frame.width * 0.5, height: self.frame.height)
         }
         
@@ -53,10 +67,13 @@ final class RadioProgressBar: UIView {
               width: 0, height: self.frame.height)
         }
     }, completion: { _ in
-      self.reset()
       if self.isRunningAnimation {
         self.animate()
+      } else {
+        self.completion?()
       }
+      
+      self.reset()
     })
   }
   

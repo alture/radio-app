@@ -8,25 +8,28 @@
 
 import UIKit
 
-final class BadgeBarButton: UIButton {
-  var badgeNumber: Int = 0 {
-    didSet {
-      updateBadge()
-    }
-  }
-  
+final class BadgeBarButton: UIButton {  
   private lazy var label: UILabel = {
     let label = UILabel(frame: CGRect(x: 0, y: 0, width: 24.0, height: 24.0))
     label.backgroundColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
     label.textAlignment = .center
     label.clipsToBounds = true
     label.layer.cornerRadius = label.bounds.size.height / 2
+    label.layer.borderWidth = 2.0
+    label.layer.borderColor = UIColor.systemBackground.cgColor
     label.font = .systemFont(ofSize: 14.0, weight: .medium)
     label.translatesAutoresizingMaskIntoConstraints = false
-    label.textColor = .white
+    label.layer.masksToBounds = true
     label.isHidden = true
+    label.textColor = .white
     return label
   }()
+  
+  func setBadgeNumber(_ number: Int) {
+    label.text = "\(number)"
+    label.sizeToFit()
+    label.isHidden = number == 0
+  }
   
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -55,9 +58,9 @@ final class BadgeBarButton: UIButton {
     ])
   }
   
-  private func updateBadge() {
-    label.isHidden = badgeNumber == 0
-    label.text = "\(badgeNumber)"
-    label.sizeToFit()
+  override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
+    if (traitCollection.hasDifferentColorAppearance(comparedTo: previousTraitCollection)) {
+      label.layer.borderColor = UIColor.systemBackground.cgColor
+    }
   }
 }

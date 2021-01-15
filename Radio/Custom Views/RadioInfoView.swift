@@ -48,20 +48,30 @@ class RadioInfoView: UIView {
   
   var isLoading: Bool = false {
     didSet {
-      progressViewHeight.constant = isLoading ? 3 : 1
-      UIView.animate(withDuration: 0.2) {
-        self.layoutIfNeeded()
-      } completion: { [weak self] _ in
-        if self?.isLoading ?? false {
-          self?.progressBarView.startAnimation()
-        } else {
-          self?.progressBarView.stopAnimation()
+      if isLoading {
+        progressViewHeight.constant = 2.0
+        UIView.animate(
+          withDuration: 0.2) {
+          self.layoutIfNeeded()
+        } completion: { (_) in
+          self.progressBarView.startAnimation()
         }
+      } else {
+        self.progressBarView.stopAnimation()
       }
     }
   }
   
-  @IBOutlet weak var progressBarView: RadioProgressBar!
+  @IBOutlet weak var progressBarView: RadioProgressBar! {
+    didSet {
+      progressBarView.completion = { [weak self] in
+        self?.progressViewHeight.constant = 1.0
+        UIView.animate(withDuration: 0.2) {
+          self?.layoutIfNeeded()
+        }
+      }
+    }
+  }
   @IBOutlet weak var progressViewHeight: NSLayoutConstraint!
   @IBOutlet var contentView: UIView!
   @IBOutlet weak var logoImageView: UIImageView! {

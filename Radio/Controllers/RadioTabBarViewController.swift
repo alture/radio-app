@@ -30,6 +30,7 @@ class RadioTabBarViewController: UITabBarController {
     setupObservers()
     setupView()
     tabBar.tintColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
+    selectedIndex = 1
   }
   
   private func setupObservers() {
@@ -50,14 +51,9 @@ class RadioTabBarViewController: UITabBarController {
                             case .playing:
                               self.radioInfoView.isPlaying = true
                               self.radioInfoView.isLoading = false
-                            case .stoped:
+                            case .stoped, .fail:
                               self.radioInfoView.isPlaying = false
                               self.radioInfoView.isLoading = false
-                            case .fail:
-                              self.radioInfoView.isPlaying = false
-                              self.radioInfoView.isLoading = false
-                              // Error handle
-                              break
                             }
                             
       })
@@ -85,6 +81,8 @@ class RadioTabBarViewController: UITabBarController {
     searchVC.tabBarItem = UITabBarItem(title: NSLocalizedString("Станции", comment: "Владки"),
                                        image: UIImage(systemName: "dot.radiowaves.left.and.right"),
                                        tag: 1)
+    
+
     
     let settingVC = RadioSettingRouter.setupModule()
     settingVC.title = NSLocalizedString("Настройки", comment: "Владки")

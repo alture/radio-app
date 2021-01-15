@@ -1,5 +1,5 @@
 /* Bundle name */
-"CFBundleName" = "RVISION.Radio";
+"CFBundleName" = "R.Radio";
 
 /* Privacy - Camera Usage Description */
 "NSCameraUsageDescription" = " ";

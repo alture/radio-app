@@ -132,17 +132,32 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
   
   // MARK: - Setup
   private func updateInfoCenter() {
-    let mpic = MPNowPlayingInfoCenter.default()
-    let defaultImage = UIImage(named: "default-2")!
-    let artwork = MPMediaItemArtwork(boundsSize: defaultImage.size) { (_) -> UIImage in
-      return defaultImage
+    DispatchQueue.global().async { [weak self] in
+      guard let `self` = self else { return }
+      
+      let defaultImage = UIImage(named: "default-2")!
+      let mpic = MPNowPlayingInfoCenter.default()
+      let artwork = MPMediaItemArtwork(boundsSize: defaultImage.size, requestHandler: { (_) -> UIImage in
+        guard
+          let urlString = self.track.trackCover,
+          let url = URL(string: urlString),
+          let data = try? Data(contentsOf: url)
+        else {
+          return defaultImage
+        }
+        
+        return UIImage(data: data) ?? defaultImage
+      })
+      
+      DispatchQueue.main.async {
+        mpic.nowPlayingInfo = [
+          MPMediaItemPropertyArtist: self.track.artistName,
+          MPMediaItemPropertyTitle: self.track.trackName,
+          MPMediaItemPropertyArtwork: artwork,
+          MPNowPlayingInfoPropertyIsLiveStream: true
+        ]
+      }
     }
-    mpic.nowPlayingInfo = [
-      MPMediaItemPropertyArtist: track.artistName,
-      MPMediaItemPropertyTitle: track.trackName,
-      MPNowPlayingInfoPropertyIsLiveStream: true,
-      MPMediaItemPropertyArtwork: artwork
-    ]
   }
   
   private func updateCommandCenter() {
@@ -150,6 +165,7 @@ final class RadioPlayer: NSObject, AVPlayerItemMetadataOutputPushDelegate {
     scc.previousTrackCommand.isEnabled = currentStationList.indices.contains(currentRadioIndex - 1)
     scc.nextTrackCommand.isEnabled = currentStationList.indices.contains(currentRadioIndex + 1)
   }
+  
   
   private func setupMediaPlayer() {
     let scc = MPRemoteCommandCenter.shared()

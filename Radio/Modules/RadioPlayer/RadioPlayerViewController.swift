@@ -55,7 +55,6 @@ final class RadioPlayerViewController: BaseViewController {
   @IBAction func didChangeSliderValue(_ sender: UISlider) {
     let changedValue = Float(sender.value)
     hiddenSystemVolumeSlider.value = changedValue
-    
   }
   
   @IBOutlet weak var containerView: UIView! {

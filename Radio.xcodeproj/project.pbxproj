@@ -141,7 +141,7 @@
 		9A52700B253F1F3B001F0561 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9A52700D253F1F71001F0561 /* vi */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = vi; path = vi.lproj/LaunchScreen.strings; sourceTree = "<group>"; };
 		9A674D8724A7650B00C35732 /* RadioTabBarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioTabBarViewController.swift; sourceTree = "<group>"; };
-		9A6B900C24A4B1F2002FE34A /* RVISION.Радио.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "RVISION.Радио.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A6B900C24A4B1F2002FE34A /* R.Радио.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "R.Радио.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		9A6B900F24A4B1F2002FE34A /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		9A6B901124A4B1F2002FE34A /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		9A6B901824A4B1F4002FE34A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -274,7 +274,7 @@
 		9A6B900D24A4B1F2002FE34A /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				9A6B900C24A4B1F2002FE34A /* RVISION.Радио.app */,
+				9A6B900C24A4B1F2002FE34A /* R.Радио.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -471,7 +471,7 @@
 			);
 			name = Radio;
 			productName = Radio;
-			productReference = 9A6B900C24A4B1F2002FE34A /* RVISION.Радио.app */;
+			productReference = 9A6B900C24A4B1F2002FE34A /* R.Радио.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -852,7 +852,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -861,9 +861,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
-				PRODUCT_NAME = "RVISION.Радио";
+				PRODUCT_NAME = "R.Радио";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};
@@ -875,7 +875,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 15;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -884,9 +884,9 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3;
+				MARKETING_VERSION = 1.3.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
-				PRODUCT_NAME = "RVISION.Радио";
+				PRODUCT_NAME = "R.Радио";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
 			};

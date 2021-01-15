@@ -57,7 +57,7 @@ extension RadioListPresenter: RadioListInteractorOutput {
     
   }
   
-  func fetchedData(_ data: [Radio], _ type: RadioListType) {
+  func fetchedData(_ data: [Radio], _ type: RadioListType) {    
     let availableRadios = data.filter { (radio) -> Bool in
       return radio.enabled
     }
