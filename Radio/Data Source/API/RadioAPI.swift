@@ -88,7 +88,7 @@ class RadioAPI {
   
   static func removeFromFavorite(_ id: Int, completion: @escaping (Error?) -> Void) {
     let fullURL = baseAPI + "/radio/\(id)/dislike"
-    Alamofire.request(fullURL, method: .post, encoding: URLEncoding.default , headers: headers).responseData { (response) in
+    Alamofire.request(fullURL, method: .post, encoding: URLEncoding.default, headers: headers).responseData { (response) in
       switch response.result {
       case .success:
         completion(nil)
@@ -96,6 +96,28 @@ class RadioAPI {
         completion(error)
       }
     }
+  }
+  
+  static func searchRadio(from text: String, completion: @escaping (Swift.Result<[Radio], Error>) -> Void) {
+    let fullURL = baseAPI + "/radio/search"
+    
+    let parameters = [
+      "q": text,
+    ]
+        
+    Alamofire.request(fullURL,
+                      method: .get,
+                      parameters: parameters,
+                      encoding: URLEncoding.queryString,
+                      headers: headers).validate().responseArray { (response: DataResponse<[Radio]>) in
+                        switch response.result {
+                        case .failure(let error):
+                          completion(.failure(error))
+                        case .success(let value):
+                          print(value.count)
+                          completion(.success(value))
+                        }
+                      }
   }
 }
 

@@ -114,7 +114,7 @@ class BaseViewController: UIViewController, BaseViewControllerDelegate {
 }
 
 extension BaseViewController: InteractorOutputProtocol {
-  func handleError(_ error: Error?, _ result: ViewResult?) {
+  func handleError(_ error: Error?, _ result: ViewResult? = nil) {
     if let result = result {
       prepareResultView(with: result)
     } else {

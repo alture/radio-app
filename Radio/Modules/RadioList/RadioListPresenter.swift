@@ -40,6 +40,10 @@ extension RadioListPresenter: RadioListPresentation {
   func addNewRadio() {
     router?.showNewRadioView()
   }
+  
+  func didTapSearchRadio(from text: String) {
+    interactor?.searchRadio(from: text)
+  }
 }
 
 extension RadioListPresenter: RadioListInteractorOutput {
@@ -57,11 +61,16 @@ extension RadioListPresenter: RadioListInteractorOutput {
     
   }
   
-  func fetchedData(_ data: [Radio], _ type: RadioListType) {    
+  func fetchedData(_ data: [Radio]) {    
     let availableRadios = data.filter { (radio) -> Bool in
       return radio.enabled
     }
 
     view?.updateViewFromModel(availableRadios)
   }
+  
+  func fetchedSearchData(_ data: [Radio]) {
+    view?.updateViewFromFetchedList(data)
+  }
+  
 }

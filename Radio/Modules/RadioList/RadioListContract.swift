@@ -9,12 +9,14 @@
 import UIKit
 
 protocol RadioListView: BaseTableViewController {
-  func updateViewFromModel(_ model: [Radio]) 
+  func updateViewFromModel(_ model: [Radio])
+  func updateViewFromFetchedList(_ radioList: [Radio])
 }
 
 protocol RadioListPresentation: class {
   func getRadioList(from startIndex: Int, to endIndex: Int)
   func getFavoriteRadioList(from startIndex: Int, to endIndex: Int)
+  func didTapSearchRadio(from text: String)
   func addToFavorite(_ id: Int)
   func removeFromFavorite(_ id: Int)
   func didTapShowFilterView()
@@ -23,12 +25,14 @@ protocol RadioListPresentation: class {
 
 protocol RadioListUseCase: class {
   func fetchData(of type: RadioListType, from index: Int, to endIndex: Int)
+  func searchRadio(from text: String)
   func addData(id: Int)
   func removeData(id: Int)
 }
 
 protocol RadioListInteractorOutput: InteractorOutputProtocol {
-  func fetchedData(_ data: [Radio], _ type: RadioListType)
+  func fetchedData(_ data: [Radio])
+  func fetchedSearchData(_ data: [Radio])
   func addedToFavorite()
   func removedFromFavorite()
 }

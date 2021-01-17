@@ -47,7 +47,7 @@ final class RadioListTableViewController: BaseTableViewController {
   
   private var filteredRadioList = [Radio]()
   private var isFiltering: Bool {
-    return searchController.isActive && !isSearchBarEmpty
+    return searchController.isActive && (!isSearchBarEmpty  || type == .all)
   }
   
   private var isSearchBarEmpty: Bool {
@@ -163,9 +163,7 @@ final class RadioListTableViewController: BaseTableViewController {
     
     navigationItem.largeTitleDisplayMode = .always
     navigationController?.navigationBar.prefersLargeTitles = true
-    if type == .favorite {
-      setupSearchController()
-    }
+    setupSearchController()
   }
   
   private func setupSearchController() {
@@ -189,15 +187,23 @@ final class RadioListTableViewController: BaseTableViewController {
   }
   
   private func filterContentForSearchText(_ searchText: String) {
-    filteredRadioList = radioList.filter { (radio: Radio) -> Bool in
-      guard let radioName = radio.name else {
-        return false
+    
+    switch type {
+    case .all:
+      presenter?.didTapSearchRadio(from: searchText)
+      tableView.reloadData()
+    case .favorite:
+      filteredRadioList = radioList.filter { (radio: Radio) -> Bool in
+        guard let radioName = radio.name else {
+          return false
+        }
+        
+        return radioName.lowercased().contains(searchText.lowercased())
       }
       
-      return radioName.lowercased().contains(searchText.lowercased())
+      tableView.reloadData()
     }
-    
-    tableView.reloadData()
+  
   }
   
   private func updateFilterTitle() {
@@ -266,8 +272,28 @@ final class RadioListTableViewController: BaseTableViewController {
     }
     
     let shareAction = UIAlertAction(title: NSLocalizedString("Поделится", comment: "Поделится"), style: .default) { (_) in
-      // TODO: - Implement Share
+      
+      var defaultText = NSLocalizedString("Слушай бесплатно - ", comment: "Слушай бесплатно")
+      if let radioName = radio.name {
+        defaultText += radioName + " "
+      }
+      
+      defaultText += "в приложений " + "\(UIApplication.appName!) - https://apps.apple.com/app/id1524028705)"
+      let appURL = URL(string: "https://apps.apple.com/app/id1524028705")
+      let activityController: UIActivityViewController
+      if
+        let radioImageString = radio.logo,
+        let radioImageURL = URL(string: radioImageString),
+        let data = try? Data(contentsOf: radioImageURL),
+        let imageToShare = UIImage(data: data) {
+          activityController = UIActivityViewController(activityItems: [defaultText, imageToShare], applicationActivities: nil)
+      } else {
+          activityController = UIActivityViewController(activityItems: [defaultText], applicationActivities: nil)
+      }
+      
+      self.present(activityController, animated: true, completion: nil)
     }
+    
     
     alertController.addAction(shareAction)
     
@@ -311,6 +337,11 @@ extension RadioListTableViewController: RadioListView {
     refreshControl?.endRefreshing()
     tableView.backgroundView?.isHidden = !radioList.isEmpty
   }
+  
+  func updateViewFromFetchedList(_ radioList: [Radio]) {
+    filteredRadioList = radioList
+    tableView.reloadData()
+  }
 }
 
 
@@ -352,7 +383,6 @@ extension RadioListTableViewController {
     if maximumOffset - currentOffset <= 450.0 {
       if type == .all, state == .loaded {
         state = .paginted
-        print("Load: \(radioList.count)")
         presenter?.getRadioList(from: radioList.count, to: 50)
       }
     }

@@ -27,8 +27,8 @@ final class RadioPlayerViewController: BaseViewController {
       DispatchQueue.main.async { [weak self] in
         guard let `self` = self else { return }
         self.playButton.setImage(UIImage(systemName: self.isPlaying
-                                          ? "stop.fill"
-                                          : "play.fill"),
+                                          ? "stop.circle.fill"
+                                          : "play.circle.fill"),
                                  for:  .normal)
 
       }
@@ -84,9 +84,9 @@ final class RadioPlayerViewController: BaseViewController {
     }
   }
   
-  @IBOutlet weak var backwardButton: UIButton!
-  @IBOutlet weak var playButton: UIButton!
-  @IBOutlet weak var forwardButton: UIButton!
+  @IBOutlet weak var backwardButton: PlayerButton!
+  @IBOutlet weak var playButton: PlayerButton!
+  @IBOutlet weak var forwardButton: PlayerButton!
   @IBAction func didTapBackwardButton(_ sender: UIButton) {
     radioPlayer.prevStation()
   }
@@ -106,15 +106,12 @@ final class RadioPlayerViewController: BaseViewController {
     let scc = MPRemoteCommandCenter.shared()
     var isEnabled = scc.previousTrackCommand.isEnabled
     backwardButton.isEnabled = isEnabled
-    backwardButton.alpha = isEnabled ? 1.0 : 0.3
-
+    
     isEnabled = scc.nextTrackCommand.isEnabled
     forwardButton.isEnabled = isEnabled
-    forwardButton.alpha = isEnabled ? 1.0 : 0.3
 
     isEnabled = radioPlayer.currentRadio != nil
     playButton.isEnabled = isEnabled
-    playButton.alpha = isEnabled ? 1.0 : 0.3
     
     switch radioPlayer.state {
     case .playing, .loading:
@@ -258,6 +255,14 @@ extension RadioPlayerViewController: UIPickerViewDelegate, UIPickerViewDataSourc
     case 3: bufferSize = 60
     default:
       bufferSize = 0
+    }
+  }
+}
+
+class PlayerButton: UIButton {
+  override var isHighlighted: Bool {
+    didSet {
+      self.alpha = isHighlighted ? 0.8 : 1.0
     }
   }
 }
