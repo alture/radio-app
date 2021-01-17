@@ -24,10 +24,13 @@ final class RadioPlayerViewController: BaseViewController {
 
   private var isPlaying: Bool = false {
     didSet {
-      DispatchQueue.main.async {
-        self.playStopButton?.image = UIImage(systemName: self.isPlaying
-        ? "stop.fill"
-        : "play.fill")
+      DispatchQueue.main.async { [weak self] in
+        guard let `self` = self else { return }
+        self.playButton.setImage(UIImage(systemName: self.isPlaying
+                                          ? "stop.fill"
+                                          : "play.fill"),
+                                 for:  .normal)
+
       }
     }
   }
@@ -69,6 +72,8 @@ final class RadioPlayerViewController: BaseViewController {
       imageView.clipsToBounds = true
     }
   }
+  
+  
   @IBOutlet weak var trackNameLabel: UILabel!
   @IBOutlet weak var authorNameLabel: UILabel!
   @IBOutlet weak var plusImageView: UIImageView! {
@@ -78,40 +83,38 @@ final class RadioPlayerViewController: BaseViewController {
       plusImageView.addGestureRecognizer(tap)
     }
   }
-  @IBOutlet weak var playStopButton: UIImageView! {
-    didSet {
-      let tap = UITapGestureRecognizer(target: self,
-                                       action: #selector(didTapPlayStopButton))
-      playStopButton.addGestureRecognizer(tap)
-    }
+  
+  @IBOutlet weak var backwardButton: UIButton!
+  @IBOutlet weak var playButton: UIButton!
+  @IBOutlet weak var forwardButton: UIButton!
+  @IBAction func didTapBackwardButton(_ sender: UIButton) {
+    radioPlayer.prevStation()
   }
   
-  @IBOutlet weak var prevButtonImage: UIImageView! {
-    didSet {
-      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapPrevButton))
-      prevButtonImage.addGestureRecognizer(tap)
+  @IBAction func didTapPlayButton(_ sender: UIButton) {
+    if isPlaying {
+      radioPlayer.stopRadio()
+    } else {
+      radioPlayer.playRadio()
     }
   }
-  @IBOutlet weak var nextButtonImage: UIImageView! {
-    didSet {
-      let tap = UITapGestureRecognizer(target: self, action: #selector(didTapNextButton))
-      nextButtonImage.addGestureRecognizer(tap)
-    }
+  @IBAction func didTapForwardButton(_ sender: UIButton) {
+    radioPlayer.nextStation()
   }
   
   private func updateControls() {
     let scc = MPRemoteCommandCenter.shared()
     var isEnabled = scc.previousTrackCommand.isEnabled
-    prevButtonImage.isUserInteractionEnabled = isEnabled
-    prevButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    backwardButton.isEnabled = isEnabled
+    backwardButton.alpha = isEnabled ? 1.0 : 0.3
 
     isEnabled = scc.nextTrackCommand.isEnabled
-    nextButtonImage.isUserInteractionEnabled = isEnabled
-    nextButtonImage.alpha = isEnabled ? 1.0 : 0.3
+    forwardButton.isEnabled = isEnabled
+    forwardButton.alpha = isEnabled ? 1.0 : 0.3
 
     isEnabled = radioPlayer.currentRadio != nil
-    playStopButton.isUserInteractionEnabled = isEnabled
-    playStopButton.alpha = isEnabled ? 1.0 : 0.3
+    playButton.isEnabled = isEnabled
+    playButton.alpha = isEnabled ? 1.0 : 0.3
     
     switch radioPlayer.state {
     case .playing, .loading:
@@ -204,14 +207,6 @@ final class RadioPlayerViewController: BaseViewController {
     containerView.backgroundColor = .red
   }
   
-  @objc private func didTapPlayStopButton() {
-    if isPlaying {
-      radioPlayer.stopRadio()
-    } else {
-      radioPlayer.playRadio()
-    }
-  }
-  
   @objc private func didTapOption() {
     if let currentRadio = RadioPlayer.shared.currentRadio {
       if currentRadio.isFavorite {
@@ -226,14 +221,6 @@ final class RadioPlayerViewController: BaseViewController {
       }
       
     }
-  }
-  
-  @objc private func didTapPrevButton() {
-    radioPlayer.prevStation()
-  }
-  
-  @objc private func didTapNextButton() {
-    radioPlayer.nextStation()
   }
   
   override func observeValue(forKeyPath keyPath: String?, of object: Any?, change: [NSKeyValueChangeKey : Any]?, context: UnsafeMutableRawPointer?) {
