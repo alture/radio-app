@@ -101,7 +101,7 @@ class RadioTabBarViewController: UITabBarController {
   
   private func configureConstraints() {
     NSLayoutConstraint.activate([
-      radioInfoView.heightAnchor.constraint(equalToConstant: 60.0),
+      radioInfoView.heightAnchor.constraint(greaterThanOrEqualToConstant: 60.0),
       radioInfoView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
       radioInfoView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
       radioInfoView.bottomAnchor.constraint(equalTo: tabBar.topAnchor, constant: 1)

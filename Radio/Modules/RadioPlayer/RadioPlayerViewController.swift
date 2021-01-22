@@ -9,6 +9,7 @@
 import UIKit
 import AVFoundation
 import MediaPlayer
+import SDWebImage
 
 final class RadioPlayerViewController: BaseViewController {
   
@@ -22,19 +23,7 @@ final class RadioPlayerViewController: BaseViewController {
     return slider
   }()
 
-  private var isPlaying: Bool = false {
-    didSet {
-      DispatchQueue.main.async { [weak self] in
-        guard let `self` = self else { return }
-        self.playButton.setImage(UIImage(systemName: self.isPlaying
-                                          ? "stop.circle.fill"
-                                          : "play.circle.fill"),
-                                 for:  .normal)
-
-      }
-    }
-  }
-  
+  private var isPlaying: Bool = false
   private var bufferSizes = [
     NSLocalizedString("АВТО", comment: "Размер буфера"),
     NSLocalizedString("5 секунд", comment: "Размер буфера"),
@@ -89,17 +78,21 @@ final class RadioPlayerViewController: BaseViewController {
   @IBOutlet weak var forwardButton: PlayerButton!
   @IBAction func didTapBackwardButton(_ sender: UIButton) {
     radioPlayer.prevStation()
+    backwardButton.bounceAnimate()
   }
   
   @IBAction func didTapPlayButton(_ sender: UIButton) {
     if isPlaying {
       radioPlayer.stopRadio()
+      playButton.bounceAnimate(to: UIImage(systemName: "stop.circle.fill"))
     } else {
       radioPlayer.playRadio()
+      playButton.bounceAnimate(to: UIImage(systemName: "play.circle.fill"))
     }
   }
   @IBAction func didTapForwardButton(_ sender: UIButton) {
     radioPlayer.nextStation()
+    forwardButton.bounceAnimate()
   }
   
   private func updateControls() {
@@ -126,11 +119,10 @@ final class RadioPlayerViewController: BaseViewController {
     trackNameLabel.text = player.track.trackName
     authorNameLabel.text = player.track.artistName
     imageView.image = nil
-    imageView.cancelImageLoading()
     if
       let logo = player.track.trackCover,
       let url = URL(string: logo) {
-      imageView.loadImage(at: url)
+      imageView.sd_setImage(with: url, placeholderImage: UIImage(named: "default-2"))
     } else {
       imageView.image = UIImage(named: "default-2")
     }
@@ -262,7 +254,7 @@ extension RadioPlayerViewController: UIPickerViewDelegate, UIPickerViewDataSourc
 class PlayerButton: UIButton {
   override var isHighlighted: Bool {
     didSet {
-      self.alpha = isHighlighted ? 0.8 : 1.0
+      self.imageView?.alpha = isHighlighted ? 0.67 : 1.0
     }
   }
 }

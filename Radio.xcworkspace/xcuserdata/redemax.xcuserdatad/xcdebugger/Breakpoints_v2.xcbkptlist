@@ -80,7 +80,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "92"
                   endingLineNumber = "92"
-                  offsetFromSymbolStart = "744">
+                  offsetFromSymbolStart = "625">
                </Location>
                <Location
                   uuid = "CA40BD27-0368-4DFE-8621-112ED86A1DD6 - 2d3dc804d5081793"
@@ -95,7 +95,7 @@
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "93"
                   endingLineNumber = "93"
-                  offsetFromSymbolStart = "44">
+                  offsetFromSymbolStart = "103">
                </Location>
             </Locations>
          </BreakpointContent>
@@ -103,17 +103,17 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "B9194312-ACF5-4AEB-9714-0E646863D649"
-            shouldBeEnabled = "Yes"
+            uuid = "2BE7C4A8-4A1C-4C71-A6CE-D4493DCF53DA"
+            shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Radio/Modules/RadioPlayer/RadioPlayerViewController.swift"
+            filePath = "Radio/Utilities/ImageLoader.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "265"
-            endingLineNumber = "265"
-            landmarkName = "isHighlighted"
-            landmarkType = "24">
+            startingLineNumber = "62"
+            endingLineNumber = "62"
+            landmarkName = "load(_:for:)"
+            landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

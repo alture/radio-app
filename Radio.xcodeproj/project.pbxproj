@@ -41,6 +41,7 @@
 		9A74E21C24A7E50A0059E48B /* RadioInfoView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */; };
 		9A74E21E24A7E6800059E48B /* RadioInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74E21D24A7E6800059E48B /* RadioInfoView.swift */; };
 		9A74E22124A809590059E48B /* UIImageView+LoadImg.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A74E22024A809590059E48B /* UIImageView+LoadImg.swift */; };
+		9A764FA925BAE7AE00E240A2 /* UIButton+bounceAnimate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A764FA825BAE7AE00E240A2 /* UIButton+bounceAnimate.swift */; };
 		9A9B60A624E3DD7A00D59D59 /* EmptyView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9B60A524E3DD7A00D59D59 /* EmptyView.swift */; };
 		9A9B60A824E55CAF00D59D59 /* RadioPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9B60A724E55CAF00D59D59 /* RadioPlayer.swift */; };
 		9A9F31E924D9B7FE00D8DCF7 /* RadioListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9A9F31E824D9B7FE00D8DCF7 /* RadioListTableViewController.swift */; };
@@ -155,6 +156,7 @@
 		9A74E21B24A7E50A0059E48B /* RadioInfoView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RadioInfoView.xib; sourceTree = "<group>"; };
 		9A74E21D24A7E6800059E48B /* RadioInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioInfoView.swift; sourceTree = "<group>"; };
 		9A74E22024A809590059E48B /* UIImageView+LoadImg.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+LoadImg.swift"; sourceTree = "<group>"; };
+		9A764FA825BAE7AE00E240A2 /* UIButton+bounceAnimate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+bounceAnimate.swift"; sourceTree = "<group>"; };
 		9A9B60A524E3DD7A00D59D59 /* EmptyView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmptyView.swift; sourceTree = "<group>"; };
 		9A9B60A724E55CAF00D59D59 /* RadioPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioPlayer.swift; sourceTree = "<group>"; };
 		9A9F31E824D9B7FE00D8DCF7 /* RadioListTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RadioListTableViewController.swift; sourceTree = "<group>"; };
@@ -348,6 +350,7 @@
 				9A6D533E24E166D100A1A214 /* UIImageView+DropShadow.swift */,
 				9A3B8F3E2500F8F100FA4DE2 /* UIDevice+ModelName.swift */,
 				9AE5C1B92555C477003C3F0C /* UITableView+Deselect.swift */,
+				9A764FA825BAE7AE00E240A2 /* UIButton+bounceAnimate.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -590,6 +593,7 @@
 				9A0332B825555E6A00432D38 /* FilterAPI.swift in Sources */,
 				9A6B903624A6446C002FE34A /* CountryAPI.swift in Sources */,
 				9A0332B325555BA200432D38 /* Filter.swift in Sources */,
+				9A764FA925BAE7AE00E240A2 /* UIButton+bounceAnimate.swift in Sources */,
 				9A50F31624DC0A36006C0C5E /* UIStackView+AddSubviews.swift in Sources */,
 				9A6B903424A64459002FE34A /* RadioAPI.swift in Sources */,
 				9AC193EA24B3AFFA00C03C31 /* RadioAddInteractor.swift in Sources */,
@@ -852,7 +856,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -861,7 +865,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "R.Радио";
 				SWIFT_VERSION = 5.0;
@@ -875,7 +879,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 15;
+				CURRENT_PROJECT_VERSION = 17;
 				DEVELOPMENT_TEAM = RPC7U6LPN6;
 				INFOPLIST_FILE = "";
 				"INFOPLIST_FILE[sdk=*]" = Radio/Info.plist;
@@ -884,7 +888,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.3.1;
+				MARKETING_VERSION = 1.4.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.iot.radio;
 				PRODUCT_NAME = "R.Радио";
 				SWIFT_VERSION = 5.0;

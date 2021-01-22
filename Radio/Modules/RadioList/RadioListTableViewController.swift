@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 enum RadioListType {
   case all
@@ -120,8 +121,11 @@ final class RadioListTableViewController: BaseTableViewController {
                           }),
       radioPlayer.observe(\.currentRadio,
                           options: .initial,
-                          changeHandler: { (player, value) in
-                            self.setSelectedCell(from: player.currentRadio)
+                          changeHandler: { [weak self] (player, value) in
+                            guard let `self` = self else { return }
+                            
+                            self.tableView.reloadData()
+//                            self.setSelectedCell(from: player.currentRadio)
                           })
     ]
   }
@@ -278,8 +282,8 @@ final class RadioListTableViewController: BaseTableViewController {
         defaultText += radioName + " "
       }
       
+      // MARK: - Fix
       defaultText += "в приложений " + "\(UIApplication.appName!) - https://apps.apple.com/app/id1524028705)"
-      let appURL = URL(string: "https://apps.apple.com/app/id1524028705")
       let activityController: UIActivityViewController
       if
         let radioImageString = radio.logo,
@@ -362,7 +366,7 @@ extension RadioListTableViewController {
     if
       let urlString = radio.logo,
       let url = URL(string: urlString) {
-      cell.logoImage.loadImage(at: url)
+      cell.logoImage.sd_setImage(with: url, placeholderImage: UIImage(named: "default-2"))
     }
     cell.radio = radio
     cell.didTapMoreButton = { radio in

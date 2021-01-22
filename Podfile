@@ -10,5 +10,6 @@ target 'Radio' do
     pod 'AlamofireObjectMapper'
     pod 'ObjectMapper'
     pod 'RealmSwift' 
+    pod 'SDWebImage', '~> 5.0'
 
 end

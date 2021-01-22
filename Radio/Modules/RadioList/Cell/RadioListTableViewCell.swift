@@ -16,9 +16,9 @@ final class RadioListTableViewCell: UITableViewCell {
     }
   }
   
-  private var isPlaying: Bool = false {
+  override var isSelected: Bool {
     didSet {
-      radioTitleLabel.textColor = isPlaying ? #colorLiteral(red: 0.9024619972, green: 0, blue: 0, alpha: 1) : .label
+      radioTitleLabel.textColor = isSelected ? #colorLiteral(red: 0.9024619972, green: 0, blue: 0, alpha: 1) : .label
     }
   }
   
@@ -74,12 +74,15 @@ final class RadioListTableViewCell: UITableViewCell {
       radioInfoLabel.text = "\(radio.country?.name ?? NSLocalizedString("Страна", comment: "Отображение стран в общем списке"))"
     }
     
-    isPlaying = RadioPlayer.shared.currentRadio == radio
+    if isSelected == false && RadioPlayer.shared.currentRadio == radio {
+      setSelected(true, animated: false)
+    } else {
+      setSelected(false, animated: false)
+    }
   }
   
   override func prepareForReuse() {
     super.prepareForReuse()
     logoImage.image = UIImage(named: "default-2")
-    logoImage.cancelImageLoading()
   }
 }

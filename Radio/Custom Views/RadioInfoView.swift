@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 protocol RadioInfoViewDelegate {
   func didTapPlayButton()
@@ -21,13 +22,12 @@ class RadioInfoView: UIView {
         return
       }
       
-      logoImageView.cancelImageLoading()
       titleLabel.text = track.trackName
       logoImageView.image = UIImage(named: "default-2")
       if
         let trackCover = track.trackCover,
         let url = URL(string: trackCover){
-        logoImageView.loadImage(at: url)
+        logoImageView.sd_setImage(with: url)
         playButton.isUserInteractionEnabled = true
       }
       
@@ -49,7 +49,7 @@ class RadioInfoView: UIView {
   var isLoading: Bool = false {
     didSet {
       if isLoading {
-        progressViewHeight.constant = 2.0
+        progressViewHeight.constant = 3.0
         UIView.animate(
           withDuration: 0.2) {
           self.layoutIfNeeded()
@@ -64,6 +64,8 @@ class RadioInfoView: UIView {
   
   @IBOutlet weak var progressBarView: RadioProgressBar! {
     didSet {
+      progressBarView.alpha = 0.5
+      
       progressBarView.completion = { [weak self] in
         self?.progressViewHeight.constant = 1.0
         UIView.animate(withDuration: 0.2) {

@@ -377,7 +377,7 @@
                                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="35" translatesAutoresizingMaskIntoConstraints="NO" id="9I3-II-CmS">
                                                 <rect key="frame" x="0.0" y="0.0" width="250" height="80"/>
                                                 <subviews>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s43-nK-9Dy">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="s43-nK-9Dy" customClass="PlayerButton" customModule="R_Радио" customModuleProvider="target">
                                                         <rect key="frame" x="0.0" y="15" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="50" id="83M-Db-wGy"/>
@@ -394,7 +394,7 @@
                                                             <action selector="didTapBackwardButton:" destination="gil-0z-QWc" eventType="touchUpInside" id="5bT-rY-aYH"/>
                                                         </connections>
                                                     </button>
-                                                    <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bm-Iv-K7L">
+                                                    <button contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Bm-Iv-K7L" customClass="PlayerButton" customModule="R_Радио" customModuleProvider="target">
                                                         <rect key="frame" x="85" y="0.0" width="80" height="80"/>
                                                         <constraints>
                                                             <constraint firstAttribute="height" constant="80" id="5rG-yf-LEu"/>
@@ -410,7 +410,7 @@
                                                             <action selector="didTapPlayButton:" destination="gil-0z-QWc" eventType="touchUpInside" id="9R9-NN-CJ6"/>
                                                         </connections>
                                                     </button>
-                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cp-oA-lDi">
+                                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="fill" contentVerticalAlignment="fill" adjustsImageWhenHighlighted="NO" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1Cp-oA-lDi" customClass="PlayerButton" customModule="R_Радио" customModuleProvider="target">
                                                         <rect key="frame" x="200" y="15" width="50" height="50"/>
                                                         <constraints>
                                                             <constraint firstAttribute="width" constant="50" id="NMP-Ef-TkA"/>

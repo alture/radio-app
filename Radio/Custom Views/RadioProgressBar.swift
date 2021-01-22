@@ -14,7 +14,7 @@ final class RadioProgressBar: UIView {
   private lazy var progressBarIndicator: UIView = {
     let view = UIView(frame: CGRect(x: 0, y: 0, width: 0, height: frame.height))
     view.translatesAutoresizingMaskIntoConstraints = false
-    view.backgroundColor = #colorLiteral(red: 0.968627451, green: 0, blue: 0, alpha: 1)
+    view.backgroundColor = #colorLiteral(red: 1, green: 0, blue: 0, alpha: 1)
     return view
   }()
   
