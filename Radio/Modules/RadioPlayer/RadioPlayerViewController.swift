@@ -145,8 +145,8 @@ final class RadioPlayerViewController: BaseViewController {
                             DispatchQueue.main.async {
                               if let radio = player.currentRadio {
                                 let currentImageName = radio.isFavorite
-                                  ? "checkmark"
-                                  : "plus"
+                                  ? "suit.heart.fill"
+                                  : "suit.heart"
                                 self.plusImageView.image = UIImage(systemName: currentImageName)
                               }
                               self.updateControls()
@@ -203,13 +203,14 @@ final class RadioPlayerViewController: BaseViewController {
   
   @objc private func didTapOption() {
     if let currentRadio = RadioPlayer.shared.currentRadio {
+      UIImpactFeedbackGenerator(style: .light).impactOccurred()
       if currentRadio.isFavorite {
         currentRadio.isFavorite = false
-        plusImageView.image = UIImage(systemName: "plus")
+        plusImageView.image = UIImage(systemName: "suit.heart")
         presenter?.didTapRemoveFromFavorite(with: currentRadio.id)
       } else {
         currentRadio.isFavorite = true
-        plusImageView.image = UIImage(systemName: "checkmark")
+        plusImageView.image = UIImage(systemName: "suit.heart.fill")
         presenter?.didTapAddToFavorite(with: currentRadio.id)
         handleError(nil, .sucess(text: NSLocalizedString("Добавлено в Мои станции", comment: "В плеере")))
       }

@@ -24,10 +24,8 @@ class RadioInfoView: UIView {
       
       titleLabel.text = track.trackName
       logoImageView.image = UIImage(named: "default-2")
-      if
-        let trackCover = track.trackCover,
-        let url = URL(string: trackCover){
-        logoImageView.sd_setImage(with: url)
+      
+      if RadioPlayer.shared.currentRadio != nil {
         UIView.animate(
           withDuration: 0.1,
           delay: 0,
@@ -38,7 +36,14 @@ class RadioInfoView: UIView {
           }) { (_) in
           self.playButton.isUserInteractionEnabled = true
         }
+        
+        if
+          let trackCover = track.trackCover,
+          let url = URL(string: trackCover){
+          logoImageView.sd_setImage(with: url)
+        }
       }
+
       
     }
   }

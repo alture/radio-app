@@ -349,8 +349,8 @@
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                     </stackView>
-                                    <imageView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="plus" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="I2B-b9-CIa">
-                                        <rect key="frame" x="289" y="3.5" width="30" height="23"/>
+                                    <imageView opaque="NO" clipsSubviews="YES" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="suit.heart" catalog="system" translatesAutoresizingMaskIntoConstraints="NO" id="I2B-b9-CIa">
+                                        <rect key="frame" x="289" y="3" width="30" height="24.5"/>
                                         <color key="tintColor" red="0.96421903369999995" green="0.0063548032189999996" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="displayP3"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="30" id="DXm-bQ-jFg"/>
@@ -14437,9 +14437,9 @@ AFYAAAAAAAAAAAAAAAAADMGOA
         <image name="forward.fill" catalog="system" width="128" height="79"/>
         <image name="photo" catalog="system" width="128" height="93"/>
         <image name="play.circle.fill" catalog="system" width="128" height="121"/>
-        <image name="plus" catalog="system" width="128" height="113"/>
         <image name="speaker.1.fill" catalog="system" width="128" height="108"/>
         <image name="speaker.2.fill" catalog="system" width="128" height="90"/>
+        <image name="suit.heart" catalog="system" width="128" height="109"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>
