@@ -20,6 +20,8 @@ class RadioTabBarViewController: UITabBarController {
   
   private lazy var radioInfoView: RadioInfoView = {
     let view = RadioInfoView()
+    view.isHidden = true
+    view.alpha = 0.0
     view.delegate = self
     view.translatesAutoresizingMaskIntoConstraints = false
     return view

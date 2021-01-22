@@ -25,23 +25,23 @@
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fJd-No-rsO" userLabel="ProgressView" customClass="RadioProgressBar" customModule="R_Радио" customModuleProvider="target">
-                    <rect key="frame" x="0.0" y="0.0" width="414" height="1"/>
+                    <rect key="frame" x="0.0" y="0.0" width="414" height="2"/>
                     <color key="backgroundColor" systemColor="systemGray3Color"/>
                     <constraints>
-                        <constraint firstAttribute="height" constant="1" id="fde-Oh-HQy"/>
+                        <constraint firstAttribute="height" constant="2" id="fde-Oh-HQy"/>
                     </constraints>
                 </view>
                 <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qOr-LP-GKZ">
-                    <rect key="frame" x="0.0" y="1" width="414" height="58"/>
+                    <rect key="frame" x="0.0" y="2" width="414" height="57"/>
                     <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Ftn-sc-mxP">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="58"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="57"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" alignment="center" spacing="26" translatesAutoresizingMaskIntoConstraints="NO" id="bBM-1n-fYR">
-                                <rect key="frame" x="20" y="0.0" width="374" height="58"/>
+                                <rect key="frame" x="20" y="0.0" width="374" height="57"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="default-2" translatesAutoresizingMaskIntoConstraints="NO" id="okf-OD-xP5">
-                                        <rect key="frame" x="0.0" y="9" width="40" height="40"/>
+                                        <rect key="frame" x="0.0" y="8.5" width="40" height="40"/>
                                         <color key="backgroundColor" systemColor="systemGray5Color"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="40" id="1vi-f2-slg"/>
@@ -49,13 +49,13 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Не воспроизводится" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jxF-va-MaB">
-                                        <rect key="frame" x="66" y="19" width="232" height="20.5"/>
+                                        <rect key="frame" x="66" y="18.5" width="232" height="20.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="LVv-ea-9Yn">
-                                        <rect key="frame" x="324" y="4" width="50" height="50"/>
+                                        <rect key="frame" x="324" y="3.5" width="50" height="50"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="50" id="LyS-50-q0t"/>
                                             <constraint firstAttribute="height" constant="50" id="P1Q-Se-U0e"/>

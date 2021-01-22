@@ -28,7 +28,16 @@ class RadioInfoView: UIView {
         let trackCover = track.trackCover,
         let url = URL(string: trackCover){
         logoImageView.sd_setImage(with: url)
-        playButton.isUserInteractionEnabled = true
+        UIView.animate(
+          withDuration: 0.1,
+          delay: 0,
+          options: [],
+          animations:  {
+            self.isHidden = false
+            self.alpha = 1.0
+          }) { (_) in
+          self.playButton.isUserInteractionEnabled = true
+        }
       }
       
     }
@@ -49,7 +58,7 @@ class RadioInfoView: UIView {
   var isLoading: Bool = false {
     didSet {
       if isLoading {
-        progressViewHeight.constant = 3.0
+        progressViewHeight.constant = 2.0
         UIView.animate(
           withDuration: 0.2) {
           self.layoutIfNeeded()
@@ -67,8 +76,8 @@ class RadioInfoView: UIView {
       progressBarView.alpha = 0.5
       
       progressBarView.completion = { [weak self] in
-        self?.progressViewHeight.constant = 1.0
-        UIView.animate(withDuration: 0.2) {
+        self?.progressViewHeight.constant = 2.0
+        UIView.animate(withDuration: 0.6) {
           self?.layoutIfNeeded()
         }
       }
@@ -91,6 +100,8 @@ class RadioInfoView: UIView {
   }
   @IBAction func didTapPlayButton(_ sender: UIButton) {
     delegate?.didTapPlayButton()
+    let currentImageName = isPlaying ? "stop.fill" : "play.fill"
+    sender.bounceAnimate(to: UIImage(systemName: currentImageName))
   }
   
   override init(frame: CGRect) {

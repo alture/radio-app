@@ -23,7 +23,12 @@ final class RadioPlayerViewController: BaseViewController {
     return slider
   }()
 
-  private var isPlaying: Bool = false
+  private var isPlaying: Bool = false {
+    didSet {
+      let currentImageName = isPlaying ? "stop.circle.fill" : "play.circle.fill"
+      playButton.setImage(UIImage(systemName: currentImageName), for: .normal)
+    }
+  }
   private var bufferSizes = [
     NSLocalizedString("АВТО", comment: "Размер буфера"),
     NSLocalizedString("5 секунд", comment: "Размер буфера"),
